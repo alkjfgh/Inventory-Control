@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="itemMapper">
+	<resultMap id="BaseResultMap" type="item">
+		<id column="ITEM_SEQ" jdbcType="DECIMAL" property="itemSeq" />
+		<result column="ITEM_NAME" jdbcType="VARCHAR"
+			property="itemName" />
+		<result column="ITEM_PRICE" jdbcType="DECIMAL"
+			property="itemPrice" />
+		<result column="ITEM_EXDATE" jdbcType="TIMESTAMP"
+			property="itemExdate" />
+		<result column="ITEM_SIZE" jdbcType="DECIMAL"
+			property="itemSize" />
+		<result column="ITEM_REGDATE" jdbcType="TIMESTAMP"
+			property="itemRegdate" />
+		<result column="ITEM_FWDATE" jdbcType="TIMESTAMP"
+			property="itemFwdate" />
+		<result column="ITEM_DESC" jdbcType="VARCHAR"
+			property="itemDesc" />
+		<result column="ITEM_MAKER" jdbcType="VARCHAR"
+			property="itemMaker" />
+		<result column="ITEM_IMG" jdbcType="BLOB" property="itemImg" />
+	</resultMap>
+	<delete id="delete" parameterType="item">
+		delete from ITEM
+		where ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
+	</delete>
+	<delete id="deleteAll">
+		delete from ITEM
+	</delete>
+	<insert id="insert" parameterType="item">
+		insert into ITEM (ITEM_SEQ, ITEM_NAME, ITEM_PRICE,
+		ITEM_EXDATE, ITEM_SIZE, ITEM_REGDATE,
+		ITEM_FWDATE, ITEM_DESC, ITEM_MAKER,
+		ITEM_IMG)
+		values (#{itemSeq,jdbcType=DECIMAL}, #{itemName,jdbcType=VARCHAR},
+		#{itemPrice,jdbcType=DECIMAL},
+		#{itemExdate,jdbcType=TIMESTAMP}, #{itemSize,jdbcType=DECIMAL}, #{itemRegdate,jdbcType=TIMESTAMP},
+		#{itemFwdate,jdbcType=TIMESTAMP}, #{itemDesc,jdbcType=VARCHAR},
+		#{itemMaker,jdbcType=VARCHAR},
+		#{itemImg,jdbcType=BLOB})
+	</insert>
+	<update id="update" parameterType="item">
+		update ITEM
+		set ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+		ITEM_PRICE = #{itemPrice,jdbcType=DECIMAL},
+		ITEM_EXDATE = #{itemExdate,jdbcType=TIMESTAMP},
+		ITEM_SIZE = #{itemSize,jdbcType=DECIMAL},
+		ITEM_REGDATE = #{itemRegdate,jdbcType=TIMESTAMP},
+		ITEM_FWDATE = #{itemFwdate,jdbcType=TIMESTAMP},
+		ITEM_DESC = #{itemDesc,jdbcType=VARCHAR},
+		ITEM_MAKER = #{itemMaker,jdbcType=VARCHAR},
+		ITEM_IMG = #{itemImg,jdbcType=BLOB}
+		where ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
+	</update>
+	<select id="select" parameterType="item"
+		resultMap="BaseResultMap">
+		select ITEM_SEQ, ITEM_NAME, ITEM_PRICE, ITEM_EXDATE, ITEM_SIZE,
+		ITEM_REGDATE, ITEM_FWDATE,
+		ITEM_DESC, ITEM_MAKER, ITEM_IMG
+		from ITEM
+		where ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
+	</select>
+	<select id="selectList" resultMap="BaseResultMap">
+		select ITEM_SEQ, ITEM_NAME, ITEM_PRICE, ITEM_EXDATE, ITEM_SIZE,
+		ITEM_REGDATE, ITEM_FWDATE,
+		ITEM_DESC, ITEM_MAKER, ITEM_IMG
+		from ITEM
+	</select>
+	<select id="selectCnt" resultType="int">
+		SELECT COUNT(*) FROM ITEM
+	</select>
+</mapper>
