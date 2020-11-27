@@ -30,5 +30,7 @@
 		<td>${shop.shopRegdate }</td>
 	</tr>
 </table>
+<a href="shopItems.jsp">shop items</a>
+<a href="setShopItems.jsp">set shop items</a>
 </body>
 </html>
