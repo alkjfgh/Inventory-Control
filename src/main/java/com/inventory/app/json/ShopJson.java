@@ -44,7 +44,7 @@ public class ShopJson {
 			System.out.println(json.get("seq"));
 			System.out.println("=============");
 			if (((Long) json.get("seq")).equals((Long) shopSeq)) {
-//				있으면 삭제
+//				데이터가 있으면 삭제
 				arr.remove(json);
 				break;
 			}
