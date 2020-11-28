@@ -23,7 +23,7 @@ public class ShopJson {
 	@SuppressWarnings("unchecked")
 	public void add(ItemVO item, int need) throws IOException, ParseException {
 //		System.out.println(new File(".").getAbsolutePath());
-		String path = "../../spring2/Inventory-Control/src/main/resources/json/shop-" + shopSeq + ".json";
+		String path = "../spring2/Inventory-Control/src/main/resources/json/shop-" + shopSeq + ".json";
 
 //		json 읽기
 		JSONParser parser = new JSONParser();
