@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="categoryMapper">
+	<resultMap id="BaseResultMap" type="category">
+		<result column="CATEGORY_SEQ" jdbcType="DECIMAL" property="categorySeq"/>
+		<result column="CATEGORY_NAME" jdbcType="VARCHAR" property="categoryName"/>
+	</resultMap>
+	<delete id="delete" parameterType="category">
+	DELETE FROM CATEGORYTB WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL}
+	</delete>
+	<delete id="deleteAll">
+	DELETE FROM CATEGORYTB
+	</delete>
+	<insert id="insert" parameterType="category">
+	INSERT INTO CATEGORYTB VALUES(#{categorySeq,jdbcType=DECIMAL}, #{categoryName,jdbcType=VARCHAR})
+	</insert>
+	<update id="update" parameterType="category">
+	UPDATE CATEGORYTB SET CATEGORY_NAME = #{categoryName,jdbcType=VARCHAR} WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL} 
+	</update>
+	<select id="select" parameterType="category" resultMap="BaseResultMap">
+	SELECT * FROM CATEGORYTB WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL}
+	</select>
+	<select id="selectList" resultMap="BaseResultMap">
+	SELECT * FROM CATEGORYTB
+	</select>
+	<select id="selectCnt" resultType="int">
+	SELECT COUNT(*) FROM CATEGORYTB
+	</select>
+</mapper>

@@ -58,5 +58,6 @@ public class UserTest {
 
 		service.delete(vo1);
 		assertEquals(service.selectCnt(), 1);
+		service.deleteAll();
 	}
 }

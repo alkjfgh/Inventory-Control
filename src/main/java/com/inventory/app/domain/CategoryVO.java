@@ -1,27 +1,66 @@
 package com.inventory.app.domain;
 
-import java.util.List;
-
 public class CategoryVO {
-	public int getSize() {
-		return size;
+	private long categorySeq;
+	private String categoryName;
+
+	public CategoryVO() {
+		super();
 	}
-	public void setSize(int size) {
-		this.size = size;
+
+	public CategoryVO(long categorySeq, String categoryName) {
+		super();
+		this.categorySeq = categorySeq;
+		this.categoryName = categoryName;
 	}
-	public String getName() {
-		return name;
+
+	public long getCategorySeq() {
+		return categorySeq;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setCategorySeq(long categorySeq) {
+		this.categorySeq = categorySeq;
 	}
-	public List<ItemTestVO> getItemList() {
-		return itemList;
+
+	public String getCategoryName() {
+		return categoryName;
 	}
-	public void setItemList(List<ItemTestVO> itemList) {
-		this.itemList = itemList;
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
-	int size;
-	String name;
-	List<ItemTestVO> itemList;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((categoryName == null) ? 0 : categoryName.hashCode());
+		result = prime * result + (int) (categorySeq ^ (categorySeq >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CategoryVO other = (CategoryVO) obj;
+		if (categoryName == null) {
+			if (other.categoryName != null)
+				return false;
+		} else if (!categoryName.equals(other.categoryName))
+			return false;
+		if (categorySeq != other.categorySeq)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "CategoryVO [categorySeq=" + categorySeq + ", categoryName=" + categoryName + "]";
+	}
+
 }

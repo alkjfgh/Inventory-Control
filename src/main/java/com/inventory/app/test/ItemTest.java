@@ -2,7 +2,6 @@ package com.inventory.app.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
 import java.util.Iterator;
 
 import org.junit.Before;
@@ -29,9 +28,8 @@ public class ItemTest {
 
 	@Before
 	public void setUp() {
-		vo1 = new ItemVO(111L, "water", 1000L, new Date(System.currentTimeMillis()), "JEJU");
-		
-		vo2 = new ItemVO(222L, "milk", 2000L, new Date(System.currentTimeMillis()), "SEOUL");
+		vo1 = new ItemVO(111L, 1L, "water", 1000L, "JEJU");
+		vo2 = new ItemVO(222L, 2L, "milk", 2000L, "SEOUL");
 	}
 
 	@Test

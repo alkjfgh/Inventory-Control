@@ -42,20 +42,20 @@ public class ShopController {
 			session.setAttribute("shop", vo);
 			
 //			나중에 지울것
-			ItemTestVO item1 = new ItemTestVO(1, "우유", 1000, 5, 3);
-			ItemTestVO item2 = new ItemTestVO(2, "초코우유", 1000, 5, 3);
-			ItemTestVO item3 = new ItemTestVO(3, "커피우유", 1000, 5, 3);
-			CategoryVO category = new CategoryVO();
-			category.setSize(3);
-			category.setName("우유");
-			List<ItemTestVO> list = new ArrayList<ItemTestVO>();
-			list.add(item1);
-			list.add(item2);
-			list.add(item3);
-			category.setItemList(list);
-			List<CategoryVO> categoryList = new ArrayList<CategoryVO>();
-			categoryList.add(category);
-			session.setAttribute("categoryList", categoryList);
+//			ItemTestVO item1 = new ItemTestVO(1, "우유", 1000, 5, 3);
+//			ItemTestVO item2 = new ItemTestVO(2, "초코우유", 1000, 5, 3);
+//			ItemTestVO item3 = new ItemTestVO(3, "커피우유", 1000, 5, 3);
+//			CategoryVO category = new CategoryVO();
+//			category.setSize(3);
+//			category.setName("우유");
+//			List<ItemTestVO> list = new ArrayList<ItemTestVO>();
+//			list.add(item1);
+//			list.add(item2);
+//			list.add(item3);
+//			category.setItemList(list);
+//			List<CategoryVO> categoryList = new ArrayList<CategoryVO>();
+//			categoryList.add(category);
+//			session.setAttribute("categoryList", categoryList);
 			
 			
 			return "shopInfo";
@@ -93,14 +93,14 @@ public class ShopController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "updateShop.do", method = RequestMethod.POST)
 	public String updateShop(HttpServletRequest request, HttpSession session) {
-		List<CategoryVO> categoryList = (List<CategoryVO>) session.getAttribute("categoryList");
-		int size = categoryList.size();
-		int length =0;
-		for(int i =0;i<size;i++)
-			length += categoryList.get(i).getSize();
-		for(int i=1;i<=length;i++) {
-			System.out.println(request.getParameter("need."+i));
-		}
+//		List<CategoryVO> categoryList = (List<CategoryVO>) session.getAttribute("categoryList");
+//		int size = categoryList.size();
+//		int length =0;
+//		for(int i =0;i<size;i++)
+//			length += categoryList.get(i).getSize();
+//		for(int i=1;i<=length;i++) {
+//			System.out.println(request.getParameter("need."+i));
+//		}
 		return "shopInfo";
 	}
 	

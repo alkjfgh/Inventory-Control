@@ -8,12 +8,16 @@
     	<typeAlias type="com.inventory.app.domain.ItemVO" alias="item"/>
     	<typeAlias type="com.inventory.app.domain.ShopVO" alias="shop"/>
     	<typeAlias type="com.inventory.app.domain.UserVO" alias="user"/>
+    	<typeAlias type="com.inventory.app.domain.CategoryVO" alias="category"/>
+    	<typeAlias type="com.inventory.app.domain.StockVO" alias="stock"/>
     </typeAliases>
  
  	<!-- Sql Mapper 설정 -->
     <mappers>
         <mapper resource="mybatis/mapper/ItemMapper.xml"/>
         <mapper resource="mybatis/mapper/ShopMapper.xml"/>
-        <mapper resource="mybatis/mapper/UsertbMapper.xml"/>
+        <mapper resource="mybatis/mapper/UserMapper.xml"/>
+        <mapper resource="mybatis/mapper/CategoryMapper.xml"/>
+        <mapper resource="mybatis/mapper/StockMapper.xml"/>
     </mappers>
 </configuration>

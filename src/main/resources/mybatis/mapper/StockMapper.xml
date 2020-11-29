@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="stockMapper">
+	<resultMap id="BaseResultMap" type="stock">
+		<id column="SHOP_SEQ" jdbcType="DECIMAL" property="shopSeq" />
+		<id column="ITEM_SEQ" jdbcType="DECIMAL" property="itemSeq" />
+		<id column="TOTAL" jdbcType="DECIMAL" property="total" />
+		<id column="REMAIN" jdbcType="DECIMAL" property="remain" />
+		<id column="NECESSITY" jdbcType="DECIMAL" property="necessity" />
+		<id column="SOLD" jdbcType="DECIMAL" property="sold" />
+	</resultMap>
+	<delete id="delete" parameterType="stock">
+		DELETE FROM STOCK WHERE
+		ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
+	</delete>
+	<delete id="deleteShop" parameterType="stock">
+		DELETE FROM STOCK WHERE
+		SHOP_SEQ =
+		#{shopSeq,jdbcType=DECIMAL}
+	</delete>
+	<delete id="deleteAll">
+		DELETE FROM STOCK
+	</delete>
+	<insert id="insert" parameterType="stock">
+		INSERT INTO STOCK
+		VALUES(#{shopSeq,jdbcType=DECIMAL},
+		#{itemSeq,jdbcType=DECIMAL},
+		#{total,jdbcType=DECIMAL}, #{remain,jdbcType=DECIMAL},
+		#{sold,jdbcType=DECIMAL})
+	</insert>
+	<update id="update" parameterType="stock">
+		UPDATE STOCK SET TOTAL =
+		#{total,jdbcType=DECIMAL}, REMAIN = #{remain,jdbcType=DECIMAL} WHERE
+		SHOP_SEQ =
+		#{shopSeq,jdbcType=DECIMAL} AND ITEM_SEQ =
+		#{itemSeq,jdbcType=DECIMAL}
+	</update>
+	<select id="select" parameterType="stock"
+		resultMap="BaseResultMap">
+		SELECT * FROM STOCK_VIEW WHRE WHERE SHOP_SEQ =
+		#{shopSeq,jdbcType=DECIMAL} AND ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
+	</select>
+	<select id="selectList" resultMap="BaseResultMap">
+		SELECT * FROM STOCK_VIEW
+	</select>
+	<select id="selectCnt" resultType="int">
+		SELECT COUNT(*) FROM
+		STOCK_VIEW
+	</select>
+</mapper>
