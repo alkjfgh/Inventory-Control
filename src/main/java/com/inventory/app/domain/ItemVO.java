@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class ItemVO {
 	private Long itemSeq;
-	private Long itemCategory;
+	private Long categorySeq;
 	private String itemName;
 	private Long itemPrice;
 	private Date itemRegdate;
@@ -18,10 +18,9 @@ public class ItemVO {
 		super();
 	}
 
-	public ItemVO(Long itemSeq, Long itemCategory, String itemName, Long itemPrice, String itemMaker) {
+	public ItemVO(Long categorySeq, String itemName, Long itemPrice, String itemMaker) {
 		super();
-		this.itemSeq = itemSeq;
-		this.itemCategory = itemCategory;
+		this.categorySeq = categorySeq;
 		this.itemName = itemName;
 		this.itemPrice = itemPrice;
 		this.itemMaker = itemMaker;
@@ -35,12 +34,12 @@ public class ItemVO {
 		this.itemSeq = itemSeq;
 	}
 
-	public Long getItemCategory() {
-		return itemCategory;
+	public Long getCategorySeq() {
+		return categorySeq;
 	}
 
-	public void setItemCategory(Long itemCategory) {
-		this.itemCategory = itemCategory;
+	public void setCategorySeq(Long categorySeq) {
+		this.categorySeq = categorySeq;
 	}
 
 	public String getItemName() {
@@ -100,80 +99,10 @@ public class ItemVO {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((itemCategory == null) ? 0 : itemCategory.hashCode());
-		result = prime * result + ((itemDesc == null) ? 0 : itemDesc.hashCode());
-		result = prime * result + ((itemFwdate == null) ? 0 : itemFwdate.hashCode());
-		result = prime * result + Arrays.hashCode(itemImg);
-		result = prime * result + ((itemMaker == null) ? 0 : itemMaker.hashCode());
-		result = prime * result + ((itemName == null) ? 0 : itemName.hashCode());
-		result = prime * result + ((itemPrice == null) ? 0 : itemPrice.hashCode());
-		result = prime * result + ((itemRegdate == null) ? 0 : itemRegdate.hashCode());
-		result = prime * result + ((itemSeq == null) ? 0 : itemSeq.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ItemVO other = (ItemVO) obj;
-		if (itemCategory == null) {
-			if (other.itemCategory != null)
-				return false;
-		} else if (!itemCategory.equals(other.itemCategory))
-			return false;
-		if (itemDesc == null) {
-			if (other.itemDesc != null)
-				return false;
-		} else if (!itemDesc.equals(other.itemDesc))
-			return false;
-		if (itemFwdate == null) {
-			if (other.itemFwdate != null)
-				return false;
-		} else if (!itemFwdate.equals(other.itemFwdate))
-			return false;
-		if (!Arrays.equals(itemImg, other.itemImg))
-			return false;
-		if (itemMaker == null) {
-			if (other.itemMaker != null)
-				return false;
-		} else if (!itemMaker.equals(other.itemMaker))
-			return false;
-		if (itemName == null) {
-			if (other.itemName != null)
-				return false;
-		} else if (!itemName.equals(other.itemName))
-			return false;
-		if (itemPrice == null) {
-			if (other.itemPrice != null)
-				return false;
-		} else if (!itemPrice.equals(other.itemPrice))
-			return false;
-		if (itemRegdate == null) {
-			if (other.itemRegdate != null)
-				return false;
-		} else if (!itemRegdate.equals(other.itemRegdate))
-			return false;
-		if (itemSeq == null) {
-			if (other.itemSeq != null)
-				return false;
-		} else if (!itemSeq.equals(other.itemSeq))
-			return false;
-		return true;
-	}
-
-	@Override
 	public String toString() {
-		return "ItemVO [itemSeq=" + itemSeq + ", itemCategory=" + itemCategory + ", itemName=" + itemName
-				+ ", itemPrice=" + itemPrice + ", itemRegdate=" + itemRegdate + ", itemFwdate=" + itemFwdate
-				+ ", itemDesc=" + itemDesc + ", itemMaker=" + itemMaker + ", itemImg=" + Arrays.toString(itemImg) + "]";
+		return "ItemVO [itemSeq=" + itemSeq + ", categorySeq=" + categorySeq + ", itemName=" + itemName + ", itemPrice="
+				+ itemPrice + ", itemRegdate=" + itemRegdate + ", itemFwdate=" + itemFwdate + ", itemDesc=" + itemDesc
+				+ ", itemMaker=" + itemMaker + ", itemImg=" + Arrays.toString(itemImg) + "]";
 	}
 
 }

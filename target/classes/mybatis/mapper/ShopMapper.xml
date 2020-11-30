@@ -1,40 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shopMapper">
-  <resultMap id="BaseResultMap" type="shop">
-    <id column="SHOP_SEQ" jdbcType="DECIMAL" property="shopSeq" />
-    <result column="SHOP_ADDRESS" jdbcType="VARCHAR" property="shopAddress" />
-    <result column="SHOP_PHONE" jdbcType="VARCHAR" property="shopPhone" />
-    <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
-    <result column="SHOP_REGDATE" jdbcType="TIMESTAMP" property="shopRegdate" />
-  </resultMap>
-  <delete id="delete" parameterType="shop">
-    delete from SHOP
-    where SHOP_SEQ = #{shopSeq,jdbcType=DECIMAL}
-  </delete>
+	<resultMap id="BaseResultMap" type="shop">
+		<id column="SHOP_SEQ" jdbcType="DECIMAL" property="shopSeq" />
+		<result column="SHOP_ADDRESS" jdbcType="VARCHAR"
+			property="shopAddress" />
+		<result column="SHOP_PHONE" jdbcType="VARCHAR"
+			property="shopPhone" />
+		<result column="SHOP_NAME" jdbcType="VARCHAR"
+			property="shopName" />
+		<result column="SHOP_REGDATE" jdbcType="TIMESTAMP"
+			property="shopRegdate" />
+		<result column="SHOP_COUNT" jdbcType="DECIMAL"
+			property="shopCount" />
+	</resultMap>
+	<delete id="delete" parameterType="shop">
+		delete from SHOP
+		where SHOP_SEQ
+		= #{shopSeq,jdbcType=DECIMAL}
+	</delete>
 	<delete id="deleteAll">
 		delete from SHOP
 	</delete>
-  <insert id="insert" parameterType="shop">
-    insert into SHOP (SHOP_SEQ, SHOP_ADDRESS, SHOP_PHONE, 
-      SHOP_NAME)
-    values (#{shopSeq,jdbcType=DECIMAL}, #{shopAddress,jdbcType=VARCHAR}, #{shopPhone,jdbcType=VARCHAR}, 
-      #{shopName,jdbcType=VARCHAR})
-  </insert>
-  <update id="update" parameterType="shop">
-    update SHOP
-    set SHOP_REGDATE = #{shopRegdate,jdbcType=TIMESTAMP}, SHOP_ADDRESS = #{shopAddress,jdbcType=VARCHAR}, SHOP_PHONE = #{shopPhone,jdbcType=VARCHAR}, SHOP_NAME = #{shopName,jdbcType=VARCHAR}
-    where SHOP_SEQ = #{shopSeq,jdbcType=DECIMAL}
-  </update>
-  <select id="select" parameterType="shop" resultMap="BaseResultMap">
-    select SHOP_SEQ, SHOP_ADDRESS, SHOP_PHONE, SHOP_NAME, SHOP_REGDATE
-    from SHOP
-    where SHOP_SEQ = #{shopSeq,jdbcType=DECIMAL}
-  </select>
-  <select id="selectList" resultMap="BaseResultMap">
-    select SHOP_SEQ, SHOP_ADDRESS, SHOP_PHONE, SHOP_NAME, SHOP_REGDATE
-    from SHOP
-  </select>
+	<insert id="insert" parameterType="shop">
+		insert into SHOP (SHOP_SEQ,
+		SHOP_ADDRESS, SHOP_PHONE,
+		SHOP_NAME)
+		values
+		(#{shopSeq,jdbcType=DECIMAL}, #{shopAddress,jdbcType=VARCHAR},
+		#{shopPhone,jdbcType=VARCHAR},
+		#{shopName,jdbcType=VARCHAR})
+	</insert>
+	<update id="update" parameterType="shop">
+		update SHOP
+		set SHOP_REGDATE =
+		#{shopRegdate,jdbcType=TIMESTAMP}, SHOP_ADDRESS =
+		#{shopAddress,jdbcType=VARCHAR}, SHOP_PHONE =
+		#{shopPhone,jdbcType=VARCHAR}, SHOP_NAME =
+		#{shopName,jdbcType=VARCHAR}, SHOP_COUNT = #{shopCount,jdbcType=DECIMAL}
+		where SHOP_SEQ =
+		#{shopSeq,jdbcType=DECIMAL}
+	</update>
+	<select id="select" parameterType="shop"
+		resultMap="BaseResultMap">
+		SELECT * FROM SHOP WHERE SHOP_SEQ = #{shopSeq,jdbcType=DECIMAL}
+	</select>
+	<select id="selectList" resultMap="BaseResultMap">
+		select * from SHOP
+	</select>
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM SHOP
 	</select>
