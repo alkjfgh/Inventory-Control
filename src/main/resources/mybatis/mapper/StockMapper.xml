@@ -41,7 +41,7 @@
 		#{shopSeq,jdbcType=DECIMAL} AND ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
-		SELECT * FROM STOCK_VIEW
+		SELECT * FROM STOCK_VIEW WHERE SHOP_SEQ = #{shopSeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM

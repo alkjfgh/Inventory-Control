@@ -28,8 +28,8 @@ public class ItemTest {
 
 	@Before
 	public void setUp() {
-		vo1 = new ItemVO(111L, 1L, "water", 1000L, "JEJU");
-		vo2 = new ItemVO(222L, 2L, "milk", 2000L, "SEOUL");
+//		vo1 = new ItemVO(111L, 1L, "water", 1000L, "JEJU");
+//		vo2 = new ItemVO(222L, 2L, "milk", 2000L, "SEOUL");
 	}
 
 	@Test

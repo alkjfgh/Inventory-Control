@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="itemInfoMapper">
+	<resultMap id="BaseResultMap" type="itemInfo">
+		<result column="SHOP_SEQ" jdbcType="DECIMAL" property="shopSeq"/>
+		<result column="CATEGORY_SEQ" jdbcType="DECIMAL" property="categorySeq"/>
+		<result column="CATEGORY_NAME" jdbcType="VARCHAR" property="categoryName"/>
+		<result column="ITEM_SEQ" jdbcType="DECIMAL" property="itemSeq"/>
+		<result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+		<result column="ITEM_PRICE" jdbcType="DECIMAL" property="itemPrice"/>
+		<result column="TOTAL" jdbcType="DECIMAL" property="total"/>
+		<result column="REMAIN" jdbcType="DECIMAL" property="remain"/>
+		<result column="NECSSITY" jdbcType="DECIMAL" property="necssity"/>
+	</resultMap>
+	<select id="selectList" resultMap="BaseResultMap">
+	SELECT * FROM ITEMINFO
+	</select>
+	<select id="categoryCount" resultType="int" parameterType="category">
+	SELECT COUNT(*) FROM ITEMINFO WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL }
+	</select>
+</mapper>

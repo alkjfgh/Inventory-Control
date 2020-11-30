@@ -53,18 +53,18 @@ table{
 				<th>상품 주문할갯수</th>
 				<th>상품 주문할 갯수 수정</th>
 			</tr>
-			<c:forEach items="${categoryList }" var="category">
+			<c:forEach items="${categoryList }" var="categoryItem">
 				<tr>
-					<td rowspan="${category.size }">${category.name }</td>
-					<c:forEach items="${category.itemList }" var="item">
-						<td>${item.seq }</td>
-						<td>${item.name }</td>
-						<td>${item.price }</td>
-						<td>${item.total }</td>
-						<td>${item.remain }</td>
-						<td>${item.total - item.remain }</td>
-						<td><input type="number" name="need.${item.seq }"
-							value="${item.total - item.remain }" /></td>
+					<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
+					<c:forEach items="${categoryItem.itemList }" var="item">
+						<td>${item.itemSeq }</td>
+						<td>${item.itemCategory }</td>
+						<td>${item.itemName }</td>
+						<td>${item.itemPrice }</td>
+						<td>0</td>
+						<td>0</td>
+						<td><input type="number" name="need.${item.itemSeq }"
+							value="0" /></td>
 				</tr>
 				<tr>
 			</c:forEach>

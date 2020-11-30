@@ -8,7 +8,8 @@ public class ShopVO {
 	private String shopPhone;
 	private String shopName;
 	private Date shopRegdate;
-	
+	private long shopCount;
+
 	public ShopVO() {
 		super();
 	}
@@ -20,7 +21,6 @@ public class ShopVO {
 		this.shopPhone = shopPhone;
 		this.shopName = shopName;
 	}
-
 
 	public Long getShopSeq() {
 		return shopSeq;
@@ -35,7 +35,7 @@ public class ShopVO {
 	}
 
 	public void setShopAddress(String shopAddress) {
-		this.shopAddress = shopAddress == null ? null : shopAddress.trim();
+		this.shopAddress = shopAddress;
 	}
 
 	public String getShopPhone() {
@@ -43,7 +43,7 @@ public class ShopVO {
 	}
 
 	public void setShopPhone(String shopPhone) {
-		this.shopPhone = shopPhone == null ? null : shopPhone.trim();
+		this.shopPhone = shopPhone;
 	}
 
 	public String getShopName() {
@@ -51,7 +51,7 @@ public class ShopVO {
 	}
 
 	public void setShopName(String shopName) {
-		this.shopName = shopName == null ? null : shopName.trim();
+		this.shopName = shopName;
 	}
 
 	public Date getShopRegdate() {
@@ -62,10 +62,18 @@ public class ShopVO {
 		this.shopRegdate = shopRegdate;
 	}
 
+	public long getShopCount() {
+		return shopCount;
+	}
+
+	public void setShopCount(long shopCount) {
+		this.shopCount = shopCount;
+	}
+
 	@Override
 	public String toString() {
 		return "ShopVO [shopSeq=" + shopSeq + ", shopAddress=" + shopAddress + ", shopPhone=" + shopPhone
-				+ ", shopName=" + shopName + ", shopRegdate=" + shopRegdate + "]";
+				+ ", shopName=" + shopName + ", shopRegdate=" + shopRegdate + ", shopCount=" + shopCount + "]";
 	}
 
 }

@@ -17,7 +17,7 @@ table, tr, th, td {
 </style>
 </head>
 <body>
-	<form action="" method="post"></form>
+	<form action="check.do" method="post"></form>
 	<table>
 		<tr>
 			<th>카테고리</th>
@@ -25,19 +25,20 @@ table, tr, th, td {
 			<th>상품 이름</th>
 			<th>상품 가격</th>
 			<th>상품 총개수</th>
-			<th>상품 현재개수</th>
-			<th>상품 주문할갯수</th>
+			<th>상품 보충될갯수</th>
+			<th>자동적으로 변화할 개수</th>
 		</tr>
-		<c:forEach items="${categoryList }" var="category">
+		<c:forEach items="${categoryList }" var="categoryItem">
 			<tr>
-			<td rowspan="${category.size }">${category.name }</td>
-			<c:forEach items="${category.itemList }" var="item">
-				<td>${item.seq }</td>
-				<td>${item.name }</td>
-				<td>${item.price }</td>
-				<td>${item.total }</td>
-				<td>${item.remain }</td>
-				<td class="bold">${item.total - item.remain }</td>
+			<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName }</td>
+			<c:forEach items="${categoryItem.itemList }" var="item">
+				<td>${item.itemSeq }</td>
+				<td>${item.itemName }</td>
+				<td>${item.itemPrice }</td>
+				<td>${item.itemNeed }</td>
+				<td>0</td>
+				<td>0</td>
+				
 			</tr>
 			<tr>
 			</c:forEach>

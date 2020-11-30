@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.inventory.app.domain.UserVO;
 import com.inventory.app.service.UserService;
 
+import oracle.net.aso.s;
+
 @Controller
 public class UserController {
 
@@ -46,10 +48,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "SignUp.do", method = RequestMethod.POST)
-	public String signUp(UserVO vo) {
+	public String signUp(UserVO vo, HttpSession session) {
 		vo.setUserLevel((short) 1);
 		service.insert(vo);
-		return "index";
+		session.setAttribute("user", vo);
+		return "insertShop";
 	}
 
 	public void alert(String msg, HttpServletResponse response) throws IOException {

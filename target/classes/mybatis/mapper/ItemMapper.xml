@@ -3,8 +3,8 @@
 <mapper namespace="itemMapper">
 	<resultMap id="BaseResultMap" type="item">
 		<id column="ITEM_SEQ" jdbcType="DECIMAL" property="itemSeq" />
-		<result column="ITEM_CATEGORY" jdbcType="DECIMAL"
-			property="itemCategory" />
+		<result column="CATEGORY_SEQ" jdbcType="DECIMAL"
+			property="categorySeq" />
 		<result column="ITEM_NAME" jdbcType="VARCHAR"
 			property="itemName" />
 		<result column="ITEM_PRICE" jdbcType="DECIMAL"
@@ -28,11 +28,11 @@
 	</delete>
 	<insert id="insert" parameterType="item">
 		insert into ITEM (ITEM_SEQ,
-		ITEM_CATEGORY, ITEM_NAME, ITEM_PRICE, ITEM_REGDATE, ITEM_FWDATE,
+		CATEGORY_SEQ, ITEM_NAME, ITEM_PRICE, ITEM_REGDATE, ITEM_FWDATE,
 		ITEM_DESC, ITEM_MAKER, ITEM_IMG)
 		values
-		(#{itemSeq,jdbcType=DECIMAL},
-		#{itemCategory,jdbcType=DECIMAL},
+		(SELECT NVL(MAX(ITEM_SEQ), 0) + 1 from ITEM,
+		#{categorySeq,jdbcType=DECIMAL},
 		#{itemName,jdbcType=VARCHAR},
 		#{itemPrice,jdbcType=DECIMAL},
 		#{itemRegdate,jdbcType=TIMESTAMP},
@@ -43,8 +43,8 @@
 	</insert>
 	<update id="update" parameterType="item">
 		update ITEM
-		set ITEM_CATEGORY =
-		#{itemCategory,jdbcType=DECIMAL},
+		set CATEGORY_SEQ =
+		#{categorySeq,jdbcType=DECIMAL},
 		ITEM_NAME =
 		#{itemName,jdbcType=VARCHAR},
 		ITEM_PRICE =
