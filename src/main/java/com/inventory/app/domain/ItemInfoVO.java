@@ -10,6 +10,8 @@ public class ItemInfoVO {
 	private long total;
 	private long remain;
 	private long necssity;
+	private long sold;
+	private long autoSup;
 
 	public long getShopSeq() {
 		return shopSeq;
@@ -83,11 +85,27 @@ public class ItemInfoVO {
 		this.necssity = necssity;
 	}
 
+	public long getSold() {
+		return sold;
+	}
+
+	public void setSold(long sold) {
+		this.sold = sold;
+	}
+
+	public long getAutoSup() {
+		return autoSup;
+	}
+
+	public void setAutoSup(long autoSup) {
+		this.autoSup = autoSup;
+	}
+
 	@Override
 	public String toString() {
 		return "ItemInfoVO [shopSeq=" + shopSeq + ", categorySeq=" + categorySeq + ", categoryName=" + categoryName
 				+ ", itemSeq=" + itemSeq + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", total=" + total
-				+ ", remain=" + remain + ", necssity=" + necssity + "]";
+				+ ", remain=" + remain + ", necssity=" + necssity + ", sold=" + sold + ", autoSup=" + autoSup + "]";
 	}
 
 }

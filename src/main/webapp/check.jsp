@@ -26,7 +26,7 @@ table, tr, th, td {
 			<th>상품 가격</th>
 			<th>상품 총개수</th>
 			<th>상품 보충될갯수</th>
-			<th>자동적으로 변화할 개수</th>
+			<th>자동적으로 변화할 총 개수</th>
 		</tr>
 		<c:forEach items="${categoryList }" var="categoryItem">
 			<tr>
@@ -35,9 +35,9 @@ table, tr, th, td {
 				<td>${item.itemSeq }</td>
 				<td>${item.itemName }</td>
 				<td>${item.itemPrice }</td>
-				<td>${item.itemNeed }</td>
-				<td>0</td>
-				<td>0</td>
+				<td>${item.total }</td>
+				<td>${item.remain }</td>
+				<td>${item.autoSup }</td>
 				
 			</tr>
 			<tr>

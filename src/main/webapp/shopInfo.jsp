@@ -58,13 +58,13 @@ table{
 					<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
 					<c:forEach items="${categoryItem.itemList }" var="item">
 						<td>${item.itemSeq }</td>
-						<td>${item.itemCategory }</td>
 						<td>${item.itemName }</td>
 						<td>${item.itemPrice }</td>
-						<td>0</td>
-						<td>0</td>
+						<td>${item.total }</td>
+						<td>${item.remain }</td>
+						<td>${item.necssity }</td>
 						<td><input type="number" name="need.${item.itemSeq }"
-							value="0" /></td>
+							value="${item.necssity }" /></td>
 				</tr>
 				<tr>
 			</c:forEach>

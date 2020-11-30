@@ -11,9 +11,10 @@
 		<result column="TOTAL" jdbcType="DECIMAL" property="total"/>
 		<result column="REMAIN" jdbcType="DECIMAL" property="remain"/>
 		<result column="NECSSITY" jdbcType="DECIMAL" property="necssity"/>
+		<result column="SOLD" jdbcType="DECIMAL" property="sold"/>
 	</resultMap>
-	<select id="selectList" resultMap="BaseResultMap">
-	SELECT * FROM ITEMINFO
+	<select id="selectList" resultMap="BaseResultMap" parameterType="category">
+	SELECT * FROM ITEMINFO WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL }
 	</select>
 	<select id="categoryCount" resultType="int" parameterType="category">
 	SELECT COUNT(*) FROM ITEMINFO WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL }

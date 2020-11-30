@@ -14,7 +14,7 @@ public class ItemInfoDAO {
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;
 
-	public List<ItemInfoVO> selectList(ItemInfoVO vo) {
+	public List<ItemInfoVO> selectList(CategoryVO vo) {
 		return sessionTemplate.selectList("itemInfoMapper.selectList", vo);
 	}
 

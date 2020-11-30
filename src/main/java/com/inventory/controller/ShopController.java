@@ -1,6 +1,7 @@
 package com.inventory.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
+import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
 import com.inventory.app.domain.StockVO;
@@ -39,13 +41,13 @@ public class ShopController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private StockService stockService;
-	
+
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Autowired
 	private ItemInfoService itemInfoService;
 
@@ -55,18 +57,29 @@ public class ShopController {
 		ShopVO shop = new ShopVO();
 		shop.setShopSeq(user.getShopSeq());
 		shop = shopService.select(shop);
-		session.setAttribute("shop", shop);
 		StockVO stock = new StockVO();
 		stock.setShopSeq(user.getShopSeq());
 		Iterator<CategoryVO> categoryIt = categoryService.selectList(null).iterator();
-		while(categoryIt.hasNext()) {
+		List<ItemListVO> categoryList = new ArrayList<ItemListVO>();
+		long shopCount = shop.getShopCount();
+//		지난 날짜를 임시로 3으로 정함
+		shopCount = 3;
+		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryIt.next();
-			int categorySize = itemInfoService.categoryCount(category);
-			System.out.println(categorySize);
+			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(category); 
+			for(ItemInfoVO itemInfo : itemInfoList) {
+				long total = itemInfo.getTotal();
+				double sold = itemInfo.getSold();
+				double targetSold = total * shopCount;
+				double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
+				long autoSup = (long) Math.floor(total * percent) + 1;
+				itemInfo.setAutoSup(autoSup);
+			}
+			categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(category), itemInfoList));
 		}
-		List<ItemInfoVO> itemInfoList = itemInfoService.selectList(null);
-		System.out.println(itemInfoList);
 
+		session.setAttribute("categoryList", categoryList);
+		session.setAttribute("shop", shop);
 		return "shopInfo";
 	}
 
@@ -111,7 +124,7 @@ public class ShopController {
 
 	@RequestMapping(value = "graph.do")
 	public String graph(HttpServletRequest request, HttpSession session) {
-		List<CategoryVO> categoryList = (List<CategoryVO>) session.getAttribute("categoryList");
+		List<ItemListVO> categoryList = (List<ItemListVO>) session.getAttribute("categoryList");
 
 		return "graph";
 	}

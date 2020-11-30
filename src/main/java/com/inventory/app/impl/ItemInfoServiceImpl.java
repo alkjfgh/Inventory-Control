@@ -16,7 +16,7 @@ public class ItemInfoServiceImpl implements ItemInfoService {
 	private ItemInfoDAO dao;
 
 	@Override
-	public List<ItemInfoVO> selectList(ItemInfoVO vo) {
+	public List<ItemInfoVO> selectList(CategoryVO vo) {
 		return dao.selectList(vo);
 	}
 
