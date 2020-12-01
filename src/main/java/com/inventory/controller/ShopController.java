@@ -90,7 +90,6 @@ public class ShopController {
 			category.setCategorySeq(i);
 			category = categoryService.select(category);
 			categoryItemList.add(new CategoryItemVO(category, itemService.selectCntByCategory(category), itemService.selectListByCategory(category)));
-			System.out.println(categoryItemList.get(i-1));
 		}
 		session.setAttribute("categoryItemList", categoryItemList);
 		return "updateItem";

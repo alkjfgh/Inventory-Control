@@ -12,51 +12,67 @@
 
 	<div class="hi">
 		<form action="insertItem.do" method="post">
-			<label for="category">카테고리선택</label>
-			<select class="form-control" id="category" name="categoryName" onchange="addressKindChange(this)" required="required">
+			<label for="category">카테고리선택</label> <select class="form-control"
+				id="category" name="categoryName" onchange="addressKindChange(this)"
+				required="required">
 				<option>카테고리를 선택해주세요</option>
 				<option value="1">우유</option>
 				<option value="2">빵</option>
 				<option value="3">생활용품</option>
-			</select>
-			<label for="itemSeq">상품</label>
-			<select class="form-control" id="itemSeq" name="itemSeq" required="required">
+			</select> <label for="itemSeq">상품</label> <select class="form-control"
+				id="itemSeq" name="itemSeq" required="required">
 				<option>선택해주세요.</option>
-			</select>
-			<input type="number" name="total" required="required"/>
-			<input type="submit" value="적용" />
-			
+			</select> <input type="number" name="total" required="required" /> <input
+				type="submit" value="적용" />
+
 		</form>
 	</div>
-	
+
 	<hr />
-	
+
 	<table>
+		<tr>
+			<th>카테고리</th>
+			<th>상품 번호</th>
+			<th>상품 이름</th>
+			<th>상품 가격</th>
+		</tr>
+		<c:forEach items="${categoryItemList }" var="categoryItem">
 			<tr>
-				<th>카테고리</th>
-				<th>상품 번호</th>
-				<th>상품 이름</th>
-				<th>상품 가격</th>
+				<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
+				<c:forEach items="${categoryItem.itemList }" var="item">
+					<td>${item.itemSeq }</td>
+					<td>${item.itemName }</td>
+					<td>${item.itemPrice }</td>
 			</tr>
-			<c:forEach items="${categoryItemList }" var="categoryItem">
-				<tr>
-					<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
-					<c:forEach items="${categoryItem.itemList }" var="item">
-						<td>${item.itemSeq }</td>
-						<td>${item.itemName }</td>
-						<td>${item.itemPrice }</td>
-				</tr>
-				<tr>
-			</c:forEach>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			</tr>
-			</c:forEach>
-		</table>
+			<tr>
+		</c:forEach>
+		<td hidden=""></td>
+		<td hidden=""></td>
+		<td hidden=""></td>
+		<td hidden=""></td>
+		</tr>
+		</c:forEach>
+	</table>
 </body>
-<script type="text/javascript">
+<script>
+	var arr = new Array();
+	<c:forEach items="${categoryItemList }" var="categoryItem">
+		var item = new Array();
+		<c:forEach items="${categoryItem.itemList }" var="item">
+			item.push({
+				itemSeq : "${item.itemSeq }",
+				itemName : "${item.itemName }",
+				itemPrice : "${item.itemPrice }"
+			});
+		</c:forEach>
+		arr.push({
+			categoryName : "${categoryItem.category.categoryName  }",
+			size : "${categoryItem.size }",
+			itemList : item
+		});
+	</c:forEach>
+
 	function addressKindChange(e) {
 		var uu = [ "그냥우유", "초코우유", "커피우유" ];
 		var bb = [ "빵1", "빵2", "빵3" ];
