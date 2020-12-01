@@ -66,8 +66,8 @@ public class ShopController {
 		shopCount = 3;
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryIt.next();
-			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(category); 
-			for(ItemInfoVO itemInfo : itemInfoList) {
+			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(category);
+			for (ItemInfoVO itemInfo : itemInfoList) {
 				long total = itemInfo.getTotal();
 				double sold = itemInfo.getSold();
 				double targetSold = total * shopCount;
@@ -83,22 +83,18 @@ public class ShopController {
 		return "shopInfo";
 	}
 
-	@RequestMapping(value = "setShopItems.do")
-	public String downInfo(ItemVO item, HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value = "insertItem.do", method = RequestMethod.POST)
+	public String downInfo(CategoryVO category, HttpServletRequest request, HttpSession session) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
-		item = itemService.select(item);
-		int need = Integer.parseInt(request.getParameter("need"));
-		if (item != null) {
-			ShopJson sj = new ShopJson(shop);
-			try {
-				sj.add(item, need);
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		return "shopItems";
+		long itemSeq = Long.parseLong(request.getParameter("itemSeq"));
+		long total = Long.parseLong(request.getParameter("total"));
+		StockVO stock = new StockVO();
+		stock.setItemSeq(itemSeq);
+		stock.setShopSeq(shop.getShopSeq());
+		stock.setTotal(total);
+//		stockService.insert(stock);
+		System.out.println(stock);
+		return "shopInfo";
 	}
 
 	@RequestMapping(value = "check.do")
