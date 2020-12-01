@@ -26,8 +26,8 @@ public class StockTest {
 
 	@Before
 	public void setUp() {
-		vo1 = new StockVO(1l, 111l, 5l, 0l, 0l, 0l);
-		vo2 = new StockVO(2l, 222l, 10l, 5l, 0l, 5l);
+		vo1 = new StockVO(1l, 1l, 111l, 5l, 0l, 0l, 0l);
+		vo2 = new StockVO(2l, 1l, 222l, 10l, 5l, 0l, 5l);
 	}
 
 	@Test

@@ -62,9 +62,9 @@ table{
 						<td>${item.itemPrice }</td>
 						<td>${item.total }</td>
 						<td>${item.remain }</td>
-						<td>${item.necssity }</td>
+						<td>${item.necessity }</td>
 						<td><input type="number" name="need.${item.itemSeq }"
-							value="${item.necssity }" /></td>
+							value="${item.necessity }" /></td>
 				</tr>
 				<tr>
 			</c:forEach>

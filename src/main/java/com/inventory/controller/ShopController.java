@@ -75,7 +75,10 @@ public class ShopController {
 			}
 			categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(category), itemInfoList));
 		}
-
+		Iterator<ItemListVO> it = categoryList.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
 		session.setAttribute("categoryList", categoryList);
 		session.setAttribute("shop", shop);
 		return "shopInfo";
@@ -83,20 +86,40 @@ public class ShopController {
 
 	@RequestMapping(value = "updateItem.do")
 	public String updateItemView(HttpSession session) {
+		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		int categorySize = categoryService.selectCnt();
 		List<CategoryItemVO> categoryItemList = new ArrayList<CategoryItemVO>();
 		for (int i = 1; i <= categorySize; i++) {
 			CategoryVO category = new CategoryVO();
 			category.setCategorySeq(i);
 			category = categoryService.select(category);
-			categoryItemList.add(new CategoryItemVO(category, itemService.selectCntByCategory(category), itemService.selectListByCategory(category)));
+			List<ItemVO> itemList = itemService.selectListByCategory(category);
+			int size = itemList.size();
+			System.out.println(size);
+			for (int j = 0; j < size; j++) {
+				StockVO stock = new StockVO();
+				stock.setShopSeq(shop.getShopSeq());
+				stock.setCategorySeq(category.getCategorySeq());
+				stock.setItemSeq(itemList.get(j).getItemSeq());
+				stock = stockService.select(stock);
+				if (stock != null) {
+					itemList.remove(j);
+					size--;
+					j--;
+				}
+			}
+			size = itemList.size();
+			if (size != 0) {
+//				categoryItemList.add(new CategoryItemVO(category, itemService.selectCntByCategory(category), itemList));
+				categoryItemList.add(new CategoryItemVO(category, size, itemList));
+			}
 		}
 		session.setAttribute("categoryItemList", categoryItemList);
 		return "updateItem";
 	}
 
 	@RequestMapping(value = "insertItem.do", method = RequestMethod.POST)
-	public String downInfo(CategoryVO category, HttpServletRequest request, HttpSession session) {
+	public String insertItem(CategoryVO category, HttpServletRequest request, HttpSession session) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		long itemSeq = Long.parseLong(request.getParameter("itemSeq"));
 		long total = Long.parseLong(request.getParameter("total"));
@@ -104,7 +127,30 @@ public class ShopController {
 		stock.setItemSeq(itemSeq);
 		stock.setShopSeq(shop.getShopSeq());
 		stock.setTotal(total);
+		System.out.println(stock);
 //		stockService.insert(stock);
+		return "shopInfo";
+	}
+
+	@RequestMapping(value = "deleteItem.do", method = RequestMethod.POST)
+	public String deleteItem(HttpServletRequest request, HttpSession session) {
+		List<ItemListVO> categoryItemList = (List<ItemListVO>) session.getAttribute("categoryList");
+		ShopVO shop = (ShopVO) session.getAttribute("shop");
+		int size1 = categoryItemList.size();
+		for (int i = 1; i <= size1; i++) {
+			ItemListVO itemList = categoryItemList.get(i - 1);
+			int size2 = itemList.getItemList().size();
+			for (int j = 1; j <= size2; j++)
+				if (request.getParameter(i + "_itemSeq_" + j).equals("on")) {
+					StockVO stock = new StockVO();
+					stock.setCategorySeq((long) i);
+					stock.setItemSeq((long) j);
+					stock.setShopSeq(shop.getShopSeq());
+					stock = stockService.select(stock);
+					System.out.println(stock);
+//					stockService.delete(stock);
+				}
+		}
 		return "shopInfo";
 	}
 

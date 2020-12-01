@@ -3,97 +3,141 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+#select {
+	width: 80%;
+	margin: 0 auto;
+}
+
+#select>a {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.add, .delete {
+	display: none;
+}
+</style>
 </head>
+
 <body>
 	<h1>아이템 추가 삭제 페이지</h1>
 
-	<div class="hi">
-		<form action="insertItem.do" method="post">
+	<div id="select">
+		<a href="#" class="change">수정ddddddddddddddddd </a> <a href="#"
+			class="del"> 삭제ddddddddddddddddd</a>
+	</div>
+
+
+	<div class="add">
+		<hr />
+		이곳은 수정하는곳
+		<button class="insertadd">추가</button>
+		<form action="insertItem.do" method="post" class="insertitem">
 			<label for="category">카테고리선택</label> <select class="form-control"
-				id="category" name="categoryName" onchange="addressKindChange(this)"
+				id="category" name="categoryName" onchange="categoryChange(this)"
 				required="required">
 				<option>카테고리를 선택해주세요</option>
-				<option value="1">우유</option>
-				<option value="2">빵</option>
-				<option value="3">생활용품</option>
+				<c:forEach items="${categoryList }" var="categoryItem">
+					<option value="${categoryItem.category.categorySeq }">${categoryItem.category.categoryName  }</option>
+				</c:forEach>
 			</select> <label for="itemSeq">상품</label> <select class="form-control"
 				id="itemSeq" name="itemSeq" required="required">
 				<option>선택해주세요.</option>
 			</select> <input type="number" name="total" required="required" /> <input
 				type="submit" value="적용" />
-
 		</form>
 	</div>
 
-	<hr />
+	<div class="delete">
+		<hr />
+		이곳은 삭제하는 곳
+		<form action="deleteItem.do" method="post">
+			<table>
+				<tr>
+					<th>카테고리</th>
+					<th>상품 번호</th>
+					<th>상품 이름</th>
+					<th>상품 가격</th>
+					<th>체크</th>
+				</tr>
+				<c:forEach items="${categoryList }" var="categoryItem">
+					<tr>
+						<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
+						<c:forEach items="${categoryItem.itemList }" var="item">
+							<td>${item.itemSeq }</td>
+							<td>${item.itemName }</td>
+							<td>${item.itemPrice }</td>
+							<td><input type="checkbox" name="${categoryItem.category.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
+					</tr>
+				</c:forEach>
+				<tr>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+				</tr>
+				</c:forEach>
+				
+			</table>
+			<input type="submit" value="완료(삭제작업 ㄱㄱ)" />
+		</form>
+	</div>
 
-	<table>
-		<tr>
-			<th>카테고리</th>
-			<th>상품 번호</th>
-			<th>상품 이름</th>
-			<th>상품 가격</th>
-		</tr>
-		<c:forEach items="${categoryItemList }" var="categoryItem">
-			<tr>
-				<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
-				<c:forEach items="${categoryItem.itemList }" var="item">
-					<td>${item.itemSeq }</td>
-					<td>${item.itemName }</td>
-					<td>${item.itemPrice }</td>
-			</tr>
-			<tr>
-		</c:forEach>
-		<td hidden=""></td>
-		<td hidden=""></td>
-		<td hidden=""></td>
-		<td hidden=""></td>
-		</tr>
-		</c:forEach>
-	</table>
+
 </body>
 <script>
+$('.change').click(function() {
+	$('.add').show();
+	$('.delete').hide();
+});
+$('.del').click(function() {
+	$('.add').hide();
+	$('.delete').show();
+});
+$('button')
+.click(
+		function() {
+			$('.add')
+					.append(
+							'<form action="insertItem.do" method="post" class="insertitem"><label for="category">카테고리선택</label> <select class="form-control"id="category" name="categoryName" onchange="categoryChange(this)"required="required"><option>카테고리를 선택해주세요</option><c:forEach items="${categoryList }" var="categoryItem"><option value="${categoryItem.category.categorySeq }">${categoryItem.category.categoryName  }</option></c:forEach></select> <label for="itemSeq">상품</label> <select class="form-control"id="itemSeq" name="itemSeq" required="required"><option>선택해주세요.</option></select> <input type="number" name="total" required="required" /> <input type="submit" value="적용" /></form>');
+		});
 	var arr = new Array();
-	<c:forEach items="${categoryItemList }" var="categoryItem">
-		var item = new Array();
+	<c:forEach items="${categoryList }" var="categoryItem">
+		var itemName = new Array();
+		var itemSeq = new Array();
 		<c:forEach items="${categoryItem.itemList }" var="item">
-			item.push({
-				itemSeq : "${item.itemSeq }",
-				itemName : "${item.itemName }",
-				itemPrice : "${item.itemPrice }"
-			});
+			itemName.push("${item.itemName }");
+			itemSeq.push("${item.itemSeq }");
 		</c:forEach>
 		arr.push({
-			categoryName : "${categoryItem.category.categoryName  }",
-			size : "${categoryItem.size }",
-			itemList : item
+			nameList : itemName,
+			seqList : itemSeq
 		});
 	</c:forEach>
-
-	function addressKindChange(e) {
-		var uu = [ "그냥우유", "초코우유", "커피우유" ];
-		var bb = [ "빵1", "빵2", "빵3" ];
-		var ss = [ "생활용품1", "생활용품2", "생활용품3" ];
+	function categoryChange(e) {
 		var target = document.getElementById("itemSeq");
-
-		if (e.value == "1")
-			var d = uu;
-		else if (e.value == "2")
-			var d = bb;
-		else if (e.value == "3")
-			var d = ss;
-
+		for (var i = 0; i < arr.length; i++) {
+			if (e.value == i + 1) {
+				var itemNameList = arr[i].nameList;
+				var itemSeqList = arr[i].seqList;
+			}
+		}
 		target.options.length = 0;
-
-		for (x in d) {
+		for (x in itemNameList) {
 			var opt = document.createElement("option");
-			opt.value = x;
-			opt.innerHTML = d[x];
+			opt.value = itemSeqList[x];
+			opt.innerHTML = itemNameList[x];
 			target.appendChild(opt);
 		}
 	}
 </script>
+
 </html>

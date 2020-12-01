@@ -1,20 +1,22 @@
 package com.inventory.app.domain;
 
 public class StockVO {
-	long shopSeq;
-	long itemSeq;
-	long total;
-	long remain;
-	long necessity;
-	long sold;
+	private long shopSeq;
+	private long categorySeq;
+	private long itemSeq;
+	private long total;
+	private long remain;
+	private long necessity;
+	private long sold;
 
 	public StockVO() {
 		super();
 	}
 
-	public StockVO(long shopSeq, long itemSeq, long total, long remain, long necessity, long sold) {
+	public StockVO(long shopSeq, long categorySeq, long itemSeq, long total, long remain, long necessity, long sold) {
 		super();
 		this.shopSeq = shopSeq;
+		this.categorySeq = categorySeq;
 		this.itemSeq = itemSeq;
 		this.total = total;
 		this.remain = remain;
@@ -36,6 +38,14 @@ public class StockVO {
 
 	public void setItemSeq(long itemSeq) {
 		this.itemSeq = itemSeq;
+	}
+
+	public long getCategorySeq() {
+		return categorySeq;
+	}
+
+	public void setCategorySeq(long categorySeq) {
+		this.categorySeq = categorySeq;
 	}
 
 	public long getTotal() {
@@ -71,46 +81,9 @@ public class StockVO {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (itemSeq ^ (itemSeq >>> 32));
-		result = prime * result + (int) (necessity ^ (necessity >>> 32));
-		result = prime * result + (int) (remain ^ (remain >>> 32));
-		result = prime * result + (int) (shopSeq ^ (shopSeq >>> 32));
-		result = prime * result + (int) (sold ^ (sold >>> 32));
-		result = prime * result + (int) (total ^ (total >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		StockVO other = (StockVO) obj;
-		if (itemSeq != other.itemSeq)
-			return false;
-		if (necessity != other.necessity)
-			return false;
-		if (remain != other.remain)
-			return false;
-		if (shopSeq != other.shopSeq)
-			return false;
-		if (sold != other.sold)
-			return false;
-		if (total != other.total)
-			return false;
-		return true;
-	}
-
-	@Override
 	public String toString() {
-		return "StockVO [shopSeq=" + shopSeq + ", itemSeq=" + itemSeq + ", total=" + total + ", remain=" + remain
-				+ ", necessity=" + necessity + ", sold=" + sold + "]";
+		return "StockVO [shopSeq=" + shopSeq + ", categorySeq=" + categorySeq + ", itemSeq=" + itemSeq + ", total="
+				+ total + ", remain=" + remain + ", necessity=" + necessity + ", sold=" + sold + "]";
 	}
 
 }

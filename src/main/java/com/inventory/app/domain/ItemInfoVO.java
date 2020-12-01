@@ -9,7 +9,7 @@ public class ItemInfoVO {
 	private long itemPrice;
 	private long total;
 	private long remain;
-	private long necssity;
+	private long necessity;
 	private long sold;
 	private long autoSup;
 
@@ -77,12 +77,12 @@ public class ItemInfoVO {
 		this.remain = remain;
 	}
 
-	public long getNecssity() {
-		return necssity;
+	public long getNecessity() {
+		return necessity;
 	}
 
-	public void setNecssity(long necssity) {
-		this.necssity = necssity;
+	public void setNecessity(long necessity) {
+		this.necessity = necessity;
 	}
 
 	public long getSold() {
@@ -105,7 +105,7 @@ public class ItemInfoVO {
 	public String toString() {
 		return "ItemInfoVO [shopSeq=" + shopSeq + ", categorySeq=" + categorySeq + ", categoryName=" + categoryName
 				+ ", itemSeq=" + itemSeq + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", total=" + total
-				+ ", remain=" + remain + ", necssity=" + necssity + ", sold=" + sold + ", autoSup=" + autoSup + "]";
+				+ ", remain=" + remain + ", necessity=" + necessity + ", sold=" + sold + ", autoSup=" + autoSup + "]";
 	}
 
 }
