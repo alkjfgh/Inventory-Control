@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.service.ItemService;
 
@@ -47,6 +48,16 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public int selectCnt() {
 		return dao.selectCnt();
+	}
+
+	@Override
+	public int selectCntByCategory(CategoryVO category) {
+		return dao.selectCntByCategory(category);
+	}
+
+	@Override
+	public List<ItemVO> selectListByCategory(CategoryVO category) {
+		return dao.selectListByCategory(category);
 	}
 
 }

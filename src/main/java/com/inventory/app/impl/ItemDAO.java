@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemVO;
 
 @Repository("ItemDAO")
@@ -39,5 +40,13 @@ public class ItemDAO {
 	
 	public int selectCnt() {
 		return sessionTemplate.selectOne("itemMapper.selectCnt");
+	}
+
+	public int selectCntByCategory(CategoryVO category) {
+		return sessionTemplate.selectOne("itemMapper.selectCntByCategory", category);
+	}
+
+	public List<ItemVO> selectListByCategory(CategoryVO category) {
+		return sessionTemplate.selectList("itemMapper.selectListByCategory", category);
 	}
 }

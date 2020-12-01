@@ -71,4 +71,10 @@
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM ITEM
 	</select>
+	<select id="selectListByCategory" resultMap="BaseResultMap" parameterType="category">
+	SELECT * FROM ITEM WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL}
+	</select>
+	<select id="selectCntByCategory" resultType="int" parameterType="category">
+	SELECT COUNT(*) FROM ITEM WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL}
+	</select>
 </mapper>

@@ -37,30 +37,17 @@
 				<th>상품 번호</th>
 				<th>상품 이름</th>
 				<th>상품 가격</th>
-				<th>상품 총개수</th>
-				<th>상품 현재개수</th>
-				<th>상품 주문할갯수</th>
-				<th>상품 주문할 갯수 수정</th>
 			</tr>
-			<c:forEach items="${categoryList }" var="categoryItem">
+			<c:forEach items="${categoryItemList }" var="categoryItem">
 				<tr>
 					<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
 					<c:forEach items="${categoryItem.itemList }" var="item">
 						<td>${item.itemSeq }</td>
 						<td>${item.itemName }</td>
 						<td>${item.itemPrice }</td>
-						<td>${item.total }</td>
-						<td>${item.remain }</td>
-						<td>${item.necssity }</td>
-						<td><input type="number" name="need.${item.itemSeq }"
-							value="${item.necssity }" /></td>
 				</tr>
 				<tr>
 			</c:forEach>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
 			<td hidden=""></td>
 			<td hidden=""></td>
 			<td hidden=""></td>

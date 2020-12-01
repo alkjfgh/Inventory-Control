@@ -2,6 +2,7 @@ package com.inventory.app.service;
 
 import java.util.List;
 
+import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemVO;
 
 public interface ItemService {
@@ -18,4 +19,8 @@ public interface ItemService {
 	public int deleteAll();
 	
 	public int selectCnt();
+
+	public int selectCntByCategory(CategoryVO category);
+
+	public List<ItemVO> selectListByCategory(CategoryVO category);
 }

@@ -40,7 +40,7 @@ table{
 			<td>${shop.shopRegdate }</td>
 		</tr>
 	</table>
-	<a href="graph.do">그래프</a>&nbsp;&nbsp;&nbsp;<a href="updateItem.jsp">상품 목록 수정</a>
+	<a href="graph.do">그래프</a>&nbsp;&nbsp;&nbsp;<a href="updateItem.do">상품 목록 수정</a>
 	<form action="updateShop.do" method="post">
 		<table>
 			<tr>

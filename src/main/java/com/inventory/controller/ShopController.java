@@ -1,6 +1,5 @@
 package com.inventory.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,13 +7,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
 import com.inventory.app.domain.ItemListVO;
@@ -22,7 +21,6 @@ import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
 import com.inventory.app.domain.StockVO;
 import com.inventory.app.domain.UserVO;
-import com.inventory.app.json.ShopJson;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemService;
@@ -83,6 +81,21 @@ public class ShopController {
 		return "shopInfo";
 	}
 
+	@RequestMapping(value = "updateItem.do")
+	public String updateItemView(HttpSession session) {
+		int categorySize = categoryService.selectCnt();
+		List<CategoryItemVO> categoryItemList = new ArrayList<CategoryItemVO>();
+		for (int i = 1; i <= categorySize; i++) {
+			CategoryVO category = new CategoryVO();
+			category.setCategorySeq(i);
+			category = categoryService.select(category);
+			categoryItemList.add(new CategoryItemVO(category, itemService.selectCntByCategory(category), itemService.selectListByCategory(category)));
+			System.out.println(categoryItemList.get(i-1));
+		}
+		session.setAttribute("categoryItemList", categoryItemList);
+		return "updateItem";
+	}
+
 	@RequestMapping(value = "insertItem.do", method = RequestMethod.POST)
 	public String downInfo(CategoryVO category, HttpServletRequest request, HttpSession session) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
@@ -93,7 +106,6 @@ public class ShopController {
 		stock.setShopSeq(shop.getShopSeq());
 		stock.setTotal(total);
 //		stockService.insert(stock);
-		System.out.println(stock);
 		return "shopInfo";
 	}
 
@@ -120,7 +132,7 @@ public class ShopController {
 
 	@RequestMapping(value = "graph.do")
 	public String graph(HttpServletRequest request, HttpSession session) {
-		List<ItemListVO> categoryList = (List<ItemListVO>) session.getAttribute("categoryList");
+//		List<ItemListVO> categoryList = (List<ItemListVO>) session.getAttribute("categoryList");
 
 		return "graph";
 	}
