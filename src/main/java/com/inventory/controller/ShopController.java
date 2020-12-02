@@ -64,6 +64,7 @@ public class ShopController {
 		shopCount = 3;
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryIt.next();
+			System.out.println(category);
 			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(category);
 			for (ItemInfoVO itemInfo : itemInfoList) {
 				long total = itemInfo.getTotal();
@@ -121,9 +122,11 @@ public class ShopController {
 	@RequestMapping(value = "insertItem.do", method = RequestMethod.POST)
 	public String insertItem(CategoryVO category, HttpServletRequest request, HttpSession session) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
-		long itemSeq = Long.parseLong(request.getParameter("itemSeq"));
-		long total = Long.parseLong(request.getParameter("total"));
+		long categorySeq = Long.parseLong(request.getParameter("category_1"));
+		long itemSeq = Long.parseLong(request.getParameter("item_1"));
+		long total = Long.parseLong(request.getParameter("total_1"));
 		StockVO stock = new StockVO();
+		stock.setCategorySeq(categorySeq);
 		stock.setItemSeq(itemSeq);
 		stock.setShopSeq(shop.getShopSeq());
 		stock.setTotal(total);

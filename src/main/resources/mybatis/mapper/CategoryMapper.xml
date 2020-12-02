@@ -21,7 +21,7 @@
 	SELECT * FROM CATEGORYTB WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
-	SELECT * FROM CATEGORYTB
+	SELECT * FROM CATEGORYTB ORDER BY CATEGORY_SEQ
 	</select>
 	<select id="selectCnt" resultType="int">
 	SELECT COUNT(*) FROM CATEGORYTB
