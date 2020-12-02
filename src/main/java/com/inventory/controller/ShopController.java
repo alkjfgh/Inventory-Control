@@ -64,7 +64,6 @@ public class ShopController {
 		shopCount = 3;
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryIt.next();
-			System.out.println(category);
 			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(category);
 			for (ItemInfoVO itemInfo : itemInfoList) {
 				long total = itemInfo.getTotal();
@@ -77,9 +76,6 @@ public class ShopController {
 			categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(category), itemInfoList));
 		}
 		Iterator<ItemListVO> it = categoryList.iterator();
-		while (it.hasNext()) {
-			System.out.println(it.next());
-		}
 		session.setAttribute("categoryList", categoryList);
 		session.setAttribute("shop", shop);
 		return "shopInfo";
@@ -96,7 +92,6 @@ public class ShopController {
 			category = categoryService.select(category);
 			List<ItemVO> itemList = itemService.selectListByCategory(category);
 			int size = itemList.size();
-			System.out.println(size);
 			for (int j = 0; j < size; j++) {
 				StockVO stock = new StockVO();
 				stock.setShopSeq(shop.getShopSeq());
@@ -110,6 +105,7 @@ public class ShopController {
 				}
 			}
 			size = itemList.size();
+			System.out.println(size);
 			if (size != 0) {
 //				categoryItemList.add(new CategoryItemVO(category, itemService.selectCntByCategory(category), itemList));
 				categoryItemList.add(new CategoryItemVO(category, size, itemList));
@@ -120,18 +116,29 @@ public class ShopController {
 	}
 
 	@RequestMapping(value = "insertItem.do", method = RequestMethod.POST)
-	public String insertItem(CategoryVO category, HttpServletRequest request, HttpSession session) {
+	public String insertItem(HttpServletRequest request, HttpSession session) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
-		long categorySeq = Long.parseLong(request.getParameter("category_1"));
-		long itemSeq = Long.parseLong(request.getParameter("item_1"));
-		long total = Long.parseLong(request.getParameter("total_1"));
-		StockVO stock = new StockVO();
-		stock.setCategorySeq(categorySeq);
-		stock.setItemSeq(itemSeq);
-		stock.setShopSeq(shop.getShopSeq());
-		stock.setTotal(total);
-		System.out.println(stock);
-//		stockService.insert(stock);
+		int input_size = Integer.parseInt(request.getParameter("cnt"));
+		System.out.println("============");
+		System.out.println(input_size);
+		System.out.println("============");
+		for (int i = 1; i <= input_size; i++) {
+			long categorySeq = Long.parseLong(request.getParameter("category_" + i));
+			long itemSeq = Long.parseLong(request.getParameter("item_" + i));
+			long total = Long.parseLong(request.getParameter("total_" + i));
+			System.out.println("============");
+			System.out.println(categorySeq);
+			System.out.println(itemSeq);
+			System.out.println(total);
+			System.out.println("============");
+			StockVO stock = new StockVO();
+			stock.setCategorySeq(categorySeq);
+			stock.setItemSeq(itemSeq);
+			stock.setShopSeq(shop.getShopSeq());
+			stock.setTotal(total);
+			System.out.println(stock);
+//			stockService.insert(stock);
+		}
 		return "shopInfo";
 	}
 

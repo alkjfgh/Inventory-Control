@@ -31,7 +31,7 @@ public class UserController {
 		if (get != null && get.getUserPassword().equals(vo.getUserPassword())) {
 			System.out.println("success");
 			session.setAttribute("user", get);
-			if(get.getUserLevel() == 9) return "admin";
+			if(get.getUserLevel() == 9) return "master";
 			return "redirect:ShopInfo.do";
 		} else {
 			System.out.println("failed");

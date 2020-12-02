@@ -41,6 +41,7 @@
 		이곳은 수정하는곳
 		<button class="insertadd">추가</button>
 		<form action="insertItem.do" method="post" class="insertItem">
+		<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
 		<input type="submit" value="적용" /> <br />
 		</form>
 	</div>
@@ -97,6 +98,7 @@ var cnt =  1;
 $('button')
 .click(
 		function() {
+			$("input[name=cnt]").attr("value", cnt);
 			$('.insertItem')
 					.append(
 							'<label for="'+ cnt +'">카테고리선택</label> <select class="form-control"id="'+ cnt +'" name="category_'+ cnt +'" onchange="categoryChange(this)"required="required"><option>카테고리를 선택해주세요</option><c:forEach items="${categoryItemList }" var="categoryItem"><option value="${categoryItem.category.categorySeq }">${categoryItem.category.categoryName  }</option></c:forEach></select> <label for="item_'+ cnt +'">상품</label> <select class="form-control"id="item_'+ cnt +'" name="item_'+ cnt + '" required="required"><option id = "item_'+ cnt +'">선택해주세요.</option></select> <input type="number" name="total_'+ cnt++ + '" required="required" /> </br>');
