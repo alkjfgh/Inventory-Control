@@ -14,17 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
-import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemService;
 
 @Controller
-public class CategoryController {
+public class MasterController {
 
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Autowired
 	private ItemService itemService;
 
@@ -34,12 +33,12 @@ public class CategoryController {
 		model.addAttribute("categoryList", categoryList);
 		return "updateCategory";
 	}
+
 	@RequestMapping(value = "/masterUpdateItem.do")
 	public String masterUpdateItemView(Model model) {
 		List<CategoryVO> categoryList = categoryService.selectList(null);
 		model.addAttribute("categoryList", categoryList);
-		
-		
+
 		Iterator<CategoryVO> categoryIt = categoryList.iterator();
 		List<CategoryItemVO> categoryItemList = new ArrayList<CategoryItemVO>();
 		while (categoryIt.hasNext()) {
@@ -48,8 +47,7 @@ public class CategoryController {
 			categoryItemList.add(new CategoryItemVO(category, itemService.selectCntByCategory(category), itemInfoList));
 		}
 		model.addAttribute("categoryItemList", categoryItemList);
-		
-		
+
 		return "masterUpdateItem";
 	}
 
@@ -72,9 +70,9 @@ public class CategoryController {
 	@RequestMapping(value = "/insertCategory.do", method = RequestMethod.POST)
 	public String insertCategory(HttpServletRequest request) {
 		int cnt = Integer.parseInt(request.getParameter("cnt"));
-		for(int i=1;i<=cnt;i++) {
+		for (int i = 1; i <= cnt; i++) {
 			String categoryName = request.getParameter("categoryName_" + i);
-			if(categoryName!=null && !categoryName.equals("")) {
+			if (categoryName != null && !categoryName.equals("")) {
 				CategoryVO category = new CategoryVO();
 				category.setCategoryName(categoryName);
 				System.out.println(category);
@@ -83,16 +81,25 @@ public class CategoryController {
 		return "master";
 	}
 
-
 	@RequestMapping(value = "/masterInsertItem.do", method = RequestMethod.POST)
 	public String masterInsertItem(HttpServletRequest request) {
-		System.out.println(request.getParameter("categoryName"));
-		System.out.println(request.getParameter("itemName"));
-		System.out.println(request.getParameter("itemPrice"));
-		System.out.println(request.getParameter("itemMaker"));
+		int cnt = Integer.parseInt(request.getParameter("cnt"));
+		for (int i = 1; i <= cnt; i++) {
+			ItemVO item = new ItemVO();
+			long categorySeq = Long.parseLong(request.getParameter("categorySeq_" + i));
+			String itemName = request.getParameter("itemName_" + i);
+			long itemPrice = Long.parseLong(request.getParameter("itemPrice_" + i));
+			String itemMaker = request.getParameter("itemMaker_" + i);
+			item.setCategorySeq(categorySeq);
+			item.setItemName(itemName);
+			item.setItemPrice(itemPrice);
+			item.setItemMaker(itemMaker);
+			System.out.println(item);
+//			itemService.insert(item);
+		}
 		return "master";
 	}
-	
+
 	@RequestMapping(value = "/masterDeleteItem.do", method = RequestMethod.POST)
 	public String masterDeleteItem(HttpServletRequest request) {
 		System.out.println(request.getParameter("1_itemSeq_1"));

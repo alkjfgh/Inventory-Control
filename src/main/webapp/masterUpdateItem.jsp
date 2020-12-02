@@ -22,18 +22,9 @@
 </div>
 	<div class="itemAdd">
 		<button class="insertadd">추가</button>
-		<form action="masterInsertItem.do" method="post">
-			<label for="category">카테고리선택</label>
-				<select class="form-control" id="category" name="categoryName" required="required">
-				<option>카테고리를 선택해주세요</option>
-				<c:forEach items="${categoryList }" var="categoryItem">
-					<option value="${categoryItem.categorySeq }">${categoryItem.categoryName  }</option>
-				</c:forEach>
-				</select><br />
-			물품이름<input type="text" name="itemName" />
-			물품가격<input type="number" name="itemPrice" />
-			물품 재조사<input type="text" name="itemMaker" />
-			<input type="submit" value="물품추가하기" />
+		<form action="masterInsertItem.do" method="post" class="masterInsertItem">
+			<input type="submit" value="물품추가하기" /><br />
+		<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
 		</form>
 	</div>
 	<div class="itemDelete">
@@ -80,6 +71,20 @@ $('.add').click(function() {
 $('.del').click(function() {
 	$('.itemAdd').hide();
 	$('.itemDelete').show();
+});
+var cnt = 1;
+$('button').click(function(){
+	$("input[name=cnt]").attr("value", cnt);
+	$('.masterInsertItem').append('<label for="category">카테고리선택</label>' 
+			+'<select class="form-control" id="category" name="categorySeq_'+ cnt +'" required="required">'
+			+'<option>카테고리를 선택해주세요</option>'
+			+'<c:forEach items="${categoryList}" var="categoryItem">'
+			+	'<option value="${categoryItem.categorySeq }">${categoryItem.categoryName  }</option>'
+			+'</c:forEach>'
+			+'</select><br />'
+		+'물품이름<input type="text" name="itemName_'+ cnt +'" />'
+		+'물품가격<input type="number" name="itemPrice_'+ cnt +'" />'
+		+'물품 재조사<input type="text" name="itemMaker_'+ cnt++ +'" /> </br>');
 });
 </script>
 </html>
