@@ -2,53 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shopMapper">
 	<resultMap id="BaseResultMap" type="shop">
-		<id column="SHOP_SEQ" jdbcType="DECIMAL" property="shopSeq" />
-		<result column="SHOP_ADDRESS" jdbcType="VARCHAR"
+		<id column="shop_seq" jdbcType="DECIMAL" property="shopSeq" />
+		<result column="shop_address" jdbcType="VARCHAR"
 			property="shopAddress" />
-		<result column="SHOP_PHONE" jdbcType="VARCHAR"
+		<result column="shop_phone" jdbcType="VARCHAR"
 			property="shopPhone" />
-		<result column="SHOP_NAME" jdbcType="VARCHAR"
+		<result column="shop_name" jdbcType="VARCHAR"
 			property="shopName" />
-		<result column="SHOP_REGDATE" jdbcType="TIMESTAMP"
+		<result column="shop_regdate" jdbcType="TIMESTAMP"
 			property="shopRegdate" />
-		<result column="SHOP_COUNT" jdbcType="DECIMAL"
+		<result column="shop_count" jdbcType="DECIMAL"
 			property="shopCount" />
 	</resultMap>
 	<delete id="delete" parameterType="shop">
-		delete from SHOP
-		where SHOP_SEQ
+		delete from shop
+		where shop_seq
 		= #{shopSeq,jdbcType=DECIMAL}
 	</delete>
 	<delete id="deleteAll">
-		delete from SHOP
+		delete from shop
 	</delete>
 	<insert id="insert" parameterType="shop">
-		insert into SHOP (SHOP_SEQ,
-		SHOP_ADDRESS, SHOP_PHONE,
-		SHOP_NAME)
+		insert into shop (shop_seq,
+		shop_address, shop_phone,
+		shop_name)
 		values
 		(#{shopSeq,jdbcType=DECIMAL}, #{shopAddress,jdbcType=VARCHAR},
 		#{shopPhone,jdbcType=VARCHAR},
 		#{shopName,jdbcType=VARCHAR})
 	</insert>
 	<update id="update" parameterType="shop">
-		update SHOP
-		set SHOP_REGDATE =
-		#{shopRegdate,jdbcType=TIMESTAMP}, SHOP_ADDRESS =
-		#{shopAddress,jdbcType=VARCHAR}, SHOP_PHONE =
-		#{shopPhone,jdbcType=VARCHAR}, SHOP_NAME =
-		#{shopName,jdbcType=VARCHAR}, SHOP_COUNT = #{shopCount,jdbcType=DECIMAL}
-		where SHOP_SEQ =
+		update shop
+		set shop_regdate =
+		#{shopRegdate,jdbcType=TIMESTAMP}, shop_address =
+		#{shopAddress,jdbcType=VARCHAR}, shop_phone =
+		#{shopPhone,jdbcType=VARCHAR}, shop_name =
+		#{shopName,jdbcType=VARCHAR}, shop_count = #{shopCount,jdbcType=DECIMAL}
+		where shop_seq =
 		#{shopSeq,jdbcType=DECIMAL}
 	</update>
 	<select id="select" parameterType="shop"
 		resultMap="BaseResultMap">
-		SELECT * FROM SHOP WHERE SHOP_SEQ = #{shopSeq,jdbcType=DECIMAL}
+		SELECT * FROM shop WHERE shop_seq = #{shopSeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
-		select * from SHOP
+		select * from shop
 	</select>
 	<select id="selectCnt" resultType="int">
-		SELECT COUNT(*) FROM SHOP
+		SELECT COUNT(*) FROM shop
 	</select>
 </mapper>

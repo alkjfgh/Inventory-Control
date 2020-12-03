@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="itemInfoMapper">
 	<resultMap id="BaseResultMap" type="itemInfo">
-		<result column="SHOP_SEQ" jdbcType="DECIMAL" property="shopSeq"/>
-		<result column="CATEGORY_SEQ" jdbcType="DECIMAL" property="categorySeq"/>
-		<result column="CATEGORY_NAME" jdbcType="VARCHAR" property="categoryName"/>
-		<result column="ITEM_SEQ" jdbcType="DECIMAL" property="itemSeq"/>
-		<result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
-		<result column="ITEM_PRICE" jdbcType="DECIMAL" property="itemPrice"/>
-		<result column="TOTAL" jdbcType="DECIMAL" property="total"/>
-		<result column="REMAIN" jdbcType="DECIMAL" property="remain"/>
-		<result column="NECESSITY" jdbcType="DECIMAL" property="necessity"/>
-		<result column="SOLD" jdbcType="DECIMAL" property="sold"/>
+		<result column="shop_seq" jdbcType="DECIMAL" property="shopSeq"/>
+		<result column="category_seq" jdbcType="DECIMAL" property="categorySeq"/>
+		<result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+		<result column="item_seq" jdbcType="DECIMAL" property="itemSeq"/>
+		<result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+		<result column="item_price" jdbcType="DECIMAL" property="itemPrice"/>
+		<result column="total" jdbcType="DECIMAL" property="total"/>
+		<result column="remain" jdbcType="DECIMAL" property="remain"/>
+		<result column="necessity" jdbcType="DECIMAL" property="necessity"/>
+		<result column="sold" jdbcType="DECIMAL" property="sold"/>
 	</resultMap>
 	<select id="selectList" resultMap="BaseResultMap" parameterType="category">
-	SELECT * FROM ITEMINFO WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL }
+	SELECT * FROM itemInfo WHERE category_seq = #{categorySeq,jdbcType=DECIMAL }
 	</select>
 	<select id="categoryCount" resultType="int" parameterType="category">
-	SELECT COUNT(*) FROM ITEMINFO WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL }
+	SELECT COUNT(*) FROM itemInfo WHERE category_seq = #{categorySeq,jdbcType=DECIMAL }
 	</select>
 </mapper>

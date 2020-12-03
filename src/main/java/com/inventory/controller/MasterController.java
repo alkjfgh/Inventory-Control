@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemVO;
+import com.inventory.app.domain.ShopVO;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemService;
+import com.inventory.app.service.ShopService;
 
 @Controller
 public class MasterController {
@@ -26,6 +28,9 @@ public class MasterController {
 
 	@Autowired
 	private ItemService itemService;
+	
+	@Autowired
+	private ShopService shopService;
 
 	@RequestMapping(value = "/updateCategory.do")
 	public String updateCategoryView(Model model) {
@@ -104,5 +109,12 @@ public class MasterController {
 	public String masterDeleteItem(HttpServletRequest request) {
 		System.out.println(request.getParameter("1_itemSeq_1"));
 		return "master";
+	}
+
+	@RequestMapping(value = "/shopList.do")
+	public String shopList(HttpServletRequest request, Model model) {
+		List<ShopVO> shopList = shopService.selectList(null);
+		model.addAttribute("shopList", shopList);
+		return "shopList";
 	}
 }

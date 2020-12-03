@@ -6,13 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style>
-.categoryAdd, .categoryDelete {
-	display: none;
-}
-</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="js/updateCategory.js"></script>
+<link rel="stylesheet" href="css/updateCategory.css">
 </head>
 <body>
 	<h1>카테고리 추가 삭제 페이지</h1>
@@ -48,19 +44,4 @@
 	</form>
 	</div>
 </body>
-<script>
-$('.add').click(function() {
-	$('.categoryAdd').show();
-	$('.categoryDelete').hide();
-});
-$('.del').click(function() {
-	$('.categoryAdd').hide();
-	$('.categoryDelete').show();
-});
-	var cnt = 1
-	$('button').click(function() {
-		$("input[name=cnt]").attr("value", cnt);
-		$('.insertCategory').append('카테고리 이름<input type="text" name="categoryName_'+ cnt++ +'" /> </br> ')
-	});
-</script>
 </html>

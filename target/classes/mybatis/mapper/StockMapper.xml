@@ -2,28 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="stockMapper">
 	<resultMap id="BaseResultMap" type="stock">
-		<id column="SHOP_SEQ" jdbcType="DECIMAL" property="shopSeq" />
-		<id column="CATEGORY_SEQ" jdbcType="DECIMAL" property="categorySeq" />
-		<id column="ITEM_SEQ" jdbcType="DECIMAL" property="itemSeq" />
-		<id column="TOTAL" jdbcType="DECIMAL" property="total" />
-		<id column="REMAIN" jdbcType="DECIMAL" property="remain" />
-		<id column="NECESSITY" jdbcType="DECIMAL" property="necessity" />
-		<id column="SOLD" jdbcType="DECIMAL" property="sold" />
+		<id column="shop_seq" jdbcType="DECIMAL" property="shopSeq" />
+		<id column="category_seq" jdbcType="DECIMAL" property="categorySeq" />
+		<id column="item_seq" jdbcType="DECIMAL" property="itemSeq" />
+		<id column="total" jdbcType="DECIMAL" property="total" />
+		<id column="remain" jdbcType="DECIMAL" property="remain" />
+		<id column="necessity" jdbcType="DECIMAL" property="necessity" />
+		<id column="sold" jdbcType="DECIMAL" property="sold" />
 	</resultMap>
 	<delete id="delete" parameterType="stock">
-		DELETE FROM STOCK WHERE
+		DELETE FROM stock WHERE
 		ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
 	</delete>
 	<delete id="deleteShop" parameterType="stock">
-		DELETE FROM STOCK WHERE
-		SHOP_SEQ =
+		DELETE FROM stock WHERE
+		shop_seq =
 		#{shopSeq,jdbcType=DECIMAL}
 	</delete>
 	<delete id="deleteAll">
-		DELETE FROM STOCK
+		DELETE FROM stock
 	</delete>
 	<insert id="insert" parameterType="stock">
-		INSERT INTO STOCK
+		INSERT INTO stock
 		VALUES(#{shopSeq,jdbcType=DECIMAL},
 		#{categorySeq,jdbcType=DECIMAL},
 		#{itemSeq,jdbcType=DECIMAL},
@@ -31,24 +31,24 @@
 		#{sold,jdbcType=DECIMAL})
 	</insert>
 	<update id="update" parameterType="stock">
-		UPDATE STOCK SET TOTAL =
-		#{total,jdbcType=DECIMAL}, REMAIN = #{remain,jdbcType=DECIMAL} WHERE
-		SHOP_SEQ =
-		#{shopSeq,jdbcType=DECIMAL} AND CATEGORY_SEQ =
-		#{categorySeq,jdbcType=DECIMAL} AND ITEM_SEQ =
+		UPDATE stock SET TOTAL =
+		#{total,jdbcType=DECIMAL}, remain = #{remain,jdbcType=DECIMAL} WHERE
+		shop_seq =
+		#{shopSeq,jdbcType=DECIMAL} AND category_seq =
+		#{categorySeq,jdbcType=DECIMAL} AND item_seq =
 		#{itemSeq,jdbcType=DECIMAL}
 	</update>
 	<select id="select" parameterType="stock"
 		resultMap="BaseResultMap">
-		SELECT * FROM STOCK_VIEW WHRE WHERE SHOP_SEQ =
-		#{shopSeq,jdbcType=DECIMAL} AND CATEGORY_SEQ =
-		#{categorySeq,jdbcType=DECIMAL} AND ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
+		SELECT * FROM stock_view WHERE shop_seq =
+		#{shopSeq,jdbcType=DECIMAL} AND category_seq =
+		#{categorySeq,jdbcType=DECIMAL} AND item_seq = #{itemSeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
-		SELECT * FROM STOCK_VIEW WHERE SHOP_SEQ = #{shopSeq,jdbcType=DECIMAL}
+		SELECT * FROM stock_view WHERE shop_seq = #{shopSeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM
-		STOCK_VIEW
+		stock_view
 	</select>
 </mapper>

@@ -2,36 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="itemMapper">
 	<resultMap id="BaseResultMap" type="item">
-		<id column="ITEM_SEQ" jdbcType="DECIMAL" property="itemSeq" />
-		<result column="CATEGORY_SEQ" jdbcType="DECIMAL"
+		<id column="item_seq" jdbcType="DECIMAL" property="itemSeq" />
+		<result column="category_seq" jdbcType="DECIMAL"
 			property="categorySeq" />
-		<result column="ITEM_NAME" jdbcType="VARCHAR"
+		<result column="item_name" jdbcType="VARCHAR"
 			property="itemName" />
-		<result column="ITEM_PRICE" jdbcType="DECIMAL"
+		<result column="item_price" jdbcType="DECIMAL"
 			property="itemPrice" />
-		<result column="ITEM_REGDATE" jdbcType="TIMESTAMP"
+		<result column="item_regdate" jdbcType="TIMESTAMP"
 			property="itemRegdate" />
-		<result column="ITEM_FWDATE" jdbcType="TIMESTAMP"
+		<result column="item_fwdate" jdbcType="TIMESTAMP"
 			property="itemFwdate" />
-		<result column="ITEM_DESC" jdbcType="VARCHAR"
+		<result column="item_desc" jdbcType="VARCHAR"
 			property="itemDesc" />
-		<result column="ITEM_MAKER" jdbcType="VARCHAR"
+		<result column="item_maker" jdbcType="VARCHAR"
 			property="itemMaker" />
-		<result column="ITEM_IMG" jdbcType="BLOB" property="itemImg" />
+		<result column="item_img" jdbcType="BLOB" property="itemImg" />
 	</resultMap>
 	<delete id="delete" parameterType="item">
-		delete from ITEM where
-		ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
+		delete from item where
+		item_seq = #{itemSeq,jdbcType=DECIMAL}
 	</delete>
 	<delete id="deleteAll">
-		delete from ITEM
+		delete from item
 	</delete>
 	<insert id="insert" parameterType="item">
-		insert into ITEM (ITEM_SEQ,
-		CATEGORY_SEQ, ITEM_NAME, ITEM_PRICE, ITEM_REGDATE, ITEM_FWDATE,
-		ITEM_DESC, ITEM_MAKER, ITEM_IMG)
+		insert into item (item_seq,
+		category_seq, item_name, item_price, item_regdate, item_fwdate,
+		item_desc, item_maker, item_img)
 		values
-		(SELECT NVL(MAX(ITEM_SEQ), 0) + 1 from ITEM,
+		(select seq from(SELECT IFNULL(MAX(item_seq), 0) + 1 from item) tmp,
 		#{categorySeq,jdbcType=DECIMAL},
 		#{itemName,jdbcType=VARCHAR},
 		#{itemPrice,jdbcType=DECIMAL},
@@ -42,39 +42,39 @@
 		#{itemImg,jdbcType=BLOB})
 	</insert>
 	<update id="update" parameterType="item">
-		update ITEM
-		set CATEGORY_SEQ =
+		update item
+		set category_seq =
 		#{categorySeq,jdbcType=DECIMAL},
-		ITEM_NAME =
+		item_name =
 		#{itemName,jdbcType=VARCHAR},
-		ITEM_PRICE =
+		item_price =
 		#{itemPrice,jdbcType=DECIMAL},
-		ITEM_REGDATE =
+		item_regdate =
 		#{itemRegdate,jdbcType=TIMESTAMP},
-		ITEM_FWDATE =
+		item_fwdate =
 		#{itemFwdate,jdbcType=TIMESTAMP},
-		ITEM_DESC =
+		item_desc =
 		#{itemDesc,jdbcType=VARCHAR},
-		ITEM_MAKER =
+		item_maker =
 		#{itemMaker,jdbcType=VARCHAR},
-		ITEM_IMG = #{itemImg,jdbcType=BLOB}
-		where ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
+		item_img = #{itemImg,jdbcType=BLOB}
+		where item_seq = #{itemSeq,jdbcType=DECIMAL}
 	</update>
 	<select id="select" parameterType="item"
 		resultMap="BaseResultMap">
-		select * from ITEM where ITEM_SEQ =
+		select * from item where item_seq =
 		#{itemSeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
-		select * from ITEM
+		select * from item
 	</select>
 	<select id="selectCnt" resultType="int">
-		SELECT COUNT(*) FROM ITEM
+		SELECT COUNT(*) FROM item
 	</select>
 	<select id="selectListByCategory" resultMap="BaseResultMap" parameterType="category">
-	SELECT * FROM ITEM WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL}
+	SELECT * FROM item WHERE category_seq = #{categorySeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectCntByCategory" resultType="int" parameterType="category">
-	SELECT COUNT(*) FROM ITEM WHERE CATEGORY_SEQ = #{categorySeq,jdbcType=DECIMAL}
+	SELECT COUNT(*) FROM item WHERE category_seq = #{categorySeq,jdbcType=DECIMAL}
 	</select>
 </mapper>
