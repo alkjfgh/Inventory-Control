@@ -53,6 +53,6 @@ table, tr, th, td {
 		</c:forEach>
 	</table>
 	<a href="check.do">결산</a>
-	<a href="shopInfo.jsp">뒤로가기</a>
+	<a href="shopInfo.do">뒤로가기</a>
 </body>
 </html>

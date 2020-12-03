@@ -13,10 +13,10 @@
 		<result column="necessity" jdbcType="DECIMAL" property="necessity"/>
 		<result column="sold" jdbcType="DECIMAL" property="sold"/>
 	</resultMap>
-	<select id="selectList" resultMap="BaseResultMap" parameterType="category">
-	SELECT * FROM itemInfo WHERE category_seq = #{categorySeq,jdbcType=DECIMAL }
+	<select id="selectList" resultMap="BaseResultMap" parameterType="hashMap">
+	SELECT * FROM itemInfo WHERE shop_seq = #{shopSeq} AND category_seq = #{categorySeq}
 	</select>
-	<select id="categoryCount" resultType="int" parameterType="category">
-	SELECT COUNT(*) FROM itemInfo WHERE category_seq = #{categorySeq,jdbcType=DECIMAL }
+	<select id="categoryCount" resultType="int" parameterType="hashMap">
+	SELECT COUNT(*) FROM itemInfo WHERE shop_seq = #{shopSeq} AND category_seq = #{categorySeq}
 	</select>
 </mapper>

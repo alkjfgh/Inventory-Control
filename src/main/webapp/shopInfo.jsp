@@ -81,7 +81,7 @@ table{
 		</table>
 		<input type="submit" value="수정 확인" /><br />
 	</form>
-	<a href="check.jsp">결산</a>
+	<a href="check.do">결산</a>
 	<br />
 	<a href="singOut.do">로그아웃</a>
 </body>

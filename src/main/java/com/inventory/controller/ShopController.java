@@ -21,6 +21,7 @@ import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
 import com.inventory.app.domain.StockVO;
 import com.inventory.app.domain.UserVO;
+import com.inventory.app.security.SecurityUse;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemService;
@@ -49,7 +50,7 @@ public class ShopController {
 	@Autowired
 	private ItemInfoService itemInfoService;
 
-	@RequestMapping(value = "ShopInfo.do")
+	@RequestMapping(value = "ShopInfo.do", method = RequestMethod.GET)
 	public String shopInfo(HttpSession session, Model model) {
 		UserVO user = (UserVO) session.getAttribute("user");
 		ShopVO shop = new ShopVO();
@@ -64,7 +65,9 @@ public class ShopController {
 		shopCount = 3;
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryIt.next();
-			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(category);
+			long shopSeq = shop.getShopSeq();
+			long categorySeq = category.getCategorySeq();
+			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(shopSeq, categorySeq);
 			for (ItemInfoVO itemInfo : itemInfoList) {
 				long total = itemInfo.getTotal();
 				double sold = itemInfo.getSold();
@@ -73,7 +76,7 @@ public class ShopController {
 				long autoSup = (long) Math.floor(total * percent) + 1;
 				itemInfo.setAutoSup(autoSup);
 			}
-			categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(category), itemInfoList));
+			categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
 		}
 		Iterator<ItemListVO> it = categoryList.iterator();
 		session.setAttribute("categoryList", categoryList);
@@ -119,18 +122,10 @@ public class ShopController {
 	public String insertItem(HttpServletRequest request, HttpSession session) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		int input_size = Integer.parseInt(request.getParameter("cnt"));
-		System.out.println("============");
-		System.out.println(input_size);
-		System.out.println("============");
 		for (int i = 1; i <= input_size; i++) {
 			long categorySeq = Long.parseLong(request.getParameter("category_" + i));
 			long itemSeq = Long.parseLong(request.getParameter("item_" + i));
 			long total = Long.parseLong(request.getParameter("total_" + i));
-			System.out.println("============");
-			System.out.println(categorySeq);
-			System.out.println(itemSeq);
-			System.out.println(total);
-			System.out.println("============");
 			StockVO stock = new StockVO();
 			stock.setCategorySeq(categorySeq);
 			stock.setItemSeq(itemSeq);
@@ -164,7 +159,7 @@ public class ShopController {
 		return "shopInfo";
 	}
 
-	@RequestMapping(value = "check.do")
+	@RequestMapping(value = "check.do", method = RequestMethod.POST)
 	public String check(HttpSession session) {
 		@SuppressWarnings({ "unchecked", "unused" })
 		List<CategoryVO> categoryList = (List<CategoryVO>) session.getAttribute("categoryList");
@@ -198,6 +193,8 @@ public class ShopController {
 		user = userService.select(user);
 		session.setAttribute("user", user);
 		vo.setShopSeq(user.getShopSeq());
+		System.out.println(user);
+		System.out.println(vo);
 		shopService.insert(vo);
 		return "redirect:ShopInfo.do";
 	}

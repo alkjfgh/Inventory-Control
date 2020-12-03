@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,11 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
+import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
+import com.inventory.app.domain.StockVO;
+import com.inventory.app.domain.UserVO;
 import com.inventory.app.service.CategoryService;
+import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemService;
 import com.inventory.app.service.ShopService;
+import com.inventory.app.service.StockService;
+import com.inventory.app.service.UserService;
 
 @Controller
 public class MasterController {
@@ -30,8 +37,17 @@ public class MasterController {
 	private ItemService itemService;
 	
 	@Autowired
+	private ItemInfoService itemInfoService;
+	
+	@Autowired
 	private ShopService shopService;
+	
+	@Autowired
+	private UserService userService;
 
+	@Autowired
+	private StockService stockService;
+	
 	@RequestMapping(value = "/updateCategory.do")
 	public String updateCategoryView(Model model) {
 		List<CategoryVO> categoryList = categoryService.selectList(null);
@@ -116,5 +132,27 @@ public class MasterController {
 		List<ShopVO> shopList = shopService.selectList(null);
 		model.addAttribute("shopList", shopList);
 		return "shopList";
+	}
+	
+	@RequestMapping(value = "/ownerList.do")
+	public String ownerList(Model model) {
+		List<UserVO> userList = userService.selectList(null);
+		model.addAttribute("userList", userList);
+		return "ownerList";
+	}
+	
+	@RequestMapping(value = "/totalItem.do")
+	public String totalItem(Model model, HttpSession session) {
+		StockVO vo = new StockVO();
+		vo.setShopSeq(0l);
+		Iterator<CategoryVO> categoryList = categoryService.selectList(null).iterator();
+		List<ItemListVO> totalItemList = new ArrayList<ItemListVO>();
+		while(categoryList.hasNext()) {
+			CategoryVO category = categoryList.next();
+			long categorySeq = category.getCategorySeq();
+			totalItemList.add(new ItemListVO(category, itemService.selectCntByCategory(category), itemInfoService.selectList(0l, categorySeq)));
+		}
+		model.addAttribute("totalItemList", totalItemList);
+		return "totalItem";
 	}
 }

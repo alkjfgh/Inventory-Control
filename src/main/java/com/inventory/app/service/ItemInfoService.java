@@ -6,7 +6,7 @@ import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
 
 public interface ItemInfoService {
-	public List<ItemInfoVO> selectList(CategoryVO vo);
+	public List<ItemInfoVO> selectList(long shopSeq, long categorySeq);
 	
-	public int categoryCount(CategoryVO vo);
+	public int categoryCount(long shopSeq, long categorySeq);
 }

@@ -6,16 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.inventory.app.domain.UserVO;
+import com.inventory.app.security.SecurityUse;
 import com.inventory.app.service.UserService;
 
 @Service("UserService")
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
-	UserDAO dao;
+	private UserDAO dao;
+	
+	@Autowired
+	private SecurityUse security;
 	
 	@Override
 	public int insert(UserVO vo) {
+		vo.setUserId(security.security(vo.getUserId()));
+		vo.setUserPassword(security.security(vo.getUserPassword()));
 		return dao.insert(vo);
 	}
 
@@ -31,7 +37,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserVO select(UserVO vo) {
-		return dao.select(vo);
+		vo = dao.select(vo);
+		vo.setUserId(security.recorvery(vo.getUserId()));
+		vo.setUserPassword(security.recorvery(vo.getUserPassword()));
+		return vo;
 	}
 
 	@Override

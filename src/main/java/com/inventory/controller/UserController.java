@@ -49,8 +49,6 @@ public class UserController {
 	public String signUp(UserVO vo, HttpSession session) {
 		vo.setUserLevel((short) 1);
 		service.insert(vo);
-		System.out.println("============");
-		System.out.println(vo);
 		session.setAttribute("user", vo);
 		return "insertShop";
 	}
