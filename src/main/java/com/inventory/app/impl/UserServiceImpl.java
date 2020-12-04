@@ -1,5 +1,6 @@
 package com.inventory.app.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,10 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public int insert(UserVO vo) {
-		vo.setUserId(security.security(vo.getUserId()));
-		vo.setUserPassword(security.security(vo.getUserPassword()));
+		/*
+		 * vo.setUserId(security.security(vo.getUserId()));
+		 * vo.setUserPassword(security.security(vo.getUserPassword()));
+		 */
 		return dao.insert(vo);
 	}
 
@@ -37,10 +40,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserVO select(UserVO vo) {
-		vo = dao.select(vo);
-		vo.setUserId(security.recorvery(vo.getUserId()));
-		vo.setUserPassword(security.recorvery(vo.getUserPassword()));
-		return vo;
+		return dao.select(vo);
 	}
 
 	@Override

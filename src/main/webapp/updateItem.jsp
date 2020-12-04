@@ -30,14 +30,12 @@
 	<h1>아이템 추가 삭제 페이지</h1>
 
 	<div id="select">
-		<a href="#" class="change">수정ddddddddddddddddd </a> <a href="#" class="del"> 삭제ddddddddddddddddd</a>
+		<a href="#" class="change">추가</a> <a href="#" class="del">삭제</a>
 	</div>
-
-
 	
 	<div class="add">
 		<hr />
-		이곳은 수정하는곳
+		이곳은 추가하는곳
 		<button class="insertadd">추가</button>
 		<form action="insertItem.do" method="post" class="insertItem">
 		<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
@@ -98,9 +96,7 @@ $('button')
 .click(
 		function() {
 			$("input[name=cnt]").attr("value", cnt);
-			$('.insertItem')
-					.append(
-							'<label for="'+ cnt +'">카테고리선택</label> <select class="form-control"id="'+ cnt +'" name="category_'+ cnt +'" onchange="categoryChange(this)"required="required"><option>카테고리를 선택해주세요</option><c:forEach items="${categoryItemList }" var="categoryItem"><option value="${categoryItem.category.categorySeq }">${categoryItem.category.categoryName  }</option></c:forEach></select> <label for="item_'+ cnt +'">상품</label> <select class="form-control"id="item_'+ cnt +'" name="item_'+ cnt + '" required="required"><option id = "item_'+ cnt +'">선택해주세요.</option></select> <input type="number" name="total_'+ cnt++ + '" required="required" /> </br>');
+			$('.insertItem').append('<label for="'+ cnt +'">카테고리선택</label> <select class="form-control"id="'+ cnt +'" name="category_'+ cnt +'" onchange="categoryChange(this)"required="required"><option>카테고리를 선택해주세요</option><c:forEach items="${categoryItemList }" var="categoryItem"><option value="${categoryItem.category.categorySeq }">${categoryItem.category.categoryName  }</option></c:forEach></select> <label for="item_'+ cnt +'">상품</label> <select class="form-control"id="item_'+ cnt +'" name="item_'+ cnt + '" required="required"><option id = "item_'+ cnt +'">선택해주세요.</option></select> <input type="number" name="total_'+ cnt++ + '" required="required" /> </br>');
 		});
 	var arr = new Array();
 	<c:forEach items="${categoryItemList }" var="categoryItem">
@@ -111,6 +107,7 @@ $('button')
 			itemSeq.push("${item.itemSeq }");
 		</c:forEach>
 		arr.push({
+			categorySeq : ${categoryItem.category.categorySeq},
 			nameList : itemName,
 			seqList : itemSeq
 		});
@@ -120,7 +117,7 @@ $('button')
          btn = d.target || d.srcElement;
 			var target = document.getElementById("item_"+btn.id);
 			for (var i = 0; i < arr.length; i++) {
-				if (e.value == i+1) {
+				if (e.value == arr[i].categorySeq) {
 				var itemNameList = arr[i].nameList;
 				var itemSeqList = arr[i].seqList;
 			}

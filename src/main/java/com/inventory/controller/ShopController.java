@@ -21,7 +21,6 @@ import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
 import com.inventory.app.domain.StockVO;
 import com.inventory.app.domain.UserVO;
-import com.inventory.app.security.SecurityUse;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemService;
@@ -50,7 +49,7 @@ public class ShopController {
 	@Autowired
 	private ItemInfoService itemInfoService;
 
-	@RequestMapping(value = "ShopInfo.do", method = RequestMethod.GET)
+	@RequestMapping(value = "ShopInfo.do", method = {RequestMethod.POST, RequestMethod.GET})
 	public String shopInfo(HttpSession session, Model model) {
 		UserVO user = (UserVO) session.getAttribute("user");
 		ShopVO shop = new ShopVO();
@@ -74,11 +73,17 @@ public class ShopController {
 				double targetSold = total * shopCount;
 				double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
 				long autoSup = (long) Math.floor(total * percent) + 1;
+				System.out.println(total);
+				System.out.println(sold);
+				System.out.println(targetSold);
+				System.out.println(percent);
+				System.out.println(autoSup);
 				itemInfo.setAutoSup(autoSup);
 			}
-			categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
+			if (itemInfoList.size() > 0)
+				categoryList.add(
+						new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
 		}
-		Iterator<ItemListVO> it = categoryList.iterator();
 		session.setAttribute("categoryList", categoryList);
 		session.setAttribute("shop", shop);
 		return "shopInfo";
@@ -108,9 +113,7 @@ public class ShopController {
 				}
 			}
 			size = itemList.size();
-			System.out.println(size);
 			if (size != 0) {
-//				categoryItemList.add(new CategoryItemVO(category, itemService.selectCntByCategory(category), itemList));
 				categoryItemList.add(new CategoryItemVO(category, size, itemList));
 			}
 		}
@@ -131,39 +134,59 @@ public class ShopController {
 			stock.setItemSeq(itemSeq);
 			stock.setShopSeq(shop.getShopSeq());
 			stock.setTotal(total);
-			System.out.println(stock);
-//			stockService.insert(stock);
+			stockService.insert(stock);
 		}
-		return "shopInfo";
+		return "redirect:ShopInfo.do";
 	}
 
 	@RequestMapping(value = "deleteItem.do", method = RequestMethod.POST)
 	public String deleteItem(HttpServletRequest request, HttpSession session) {
-		List<ItemListVO> categoryItemList = (List<ItemListVO>) session.getAttribute("categoryList");
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
-		int size1 = categoryItemList.size();
+		int size1 = categoryService.selectCnt();
 		for (int i = 1; i <= size1; i++) {
-			ItemListVO itemList = categoryItemList.get(i - 1);
-			int size2 = itemList.getItemList().size();
-			for (int j = 1; j <= size2; j++)
-				if (request.getParameter(i + "_itemSeq_" + j).equals("on")) {
+			CategoryVO category = new CategoryVO();
+			category.setCategorySeq(i);
+			category = categoryService.select(category);
+			int size2 = itemService.selectCntByCategory(category);
+			for (int j = 1; j <= size2; j++) {
+				String checkBox = request.getParameter(i + "_itemSeq_" + j);
+				if (checkBox != null && checkBox.equals("on")) {
 					StockVO stock = new StockVO();
 					stock.setCategorySeq((long) i);
 					stock.setItemSeq((long) j);
 					stock.setShopSeq(shop.getShopSeq());
 					stock = stockService.select(stock);
-					System.out.println(stock);
-//					stockService.delete(stock);
+					stockService.delete(stock);
 				}
+			}
 		}
-		return "shopInfo";
+		return "redirect:ShopInfo.do";
 	}
 
 	@RequestMapping(value = "check.do", method = RequestMethod.POST)
 	public String check(HttpSession session) {
-		@SuppressWarnings({ "unchecked", "unused" })
-		List<CategoryVO> categoryList = (List<CategoryVO>) session.getAttribute("categoryList");
-//		db에 결산 데이터 적용해야함
+		@SuppressWarnings("unchecked")
+		Iterator<ItemListVO> itemListIt = ((List<ItemListVO>) session.getAttribute("categoryList")).iterator();
+		while (itemListIt.hasNext()) {
+			Iterator<ItemInfoVO> itemInfoIt = itemListIt.next().getItemList().iterator();
+			while (itemInfoIt.hasNext()) {
+				ItemInfoVO itemInfo = itemInfoIt.next();
+				long shopSeq = itemInfo.getShopSeq();
+				long categorySeq = itemInfo.getCategorySeq();
+				long itemSeq = itemInfo.getItemSeq();
+				long remain = itemInfo.getRemain();
+				long autoSup = itemInfo.getAutoSup();
+				if (autoSup < remain)
+					autoSup = remain;
+				StockVO stock = new StockVO();
+				stock.setShopSeq(shopSeq);
+				stock.setCategorySeq(categorySeq);
+				stock.setItemSeq(itemSeq);
+				stock.setTotal(autoSup);
+				stock.setRemain(remain);
+//				stockService.update(stock);
+			}
+		}
 		return "shopInfo";
 	}
 
@@ -196,6 +219,6 @@ public class ShopController {
 		System.out.println(user);
 		System.out.println(vo);
 		shopService.insert(vo);
-		return "redirect:ShopInfo.do";
+		return "forward:ShopInfo.do";
 	}
 }

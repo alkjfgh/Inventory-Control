@@ -12,7 +12,7 @@
 	DELETE FROM categorytb
 	</delete>
 	<insert id="insert" parameterType="category">
-	INSERT INTO categorytb VALUES(select seq from (SELECT IFNULL(MAX(category_seq), 0) + 1 from categorytb ) tmp, #{categoryName,jdbcType=VARCHAR})
+	INSERT INTO categorytb VALUES((select seq from (select IFNULL(max(category_seq), 0) + 1 as seq from categorytb) tmp), #{categoryName,jdbcType=VARCHAR})
 	</insert>
 	<update id="update" parameterType="category">
 	UPDATE categorytb SET category_name = #{categoryName,jdbcType=VARCHAR} WHERE category_seq = #{categorySeq,jdbcType=DECIMAL} 

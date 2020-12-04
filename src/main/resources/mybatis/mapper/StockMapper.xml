@@ -12,6 +12,8 @@
 	</resultMap>
 	<delete id="delete" parameterType="stock">
 		DELETE FROM stock WHERE
+		shop_seq = #{shopSeq,jdbcType=DECIMAL} and
+		category_seq = #{categorySeq,jdbcType=DECIMAL} and
 		ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
 	</delete>
 	<delete id="deleteShop" parameterType="stock">
@@ -27,7 +29,8 @@
 		VALUES(#{shopSeq,jdbcType=DECIMAL},
 		#{categorySeq,jdbcType=DECIMAL},
 		#{itemSeq,jdbcType=DECIMAL},
-		#{total,jdbcType=DECIMAL}, #{remain,jdbcType=DECIMAL},
+		#{total,jdbcType=DECIMAL},
+		#{remain,jdbcType=DECIMAL},
 		#{sold,jdbcType=DECIMAL})
 	</insert>
 	<update id="update" parameterType="stock">
@@ -42,10 +45,12 @@
 		resultMap="BaseResultMap">
 		SELECT * FROM stock_view WHERE shop_seq =
 		#{shopSeq,jdbcType=DECIMAL} AND category_seq =
-		#{categorySeq,jdbcType=DECIMAL} AND item_seq = #{itemSeq,jdbcType=DECIMAL}
+		#{categorySeq,jdbcType=DECIMAL} AND item_seq =
+		#{itemSeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
-		SELECT * FROM stock_view WHERE shop_seq = #{shopSeq,jdbcType=DECIMAL}
+		SELECT * FROM stock_view WHERE
+		shop_seq = #{shopSeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM

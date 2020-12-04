@@ -17,7 +17,7 @@ table, tr, th, td {
 </style>
 </head>
 <body>
-	<form action="check.do" method="post"></form>
+	<form action="check.do" method="post">
 	<table>
 		<tr>
 			<th>카테고리</th>
@@ -25,7 +25,7 @@ table, tr, th, td {
 			<th>상품 이름</th>
 			<th>상품 가격</th>
 			<th>상품 총개수</th>
-			<th>상품 보충될갯수</th>
+			<th>상품 남은갯수</th>
 			<th>자동적으로 변화할 총 개수</th>
 		</tr>
 		<c:forEach items="${categoryList }" var="categoryItem">
@@ -38,7 +38,6 @@ table, tr, th, td {
 				<td>${item.total }</td>
 				<td>${item.remain }</td>
 				<td>${item.autoSup }</td>
-				
 			</tr>
 			<tr>
 			</c:forEach>
@@ -52,7 +51,8 @@ table, tr, th, td {
 			</tr>
 		</c:forEach>
 	</table>
-	<a href="check.do">결산</a>
-	<a href="shopInfo.do">뒤로가기</a>
+	<input type="submit" value="적용">
+	<a href="#" onclick="window.history.back()">취소</a>
+	</form>
 </body>
 </html>

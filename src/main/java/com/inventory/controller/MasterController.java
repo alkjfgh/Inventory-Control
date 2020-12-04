@@ -35,19 +35,19 @@ public class MasterController {
 
 	@Autowired
 	private ItemService itemService;
-	
+
 	@Autowired
 	private ItemInfoService itemInfoService;
-	
+
 	@Autowired
 	private ShopService shopService;
-	
+
 	@Autowired
 	private UserService userService;
 
 	@Autowired
 	private StockService stockService;
-	
+
 	@RequestMapping(value = "/updateCategory.do")
 	public String updateCategoryView(Model model) {
 		List<CategoryVO> categoryList = categoryService.selectList(null);
@@ -65,7 +65,9 @@ public class MasterController {
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryIt.next();
 			List<ItemVO> itemInfoList = itemService.selectListByCategory(category);
-			categoryItemList.add(new CategoryItemVO(category, itemService.selectCntByCategory(category), itemInfoList));
+			int cnt = itemService.selectCntByCategory(category);
+			if(cnt > 0)
+				categoryItemList.add(new CategoryItemVO(category, cnt, itemInfoList));
 		}
 		model.addAttribute("categoryItemList", categoryItemList);
 
@@ -74,16 +76,20 @@ public class MasterController {
 
 	@RequestMapping(value = "/deleteCategory.do", method = RequestMethod.POST)
 	public String deleteCategory(HttpServletRequest request) {
+//		나중에 매장에 아이템이 남아았는지 하나하나 검사해야함
 		int category_size = categoryService.selectCnt();
 		for (int i = 1; i <= category_size; i++) {
 			int categorySeq = 0;
-			if (request.getParameter(String.valueOf(i)).equals("on"))
+			String checkBox = request.getParameter(String.valueOf(i));
+			if (checkBox != null && checkBox.equals("on"))
 				categorySeq = i;
+			else
+				continue;
 			CategoryVO category = new CategoryVO();
 			category.setCategorySeq(categorySeq);
 			category = categoryService.select(category);
-//			if (category != null)
-//				categoryService.delete(category);
+			if (category != null)
+				categoryService.delete(category);
 		}
 		return "master";
 	}
@@ -96,7 +102,7 @@ public class MasterController {
 			if (categoryName != null && !categoryName.equals("")) {
 				CategoryVO category = new CategoryVO();
 				category.setCategoryName(categoryName);
-				System.out.println(category);
+				categoryService.insert(category);
 			}
 		}
 		return "master";
@@ -116,14 +122,29 @@ public class MasterController {
 			item.setItemPrice(itemPrice);
 			item.setItemMaker(itemMaker);
 			System.out.println(item);
-//			itemService.insert(item);
+			itemService.insert(item);
 		}
 		return "master";
 	}
 
 	@RequestMapping(value = "/masterDeleteItem.do", method = RequestMethod.POST)
 	public String masterDeleteItem(HttpServletRequest request) {
-		System.out.println(request.getParameter("1_itemSeq_1"));
+		int size1 = categoryService.selectCnt();
+		for (int i = 1; i <= size1; i++) {
+			CategoryVO category = new CategoryVO();
+			category.setCategorySeq(i);
+			category = categoryService.select(category);
+			int size2 = itemService.selectCntByCategory(category);
+			for (int j = 1; j <= size2; j++) {
+				String checkBox = request.getParameter(i + "_itemSeq_" + j);
+				if (checkBox != null && checkBox.equals("on")) {
+					ItemVO item = new ItemVO();
+					item.setCategorySeq((long)i);
+					item.setItemSeq((long)j);
+					itemService.delete(item);
+				}
+			}
+		}
 		return "master";
 	}
 
@@ -133,24 +154,25 @@ public class MasterController {
 		model.addAttribute("shopList", shopList);
 		return "shopList";
 	}
-	
+
 	@RequestMapping(value = "/ownerList.do")
 	public String ownerList(Model model) {
 		List<UserVO> userList = userService.selectList(null);
 		model.addAttribute("userList", userList);
 		return "ownerList";
 	}
-	
+
 	@RequestMapping(value = "/totalItem.do")
 	public String totalItem(Model model, HttpSession session) {
 		StockVO vo = new StockVO();
 		vo.setShopSeq(0l);
 		Iterator<CategoryVO> categoryList = categoryService.selectList(null).iterator();
 		List<ItemListVO> totalItemList = new ArrayList<ItemListVO>();
-		while(categoryList.hasNext()) {
+		while (categoryList.hasNext()) {
 			CategoryVO category = categoryList.next();
 			long categorySeq = category.getCategorySeq();
-			totalItemList.add(new ItemListVO(category, itemService.selectCntByCategory(category), itemInfoService.selectList(0l, categorySeq)));
+			totalItemList.add(new ItemListVO(category, itemService.selectCntByCategory(category),
+					itemInfoService.selectList(0l, categorySeq)));
 		}
 		model.addAttribute("totalItemList", totalItemList);
 		return "totalItem";
