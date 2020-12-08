@@ -10,18 +10,18 @@
 </head>
 <body>
     <button>추가</button>
-<form action="구매.do" method="post">
-    <input type="text" hidden="hidden" name="cnt" value="" id="cnt"/>
-    <table class="insertItem">
-        <tr>
-            <th>shop name</th>
-            <th>category name</th>
-            <th>item name</th>
-            <th>개수</th>
-        </tr>
-	</table>
-	<input type="submit" value="구매">
-</form>
+	<form action="buy.do" method="post">
+    	<input type="text" hidden="hidden" name="cnt" value="" id="cnt"/>
+    	<table class="insertItem">
+	        <tr>
+    	        <th>shop name</th>
+        	    <th>category name</th>
+            	<th>item name</th>
+            	<th>개수</th>
+        	</tr>
+		</table>
+		<input type="submit" value="구매">
+	</form>
 </body>
 <script>
 	var cnt = 1;
