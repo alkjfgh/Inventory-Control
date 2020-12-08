@@ -99,6 +99,76 @@ public class ItemVO {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((categorySeq == null) ? 0 : categorySeq.hashCode());
+		result = prime * result + ((itemDesc == null) ? 0 : itemDesc.hashCode());
+		result = prime * result + ((itemFwdate == null) ? 0 : itemFwdate.hashCode());
+		result = prime * result + Arrays.hashCode(itemImg);
+		result = prime * result + ((itemMaker == null) ? 0 : itemMaker.hashCode());
+		result = prime * result + ((itemName == null) ? 0 : itemName.hashCode());
+		result = prime * result + ((itemPrice == null) ? 0 : itemPrice.hashCode());
+		result = prime * result + ((itemRegdate == null) ? 0 : itemRegdate.hashCode());
+		result = prime * result + ((itemSeq == null) ? 0 : itemSeq.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ItemVO other = (ItemVO) obj;
+		if (categorySeq == null) {
+			if (other.categorySeq != null)
+				return false;
+		} else if (!categorySeq.equals(other.categorySeq))
+			return false;
+		if (itemDesc == null) {
+			if (other.itemDesc != null)
+				return false;
+		} else if (!itemDesc.equals(other.itemDesc))
+			return false;
+		if (itemFwdate == null) {
+			if (other.itemFwdate != null)
+				return false;
+		} else if (!itemFwdate.equals(other.itemFwdate))
+			return false;
+		if (!Arrays.equals(itemImg, other.itemImg))
+			return false;
+		if (itemMaker == null) {
+			if (other.itemMaker != null)
+				return false;
+		} else if (!itemMaker.equals(other.itemMaker))
+			return false;
+		if (itemName == null) {
+			if (other.itemName != null)
+				return false;
+		} else if (!itemName.equals(other.itemName))
+			return false;
+		if (itemPrice == null) {
+			if (other.itemPrice != null)
+				return false;
+		} else if (!itemPrice.equals(other.itemPrice))
+			return false;
+		if (itemRegdate == null) {
+			if (other.itemRegdate != null)
+				return false;
+		} else if (!itemRegdate.equals(other.itemRegdate))
+			return false;
+		if (itemSeq == null) {
+			if (other.itemSeq != null)
+				return false;
+		} else if (!itemSeq.equals(other.itemSeq))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "ItemVO [itemSeq=" + itemSeq + ", categorySeq=" + categorySeq + ", itemName=" + itemName + ", itemPrice="
 				+ itemPrice + ", itemRegdate=" + itemRegdate + ", itemFwdate=" + itemFwdate + ", itemDesc=" + itemDesc

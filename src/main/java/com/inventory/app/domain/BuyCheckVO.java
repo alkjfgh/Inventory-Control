@@ -47,6 +47,43 @@ public class BuyCheckVO {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
+		result = prime * result + ((item == null) ? 0 : item.hashCode());
+		result = prime * result + ((shop == null) ? 0 : shop.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BuyCheckVO other = (BuyCheckVO) obj;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
+		if (item == null) {
+			if (other.item != null)
+				return false;
+		} else if (!item.equals(other.item))
+			return false;
+		if (shop == null) {
+			if (other.shop != null)
+				return false;
+		} else if (!shop.equals(other.shop))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "buyCheckVO [shop=" + shop + ", category=" + category + ", item=" + item + ", buyCnt=" + buyCnt + "]";
 	}
