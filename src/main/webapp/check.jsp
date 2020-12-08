@@ -87,56 +87,71 @@
 		color: white;
 	}
 	
+	.requ { 
+			height: 25px;
+			background: hsl(60, 100%, 98%);
+			color: black;
+			font-size: 17px;			
+			cursor: pointer;
+			font-family : 'Do Hyeon', sans-serif;
+	}	
+	
+	.requ:hover {
+		background-color: grey;
+	}
+	
+	.requ:focus {
+		background-color: grey;
+		color: white;
+	}
+	
 </style>
 </head>
 <body>
 	<h1>결산</h1>
-		<section>
-        <div id="top"> 
-            
-        </div>
-    	</section>
+	<section>
+        <div id="top"></div>
+    </section>
 	<form action="check.do" method="post">
-	<table>
-		<tr>
-			<th>카테고리</th>
-			<th>상품 번호</th>
-			<th>상품 이름</th>
-			<th>상품 가격</th>
-			<th>상품 총개수</th>
-			<th>상품 남은갯수</th>
-			<th>자동적으로 변화할 총 개수</th>
-		</tr>
-		<c:forEach items="${categoryList }" var="categoryItem">
+		<table>
 			<tr>
-			<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName }</td>
-			<c:forEach items="${categoryItem.itemList }" var="item">
-				<td>${item.itemSeq }</td>
-				<td>${item.itemName }</td>
-				<td>${item.itemPrice }</td>
-				<td>${item.total }</td>
-				<td>${item.remain }</td>
-				<td>${item.autoSup }</td>
+				<th>카테고리</th>
+				<th>상품 번호</th>
+				<th>상품 이름</th>
+				<th>상품 가격</th>
+				<th>상품 총개수</th>
+				<th>상품 남은갯수</th>
+				<th>자동적으로 변화할 총 개수</th>
 			</tr>
-			<tr>
+			<c:forEach items="${categoryList }" var="categoryItem">
+				<tr>
+				<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName }</td>
+				<c:forEach items="${categoryItem.itemList }" var="item">
+					<td>${item.itemSeq }</td>
+					<td>${item.itemName }</td>
+					<td>${item.itemPrice }</td>
+					<td>${item.total }</td>
+					<td>${item.remain }</td>
+					<td><input class="requ" type="number" name="${categoryItem.category.categorySeq }_${item.itemSeq }_autoSup" value="${item.autoSup }"/></td>
+				</tr>
+				<tr>
+				</c:forEach>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+				</tr>
 			</c:forEach>
-				<td hidden=""></td>
-				<td hidden=""></td>
-				<td hidden=""></td>
-				<td hidden=""></td>
-				<td hidden=""></td>
-				<td hidden=""></td>
-				<td hidden=""></td>
-			</tr>
-		</c:forEach>
-	</table>
+		</table>
 	<br />
 	<input class="app" type="submit" value="적용">
 	<a href="#" class="canC" onclick="window.history.back()">취소</a>
 	</form>
     <div id="bottom">
-    <a href="#top" class="gotopbtn">▲</a>
+    	<a href="#top" class="gotopbtn">▲</a>
     </div>
-	
 </body>
 </html>

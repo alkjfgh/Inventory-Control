@@ -60,6 +60,23 @@
         .menu li a:hover::before{
             right: 0;
         }
+        .logout{
+			width: 100%;
+			margin : 0 auto;
+			padding: 0;
+			text-align: center;
+			
+        }
+        .logout a{
+        	text-decoration: none;
+			font-size: 24px;
+			font-family:'Do Hyeon', sans-serif;
+			color: black;
+        }
+        .logout a:hover{
+        	color: green;
+        	transition: 0.7s all;
+        }
     </style>
 </head>
 <body>
@@ -87,5 +104,8 @@
         </li>
 
     </ul>
+    <div class="logout">
+    <a href="SignOut.do">로그아웃</a>
+    </div>
 </body>
 </html>

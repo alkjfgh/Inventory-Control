@@ -42,39 +42,6 @@
 		text-align: center; 
 	}
 	
-	.modi { 
-			height: 30px;
-			background: #58C9B9;
-			color: black;
-			font-size: 20px;
-			border: none;
-			border-radius: 25px;
-			cursor: pointer;
-			font-family : 'Do Hyeon', sans-serif;
-	}
-	
-	.modi:hover {
-		color: white;
-	}
-	
-	.requ { 
-			height: 25px;
-			background: hsl(60, 100%, 98%);
-			color: black;
-			font-size: 17px;			
-			cursor: pointer;
-			font-family : 'Do Hyeon', sans-serif;
-	}	
-	
-	.requ:hover {
-		background-color: grey;
-	}
-	
-	.requ:focus {
-		background-color: grey;
-		color: white;
-	}
-	
 	
 
 </style>
@@ -106,7 +73,6 @@
 		</tr>
 	</table>
 	<a href="graph.do">그래프</a>&nbsp;&nbsp;&nbsp;<a href="updateItem.do">상품 목록 수정</a>
-	<form action="updateShop.do" method="post">
 	<br>
 	</div>
 		<table>
@@ -118,36 +84,31 @@
 				<th>상품 총개수</th>
 				<th>상품 현재개수</th>
 				<th>상품 주문할갯수</th>
-				<th>상품 주문할 갯수 수정</th>
 			</tr>
 			<c:forEach items="${categoryList }" var="categoryItem">
 				<tr>
 					<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
 					<c:forEach items="${categoryItem.itemList }" var="item">
-						<td>${item.itemSeq }</td>
-						<td>${item.itemName }</td>
-						<td>${item.itemPrice }</td>
-						<td>${item.total }</td>
-						<td>${item.remain }</td>
-						<td>${item.necessity }</td>
-						<!-- input 나중에 삭제하고 결산으로 옮기기 -->
-						<td><input class="requ" type="number" name="need.${item.itemSeq }" value="${item.necessity }" /></td>
+					<td>${item.itemSeq }</td>
+					<td>${item.itemName }</td>
+					<td>${item.itemPrice }</td>
+					<td>${item.total }</td>
+					<td>${item.remain }</td>
+					<td>${item.necessity }</td>
+					<!-- input 나중에 삭제하고 결산으로 옮기기 -->
 				</tr>
 				<tr>
-			</c:forEach>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			</tr>
-			</c:forEach>
+				</c:forEach>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+					<td hidden=""></td>
+				</tr>
+				</c:forEach>
 		</table>
-		<input class="modi" type="submit" value="수정 확인" /><br />
-	</form>
 	<c:set var="level" value="${user.userLevel }" />
 	<c:if test="${level eq 1}">
 		<br />

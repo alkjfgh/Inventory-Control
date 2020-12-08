@@ -49,13 +49,13 @@ public class ShopController {
 	@Autowired
 	private ItemInfoService itemInfoService;
 
-	@RequestMapping(value = "ShopInfo.do", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "ShopInfo.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public String shopInfo(HttpSession session, Model model, HttpServletRequest request) {
 		long shopSeq = -1;
-		if(request.getParameter("shopSeq")!=null && !request.getParameter("shopSeq").equals(""))
+		if (request.getParameter("shopSeq") != null && !request.getParameter("shopSeq").equals(""))
 			shopSeq = Long.parseLong(request.getParameter("shopSeq"));
 		UserVO user = new UserVO();
-		if(shopSeq!=-1) {
+		if (shopSeq != -1) {
 			user.setShopSeq(shopSeq);
 		} else {
 			user = (UserVO) session.getAttribute("user");
@@ -68,8 +68,6 @@ public class ShopController {
 		Iterator<CategoryVO> categoryIt = categoryService.selectList(null).iterator();
 		List<ItemListVO> categoryList = new ArrayList<ItemListVO>();
 		long shopCount = shop.getShopCount();
-//		지난 날짜를 임시로 3으로 정함
-		shopCount = 3;
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryIt.next();
 			shopSeq = shop.getShopSeq();
@@ -77,15 +75,18 @@ public class ShopController {
 			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(shopSeq, categorySeq);
 			for (ItemInfoVO itemInfo : itemInfoList) {
 				long total = itemInfo.getTotal();
-				double sold = itemInfo.getSold();
-				double targetSold = total * shopCount;
-				double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
-				long autoSup = (long) Math.floor(total * percent) + 1;
-				itemInfo.setAutoSup(autoSup);
+				if (shopCount > 6) {
+					double sold = itemInfo.getSold();
+					double targetSold = total * shopCount;
+					double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
+					long autoSup = (long) Math.floor(total * percent) + 1;
+					itemInfo.setAutoSup(autoSup);
+				} else {
+					itemInfo.setAutoSup(total);
+				}
 			}
 			if (itemInfoList.size() > 0)
-				categoryList.add(
-						new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
+				categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
 		}
 		session.setAttribute("categoryList", categoryList);
 		session.setAttribute("shop", shop);
@@ -167,7 +168,7 @@ public class ShopController {
 	}
 
 	@RequestMapping(value = "check.do", method = RequestMethod.POST)
-	public String check(HttpSession session) {
+	public String check(HttpSession session, HttpServletRequest request) {
 		@SuppressWarnings("unchecked")
 		Iterator<ItemListVO> itemListIt = ((List<ItemListVO>) session.getAttribute("categoryList")).iterator();
 		while (itemListIt.hasNext()) {
@@ -178,19 +179,32 @@ public class ShopController {
 				long categorySeq = itemInfo.getCategorySeq();
 				long itemSeq = itemInfo.getItemSeq();
 				long remain = itemInfo.getRemain();
-				long autoSup = itemInfo.getAutoSup();
+				long autoSup = Long.parseLong(request.getParameter(categorySeq + "_" + itemSeq + "_autoSup"));
 				if (autoSup < remain)
 					autoSup = remain;
-				StockVO stock = new StockVO();
-				stock.setShopSeq(shopSeq);
-				stock.setCategorySeq(categorySeq);
-				stock.setItemSeq(itemSeq);
-				stock.setTotal(autoSup);
-				stock.setRemain(remain);
-//				stockService.update(stock);
+				StockVO shopStock = new StockVO();
+				shopStock.setShopSeq(shopSeq);
+				shopStock.setCategorySeq(categorySeq);
+				shopStock.setItemSeq(itemSeq);
+				shopStock.setTotal(autoSup);
+				shopStock.setRemain(autoSup);
+
+				StockVO masterStock = new StockVO();
+				masterStock.setShopSeq(2);
+				masterStock.setCategorySeq(categorySeq);
+				masterStock.setItemSeq(itemSeq);
+				masterStock = stockService.select(masterStock);
+				masterStock.setRemain(masterStock.getRemain() - (autoSup - remain));
+				
+				
+				stockService.update(shopStock);
+				stockService.update(masterStock);
 			}
 		}
-		return "shopInfo";
+		ShopVO shop = (ShopVO) session.getAttribute("shop");
+		shop.setShopCount(shop.getShopCount() + 1);
+		shopService.update(shop);
+		return "forward:ShopInfo.do";
 	}
 
 	@RequestMapping(value = "updateShop.do", method = RequestMethod.POST)

@@ -126,6 +126,7 @@ public class BuyerController {
 			stock.setCategorySeq(buy.getCategory().getCategorySeq());
 			stock.setItemSeq(buy.getItem().getItemSeq());
 			stock = stockService.select(stock);
+			stock.setSold(stock.getSold() + buy.getBuyCnt());
 			stock.setRemain(stock.getRemain() - buy.getBuyCnt());
 			stockService.update(stock);
 		}

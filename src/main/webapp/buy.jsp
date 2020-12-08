@@ -6,27 +6,33 @@
 <head>
 <meta charset="UTF-8">
 <title>Buy</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <button>추가</button>
-	<form action="buyCheck.do" method="post">
-    	<input type="text" hidden="hidden" name="cnt" value="" id="cnt"/>
-    	<table class="insertItem">
-	        <tr>
-    	        <th>shop name</th>
-        	    <th>category name</th>
-            	<th>item name</th>
-            	<th>개수</th>
-        	</tr>
+	<button>추가</button>
+	<form action="buyCheck.do" name=fr method="post">
+		<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
+		<table class="insertItem">
+			<tr>
+				<th>shop name</th>
+				<th>category name</th>
+				<th>item name</th>
+				<th>개수</th>
+				<th>금액(원)</th>
+			</tr>
 		</table>
+		<span id="totalPrice">총 금액 : </span>
 		<input type="submit" value="구매">
 	</form>
 </body>
 <script>
+
 	var cnt = 1;
 	$('button').click(function() {
-		var html = '<tr><td><select id="shop_' + cnt + '" name="shop_' + cnt +'" onchange="shopChange(this)" required="required"><option value="">상점을 선택해주세요</option><c:forEach items="${shopInfoList }" var="shopInfo"><option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option></c:forEach></select></td><td><select id="category_' + cnt + '" name="category_' + cnt + '" onchange="categoryChange(this)" required="required"><option value="">카테고리를 선택해주세요</option></select></td><td><select id="item_'+ cnt +'" name="item_'+ cnt + '" required="required" onchange="itemChange(this)"><option value="">아이템을 선택해주세요</option></select></td><td><input type="number" name="total_'+ cnt++ + '" required="required" min = "1" max = "0" onblur="numberCheck(this);"/>'
+		var html = '<tr><td><select id="shop_' + cnt + '" name="shop_' + cnt +'" onchange="shopChange(this)" required="required"><option value="">상점을 선택해주세요</option><c:forEach items="${shopInfoList }" var="shopInfo"><option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option></c:forEach></select></td><td><select id="category_' + cnt + '" name="category_' + cnt + '" onchange="categoryChange(this)" required="required"><option value="">카테고리를 선택해주세요</option></select></td><td><select id="item_'+ cnt +'" name="item_'+ cnt + '" required="required" onchange="itemChange(this)"><option value="">아이템을 선택해주세요</option></select></td><td><input type="number" name="total_'+ cnt + '" required="required" min = "1" max = "0" onblur="numberCheck(this);"/>'
+		html += '<td><span name = "alertMoney_'+ cnt + '" ></span>';
+		html += '<span name = "price_'+ cnt++ + '"  hidden="hidden" ></span></td>';
 		html += '<td><button type="button" class="btnDel">Del</button>';
 		html += '</td></tr>';
 		$("input[name=cnt]").attr("value", cnt);
@@ -46,16 +52,19 @@
 			var itemName = new Array();
 			var itemSeq = new Array();
 			var itemRemain = new Array();
+			var itemPrice = new Array();
 			<c:forEach items="${categoryItem.itemList }" var="item">
 				itemName.push("${item.itemName}");
 				itemSeq.push("${item.itemSeq}");
 				itemRemain.push("${item.remain}");
+				itemPrice.push("${item.itemPrice}");
 			</c:forEach>
 			itemInfoList.push({
 				categorySeq : ${categoryItem.category.categorySeq},
 				nameList: itemName,
 				seqList: itemSeq,
-				remainList: itemRemain
+				remainList: itemRemain,
+				priceList : itemPrice
 			});
 		</c:forEach>
 		shopList.push({ 
@@ -65,7 +74,7 @@
 			itemList : itemInfoList
 		});
 	</c:forEach>
-
+	
 	function shopChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
 		var id = btn.id.charAt(btn.id.length-1);
@@ -88,7 +97,7 @@
 			target.appendChild(opt);
 		}
 	}
-
+	
 	function categoryChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
 		var id = btn.id.charAt(btn.id.length-1);
@@ -121,7 +130,7 @@
 			target2.appendChild(opt);
 		}
 	}
-
+	
 	function itemChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
 		var id = btn.id.charAt(btn.id.length-1);
@@ -140,10 +149,13 @@
 						var seq_List = category.seqList;
 						var seqLength = seq_List.length;
 						var remain_List = category.remainList;
+						var price_list = category.priceList;
 						for(var k=0;k<seqLength;k++){
 							var itemSeq = seq_List[k];
 							if(itemSeq == item_seq){
 								$("input[name = total_" + id + "]").attr("max", remain_List[k]);
+								$("span[name = alertMoney_" + id + "]").html(0);
+								$("span[name = price_" + id + "]").html(price_list[k]);
 							}
 						}
 					}
@@ -162,6 +174,19 @@
 			e.value = max;
 		if(value < min)
 			e.value = min;
+		
+		var index = e.name.charAt(e.name.length-1);
+		var price = parseInt($("span[name = price_" + index + "]").text());
+		$("span[name = alertMoney_" + index + "]").html(price * e.value);
+		
+		var total = 0;
+		for(i=1;i<=cnt;i++){
+			var price = parseInt($("span[name = alertMoney_" + i + "]").text());
+			if(!Number.isNaN(price))
+				total += price;
+		} 
+		$("#totalPrice").html("총 금액 : " + total);
+		
 	}
 	
 	
