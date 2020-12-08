@@ -7,17 +7,82 @@
 <meta charset="UTF-8">
 <title>Shop Info</title>
 <style>
-table, tr, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-table{
-	display: inline-block;
-}
+	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+ 	a:link {text-decoration: underline; color:black; font-size: 20px; margin-left: 15px;}
+	a:visited {text-decoration: underline; color:black; font-size: 20px; margin-left: 15px;}
+	a:hover {text-decoration: underline; color:#58C9B9; font-size: 20px; margin-left: 15px;}
+ 	
+	table, th, td {
+		border: 1px solid black;
+		border-collapse: collapse;
+		text-align: center;
+		margin-left: 10px;
+		padding-top: 5px;
+        padding-right: 10px;
+        padding-bottom: 5px;
+        padding-left: 10px;
+	}
+	
+	table {
+		display: inline-block;
+		padding-top: 0px;
+        padding-right: 0px;
+        padding-bottom: 0px;
+        padding-left: 0px;
+	}
+	
+	body {
+		font-family: 'Do Hyeon', sans-serif;
+		background-color: hsl(60, 100%, 98%);
+	}	
+	
+	h1 { 
+		font-size: 50px;
+		text-align: center; 
+	}
+	
+	.modi { 
+			height: 30px;
+			background: #58C9B9;
+			color: black;
+			font-size: 20px;
+			border: none;
+			border-radius: 25px;
+			cursor: pointer;
+			font-family : 'Do Hyeon', sans-serif;
+	}
+	
+	.modi:hover {
+		color: white;
+	}
+	
+	.requ { 
+			height: 25px;
+			background: hsl(60, 100%, 98%);
+			color: black;
+			font-size: 17px;			
+			cursor: pointer;
+			font-family : 'Do Hyeon', sans-serif;
+	}	
+	
+	.requ:hover {
+		background-color: grey;
+	}
+	
+	.requ:focus {
+		background-color: grey;
+		color: white;
+	}
+	
+	
+
 </style>
 </head>
 <body>
 	<h1>Shop Info</h1>
+	<br>
+	<div>
 	<table>
 		<tr>
 			<td>Shop Seq</td>
@@ -42,6 +107,8 @@ table{
 	</table>
 	<a href="graph.do">그래프</a>&nbsp;&nbsp;&nbsp;<a href="updateItem.do">상품 목록 수정</a>
 	<form action="updateShop.do" method="post">
+	<br>
+	</div>
 		<table>
 			<tr>
 				<th>카테고리</th>
@@ -63,7 +130,7 @@ table{
 						<td>${item.total }</td>
 						<td>${item.remain }</td>
 						<td>${item.necessity }</td>
-						<td><input type="number" name="need.${item.itemSeq }"
+						<td><input class="requ" type="number" name="need.${item.itemSeq }"
 							value="${item.necessity }" /></td>
 				</tr>
 				<tr>
@@ -79,8 +146,9 @@ table{
 			</tr>
 			</c:forEach>
 		</table>
-		<input type="submit" value="수정 확인" /><br />
+		<input class="modi" type="submit" value="수정 확인" /><br />
 	</form>
+	<br />
 	<a href="check.do">결산</a>
 	<br />
 	<a href="singOut.do">로그아웃</a>
