@@ -9,8 +9,6 @@
 </head>
 <body>
 <h1>재고 리스트 </h1>
-
-
 	<table>
 		<tr>
 			<th>카테고리 </th>

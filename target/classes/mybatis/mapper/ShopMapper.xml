@@ -46,7 +46,7 @@
 		SELECT * FROM shop WHERE shop_seq = #{shopSeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
-		select * from shop
+		select * from shop order by shop_seq
 	</select>
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM shop

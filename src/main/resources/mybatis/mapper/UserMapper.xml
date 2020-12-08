@@ -63,11 +63,7 @@
 		#{userId,jdbcType=VARCHAR}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
-		select user_id, user_email,
-		user_phone, user_password, shop_seq,
-		user_regdate, user_name,
-		user_address, user_level
-		from usertb
+		select * from usertb order by shop_seq
 	</select>
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM usertb

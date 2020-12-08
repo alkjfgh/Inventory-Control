@@ -130,8 +130,8 @@
 						<td>${item.total }</td>
 						<td>${item.remain }</td>
 						<td>${item.necessity }</td>
-						<td><input class="requ" type="number" name="need.${item.itemSeq }"
-							value="${item.necessity }" /></td>
+						<!-- input 나중에 삭제하고 결산으로 옮기기 -->
+						<td><input class="requ" type="number" name="need.${item.itemSeq }" value="${item.necessity }" /></td>
 				</tr>
 				<tr>
 			</c:forEach>
@@ -148,9 +148,12 @@
 		</table>
 		<input class="modi" type="submit" value="수정 확인" /><br />
 	</form>
-	<br />
-	<a href="check.do">결산</a>
-	<br />
-	<a href="singOut.do">로그아웃</a>
+	<c:set var="level" value="${user.userLevel }" />
+	<c:if test="${level eq 1}">
+		<br />
+		<a href="check.do">결산</a>
+		<br />
+		<a href="SignOut.do">로그아웃</a>
+	</c:if>
 </body>
 </html>

@@ -50,8 +50,16 @@ public class ShopController {
 	private ItemInfoService itemInfoService;
 
 	@RequestMapping(value = "ShopInfo.do", method = {RequestMethod.POST, RequestMethod.GET})
-	public String shopInfo(HttpSession session, Model model) {
-		UserVO user = (UserVO) session.getAttribute("user");
+	public String shopInfo(HttpSession session, Model model, HttpServletRequest request) {
+		long shopSeq = -1;
+		if(request.getParameter("shopSeq")!=null && !request.getParameter("shopSeq").equals(""))
+			shopSeq = Long.parseLong(request.getParameter("shopSeq"));
+		UserVO user = new UserVO();
+		if(shopSeq!=-1) {
+			user.setShopSeq(shopSeq);
+		} else {
+			user = (UserVO) session.getAttribute("user");
+		}
 		ShopVO shop = new ShopVO();
 		shop.setShopSeq(user.getShopSeq());
 		shop = shopService.select(shop);
@@ -64,7 +72,7 @@ public class ShopController {
 		shopCount = 3;
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryIt.next();
-			long shopSeq = shop.getShopSeq();
+			shopSeq = shop.getShopSeq();
 			long categorySeq = category.getCategorySeq();
 			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(shopSeq, categorySeq);
 			for (ItemInfoVO itemInfo : itemInfoList) {
@@ -73,11 +81,6 @@ public class ShopController {
 				double targetSold = total * shopCount;
 				double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
 				long autoSup = (long) Math.floor(total * percent) + 1;
-				System.out.println(total);
-				System.out.println(sold);
-				System.out.println(targetSold);
-				System.out.println(percent);
-				System.out.println(autoSup);
 				itemInfo.setAutoSup(autoSup);
 			}
 			if (itemInfoList.size() > 0)

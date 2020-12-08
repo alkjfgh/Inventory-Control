@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Buy</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <button>추가</button>
-	<form action="buy.do" method="post">
+	<form action="buyCheck.do" method="post">
     	<input type="text" hidden="hidden" name="cnt" value="" id="cnt"/>
     	<table class="insertItem">
 	        <tr>
@@ -26,8 +26,14 @@
 <script>
 	var cnt = 1;
 	$('button').click(function() {
+		var html = '<tr><td><select id="shop_' + cnt + '" name="shop_' + cnt +'" onchange="shopChange(this)" required="required"><option value="">상점을 선택해주세요</option><c:forEach items="${shopInfoList }" var="shopInfo"><option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option></c:forEach></select></td><td><select id="category_' + cnt + '" name="category_' + cnt + '" onchange="categoryChange(this)" required="required"><option value="">카테고리를 선택해주세요</option></select></td><td><select id="item_'+ cnt +'" name="item_'+ cnt + '" required="required" onchange="itemChange(this)"><option value="">아이템을 선택해주세요</option></select></td><td><input type="number" name="total_'+ cnt++ + '" required="required" min = "1" max = "0" onblur="numberCheck(this);"/>'
+		html += '<td><button type="button" class="btnDel">Del</button>';
+		html += '</td></tr>';
 		$("input[name=cnt]").attr("value", cnt);
-		$('.insertItem').append('<tr><td><select id="' + cnt + '" name="shop_' + cnt +'" onchange="shopChange(this)" required="required"><option value="">상점을 선택해주세요</option><c:forEach items="${shopInfoList }" var="shopInfo"><option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option></c:forEach></select></td><td><select id="category_' + cnt + '" name="category_' + cnt + '" onchange="categoryChange(this)" required="required"><option value="">카테고리를 선택해주세요</option></select></td><td><select id="item_'+ cnt +'" name="item_'+ cnt + '" required="required" onchange="itemChange(this)"><option value="">아이템을 선택해주세요</option></select></td><td><input type="number" name="total_'+ cnt++ + '" required="required" min = "0" max = "0"/></td></tr>');
+		$('.insertItem').append(html);
+		$(".insertItem").on("click", ".btnDel", function() {
+		    $(this).parent().parent().remove(); 
+		  }); 
 	});
 	var shopList = new Array();
 	<c:forEach items="${shopInfoList }" var="shopInfo">
@@ -62,7 +68,8 @@
 
 	function shopChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
-		var target = document.getElementById("category_" + btn.id);
+		var id = btn.id.charAt(btn.id.length-1);
+		var target = document.getElementById("category_" + id);
 		for (var i = 0; i < shopList.length; i++) {
 			if (e.value == shopList[i].shopSeq) {
 				var categoryNameList = shopList[i].cateName;
@@ -84,13 +91,22 @@
 
 	function categoryChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
-		btn.id = btn.id.charAt(btn.id.length-1);
-		var target1 = document.getElementById(btn.id);
-		var target2 = document.getElementById("item_" + btn.id);
-		for (var i = 0; i < shopList[target1.value - 1].itemList.length; i++) {
-			if (e.value == shopList[target1.value - 1].itemList[i].categorySeq) {
-				var itemNameList = shopList[target1.value - 1].itemList[i].nameList;
-				var itemSeqList = shopList[target1.value - 1].itemList[i].seqList;
+		var id = btn.id.charAt(btn.id.length-1);
+		var target1 = document.getElementById("shop_" + id);
+		var target2 = document.getElementById("item_" + id);
+		var index;
+		for (var i = 0; i < shopList.length; i++) {
+			if (target1.value == shopList[i].shopSeq) {
+				index = i;
+				break;
+			}
+		}
+		var length =  shopList[index].itemList.length;
+		var itemList = shopList[index].itemList;
+		for (var i = 0; i < length; i++) {
+			if (e.value == itemList[i].categorySeq) {
+				var itemNameList = itemList[i].nameList;
+				var itemSeqList = itemList[i].seqList;
 			}
 		}
 		target2.options.length = 0;
@@ -108,29 +124,26 @@
 
 	function itemChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
-		btn.id = btn.id.charAt(btn.id.length-1);
-		var shop_seq = $("select[name = shop_" + btn.id + "] option:selected").val();
-		var category_seq = $("select[name = category_" + btn.id + "] option:selected").val();
-		var item_seq = $("select[name = item_" + btn.id + "] option:selected").val();
+		var id = btn.id.charAt(btn.id.length-1);
+		var shop_seq = $("select[name = shop_" + id + "] option:selected").val();
+		var category_seq = $("select[name = category_" + id + "] option:selected").val();
+		var item_seq = $("select[name = item_" + id + "] option:selected").val();
 		var shopLength = shopList.length;
 		for(var i=0;i<shopLength;i++){
 			var shop = shopList[i];
-			if(shop.shopSeq = shop_seq){
+			if(shop.shopSeq == shop_seq){
 				var categoryList = shop.itemList;
 				var categoryLength = categoryList.length;
 				for(var j=0;j<categoryLength;j++){
 					var category = categoryList[j];
-					if(category.categorySeq = category_seq){
-						var seqList = category.seqList;
-						var seqLength = seqList.length;
-						var remainList = category.remainList;
+					if(category.categorySeq == category_seq){
+						var seq_List = category.seqList;
+						var seqLength = seq_List.length;
+						var remain_List = category.remainList;
 						for(var k=0;k<seqLength;k++){
-							var itemSeq = seqList[k];
-							if(itemSeq = item_seq){
-								console.log("total_" + btn.id);
-								console.log(remainList[k]);
-								console.log(remainList);
-								$("input[name = total_" + btn.id + "]").attr("max", remainList[k]);
+							var itemSeq = seq_List[k];
+							if(itemSeq == item_seq){
+								$("input[name = total_" + id + "]").attr("max", remain_List[k]);
 							}
 						}
 					}
@@ -138,11 +151,25 @@
 			}
 		}
 	}
+	function numberCheck(e){
+		var value = parseInt(e.value);
+		if(Number.isNaN(value)){
+			e.value = 1;
+		}
+		var max = parseInt(e.max);
+		var min = parseInt(e.min);
+		if(value > max)
+			e.value = max;
+		if(value < min)
+			e.value = min;
+	}
+	
+	
 </script>
 </html>
 <!-- 
 <td>
-    <select name="shop_' + cnt + '" id="' + cnt + '" onchange="shopChange(this)" required="required">
+    <select name="shop_' + cnt + '" id="shop_' + cnt + '" onchange="shopChange(this)" required="required">
     <c:forEach items="${shopInfoList }" var="shopInfo">
         <option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option>
     </c:forEach>

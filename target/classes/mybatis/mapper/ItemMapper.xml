@@ -20,7 +20,9 @@
 		<result column="item_img" jdbcType="BLOB" property="itemImg" />
 	</resultMap>
 	<delete id="delete" parameterType="item">
-		delete from item where item_seq = #{itemSeq,jdbcType=DECIMAL} and category_seq = #{categorySeq,jdbcType=DECIMAL}
+		delete from item where
+		item_seq = #{itemSeq,jdbcType=DECIMAL} and category_seq =
+		#{categorySeq,jdbcType=DECIMAL}
 	</delete>
 	<delete id="deleteAll">
 		delete from item
@@ -30,7 +32,9 @@
 		category_seq, item_name, item_price, item_regdate, item_fwdate,
 		item_desc, item_maker, item_img)
 		values
-		((select seq from (SELECT IFNULL(MAX(item_seq), 0) + 1 as seq from item where category_seq = #{categorySeq,jdbcType=DECIMAL}) tmp),
+		((select seq from (SELECT
+		IFNULL(MAX(item_seq), 0) + 1 as seq from item where category_seq =
+		#{categorySeq,jdbcType=DECIMAL}) tmp),
 		#{categorySeq,jdbcType=DECIMAL},
 		#{itemName,jdbcType=VARCHAR},
 		#{itemPrice,jdbcType=DECIMAL},
@@ -62,7 +66,8 @@
 	<select id="select" parameterType="item"
 		resultMap="BaseResultMap">
 		select * from item where item_seq =
-		#{itemSeq,jdbcType=DECIMAL}
+		#{itemSeq,jdbcType=DECIMAL} and category_seq =
+		#{categorySeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
 		select * from item
@@ -70,10 +75,13 @@
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM item
 	</select>
-	<select id="selectListByCategory" resultMap="BaseResultMap" parameterType="category">
-	SELECT * FROM item WHERE category_seq = #{categorySeq,jdbcType=DECIMAL}
+	<select id="selectListByCategory" resultMap="BaseResultMap"
+		parameterType="category">
+		SELECT * FROM item WHERE category_seq = #{categorySeq,jdbcType=DECIMAL}
 	</select>
-	<select id="selectCntByCategory" resultType="int" parameterType="category">
-	SELECT COUNT(*) FROM item WHERE category_seq = #{categorySeq,jdbcType=DECIMAL}
+	<select id="selectCntByCategory" resultType="int"
+		parameterType="category">
+		SELECT COUNT(*) FROM item WHERE category_seq =
+		#{categorySeq,jdbcType=DECIMAL}
 	</select>
 </mapper>

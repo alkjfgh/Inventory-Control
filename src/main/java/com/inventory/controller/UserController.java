@@ -21,7 +21,15 @@ public class UserController {
 	private UserService service;
 
 	@RequestMapping(value = "SignIn.do", method = RequestMethod.GET)
-	public String signInView() {
+	public String signInView(HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		if (user != null) {
+			int level = user.getUserLevel();
+			if (level == 1)
+				return "redirect:ShopInfo.do";
+			else if (level == 9)
+				return "master";
+		}
 		return "signIn";
 	}
 
@@ -31,7 +39,8 @@ public class UserController {
 		if (get != null && get.getUserPassword().equals(vo.getUserPassword())) {
 			System.out.println("success");
 			session.setAttribute("user", get);
-			if(get.getUserLevel() == 9) return "master";
+			if (get.getUserLevel() == 9)
+				return "master";
 			return "redirect:ShopInfo.do";
 		} else {
 			System.out.println("failed");
@@ -41,7 +50,15 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "SignUp.do", method = RequestMethod.GET)
-	public String signUpView() {
+	public String signUpView(HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		if (user != null) {
+			int level = user.getUserLevel();
+			if (level == 1)
+				return "redirect:ShopInfo.do";
+			else if (level == 9)
+				return "master";
+		}
 		return "signUp";
 	}
 
@@ -51,6 +68,12 @@ public class UserController {
 		service.insert(vo);
 		session.setAttribute("user", vo);
 		return "insertShop";
+	}
+
+	@RequestMapping(value = "SignOut.do", method = RequestMethod.GET)
+	public String signOut(HttpSession session) {
+		session.invalidate();
+		return "index";
 	}
 
 	public void alert(String msg, HttpServletResponse response) throws IOException {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
+import com.inventory.app.domain.ItemInfoVO;
 import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
@@ -171,8 +172,9 @@ public class MasterController {
 		while (categoryList.hasNext()) {
 			CategoryVO category = categoryList.next();
 			long categorySeq = category.getCategorySeq();
-			totalItemList.add(new ItemListVO(category, itemService.selectCntByCategory(category),
-					itemInfoService.selectList(0l, categorySeq)));
+			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(0l, categorySeq);
+			if(itemInfoList.size()>0)
+				totalItemList.add(new ItemListVO(category, itemService.selectCntByCategory(category), itemInfoList));
 		}
 		model.addAttribute("totalItemList", totalItemList);
 		return "totalItem";

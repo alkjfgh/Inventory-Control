@@ -109,19 +109,18 @@
 				</tr>
 			</thead>
 			<tbody>
-
-				<c:forEach items="${shopList }" var="shop">
-					<form action="shopInfo.do">
-						<tr>
-							<td>${shop.shopSeq }</td>
-							<td>${shop.shopName }</td>
-							<td>${shop.shopPhone }</td>
-							<td>${shop.shopAddress }</td>
-							<td>${shop.shopRegdate }</td>
-							<td><input class="btn area" type="submit" value="상세보기" /></td>
-						</tr>
-					</form>
-				</c:forEach>
+			<c:forEach items="${shopList }" var="shop">
+				<tr>
+					<td>${shop.shopSeq }</td>
+					<td>${shop.shopName }</td>
+					<td>${shop.shopPhone }</td>
+					<td>${shop.shopAddress }</td>
+					<td>${shop.shopRegdate }</td>
+					<td>
+						<a class="btn area" href="ShopInfo.do?shopSeq=${shop.shopSeq }">상세보기</a>
+					</td>
+				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 		<a href="master.do">관리자페이지</a>
