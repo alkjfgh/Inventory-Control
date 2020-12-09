@@ -29,7 +29,10 @@ import com.inventory.app.service.StockService;
 import com.inventory.app.service.UserService;
 
 @Controller
+@RequestMapping("/master/")
 public class MasterController {
+
+	private final static String PATH = "/master/";
 
 	@Autowired
 	private CategoryService categoryService;
@@ -48,15 +51,19 @@ public class MasterController {
 
 	@Autowired
 	private StockService stockService;
+	@RequestMapping(value = "master.do")
+	public String masterView() {
+		return PATH + "master";
+	}
 
-	@RequestMapping(value = "/updateCategory.do")
+	@RequestMapping(value = "updateCategory.do")
 	public String updateCategoryView(Model model) {
 		List<CategoryVO> categoryList = categoryService.selectList(null);
 		model.addAttribute("categoryList", categoryList);
-		return "updateCategory";
+		return PATH + "updateCategory";
 	}
 
-	@RequestMapping(value = "/masterUpdateItem.do")
+	@RequestMapping(value = "masterUpdateItem.do")
 	public String masterUpdateItemView(Model model) {
 		List<CategoryVO> categoryList = categoryService.selectList(null);
 		model.addAttribute("categoryList", categoryList);
@@ -67,15 +74,15 @@ public class MasterController {
 			CategoryVO category = categoryIt.next();
 			List<ItemVO> itemInfoList = itemService.selectListByCategory(category);
 			int cnt = itemService.selectCntByCategory(category);
-			if(cnt > 0)
+			if (cnt > 0)
 				categoryItemList.add(new CategoryItemVO(category, cnt, itemInfoList));
 		}
 		model.addAttribute("categoryItemList", categoryItemList);
 
-		return "masterUpdateItem";
+		return PATH + "masterUpdateItem";
 	}
 
-	@RequestMapping(value = "/deleteCategory.do", method = RequestMethod.POST)
+	@RequestMapping(value = "deleteCategory.do", method = RequestMethod.POST)
 	public String deleteCategory(HttpServletRequest request) {
 //		나중에 매장에 아이템이 남아았는지 하나하나 검사해야함
 		int category_size = categoryService.selectCnt();
@@ -92,10 +99,10 @@ public class MasterController {
 			if (category != null)
 				categoryService.delete(category);
 		}
-		return "master";
+		return "redirect:" + PATH + "master.do";
 	}
 
-	@RequestMapping(value = "/insertCategory.do", method = RequestMethod.POST)
+	@RequestMapping(value = "insertCategory.do", method = RequestMethod.POST)
 	public String insertCategory(HttpServletRequest request) {
 		int cnt = Integer.parseInt(request.getParameter("cnt"));
 		for (int i = 1; i <= cnt; i++) {
@@ -106,10 +113,10 @@ public class MasterController {
 				categoryService.insert(category);
 			}
 		}
-		return "master";
+		return "redirect:" + PATH + "master.do";
 	}
 
-	@RequestMapping(value = "/masterInsertItem.do", method = RequestMethod.POST)
+	@RequestMapping(value = "masterInsertItem.do", method = RequestMethod.POST)
 	public String masterInsertItem(HttpServletRequest request) {
 		int cnt = Integer.parseInt(request.getParameter("cnt"));
 		for (int i = 1; i <= cnt; i++) {
@@ -125,10 +132,10 @@ public class MasterController {
 			System.out.println(item);
 			itemService.insert(item);
 		}
-		return "master";
+		return "redirect:" + PATH + "master.do";
 	}
 
-	@RequestMapping(value = "/masterDeleteItem.do", method = RequestMethod.POST)
+	@RequestMapping(value = "masterDeleteItem.do", method = RequestMethod.POST)
 	public String masterDeleteItem(HttpServletRequest request) {
 		int size1 = categoryService.selectCnt();
 		for (int i = 1; i <= size1; i++) {
@@ -140,30 +147,30 @@ public class MasterController {
 				String checkBox = request.getParameter(i + "_itemSeq_" + j);
 				if (checkBox != null && checkBox.equals("on")) {
 					ItemVO item = new ItemVO();
-					item.setCategorySeq((long)i);
-					item.setItemSeq((long)j);
+					item.setCategorySeq((long) i);
+					item.setItemSeq((long) j);
 					itemService.delete(item);
 				}
 			}
 		}
-		return "master";
+		return "redirect:" + PATH + "master.do";
 	}
 
-	@RequestMapping(value = "/shopList.do")
+	@RequestMapping(value = "shopList.do", method = RequestMethod.GET)
 	public String shopList(HttpServletRequest request, Model model) {
 		List<ShopVO> shopList = shopService.selectList(null);
 		model.addAttribute("shopList", shopList);
-		return "shopList";
+		return PATH + "shopList";
 	}
 
-	@RequestMapping(value = "/ownerList.do")
+	@RequestMapping(value = "ownerList.do")
 	public String ownerList(Model model) {
 		List<UserVO> userList = userService.selectList(null);
 		model.addAttribute("userList", userList);
-		return "ownerList";
+		return PATH + "ownerList";
 	}
 
-	@RequestMapping(value = "/totalItem.do")
+	@RequestMapping(value = "totalItem.do")
 	public String totalItem(Model model, HttpSession session) {
 		StockVO vo = new StockVO();
 		vo.setShopSeq(0l);
@@ -173,10 +180,10 @@ public class MasterController {
 			CategoryVO category = categoryList.next();
 			long categorySeq = category.getCategorySeq();
 			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(0l, categorySeq);
-			if(itemInfoList.size()>0)
+			if (itemInfoList.size() > 0)
 				totalItemList.add(new ItemListVO(category, itemService.selectCntByCategory(category), itemInfoList));
 		}
 		model.addAttribute("totalItemList", totalItemList);
-		return "totalItem";
+		return PATH + "totalItem";
 	}
 }

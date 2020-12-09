@@ -23,6 +23,7 @@ import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopInfoVO;
 import com.inventory.app.domain.ShopVO;
+import com.inventory.app.domain.StockVO;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemService;
@@ -30,7 +31,10 @@ import com.inventory.app.service.ShopService;
 import com.inventory.app.service.StockService;
 
 @Controller
+@RequestMapping("/buy/")
 public class BuyerController {
+
+	private final static String PATH = "/buy/";
 
 	@Autowired
 	private ShopService shopService;
@@ -80,14 +84,14 @@ public class BuyerController {
 		}
 
 		model.addAttribute("shopInfoList", shopInfoList);
-		return "buy";
+		return PATH + "buy";
 	}
 
 	@RequestMapping(value = "buyCheck.do", method = RequestMethod.POST)
 	public String buyCheckView(HttpServletRequest request, HttpSession session) {
-		String cntCheck = request.getParameter("cnt");
-		if (cntCheck == null || cntCheck.equals(""))
-			return "index";
+		String cntCheck = request.getParameter("cntCheck");
+		if (cntCheck == null || cntCheck.equals("") || Integer.parseInt(cntCheck) < 1)
+			return "redirect:/home.do";
 		int cnt = Integer.parseInt(cntCheck);
 		List<BuyCheckVO> buyList = new ArrayList<BuyCheckVO>();
 		Set<ItemVO> duplicateCheck = new HashSet<ItemVO>();
@@ -100,7 +104,7 @@ public class BuyerController {
 				long categorySeq = Long.parseLong(request.getParameter("category_" + i));
 				long itemSeq = Long.parseLong(request.getParameter("item_" + i));
 				long buyCnt = Long.parseLong(request.getParameter("total_" + i));
-				if (shop.getShopSeq()!= null && shopSeq != shop.getShopSeq()) {
+				if (shop.getShopSeq() != null && shopSeq != shop.getShopSeq()) {
 					if (itemList.size() > 0) {
 						System.out.println(itemList);
 						buyList.add(new BuyCheckVO(shop, itemList));
@@ -125,7 +129,7 @@ public class BuyerController {
 			buyList.add(new BuyCheckVO(shop, itemList));
 		}
 		session.setAttribute("buyList", buyList);
-		return "buyCheck";
+		return PATH + "buyCheck";
 	}
 
 	@RequestMapping(value = "buyComplete.do", method = RequestMethod.POST)
@@ -133,20 +137,28 @@ public class BuyerController {
 		@SuppressWarnings("unchecked")
 		Iterator<BuyCheckVO> buyIt = ((List<BuyCheckVO>) session.getAttribute("buyList")).iterator();
 		while (buyIt.hasNext()) {
-//			BuyCheckVO buy = buyIt.next();
-//			StockVO stock = new StockVO();
-//			stock.setShopSeq(buy.getShop().getShopSeq());
-//			stock.setCategorySeq(buy.getCategory().getCategorySeq());
-//			stock.setItemSeq(buy.getItem().getItemSeq());
-//			stock = stockService.select(stock);
-//			stock.setSold(stock.getSold() + buy.getBuyCnt());
-//			if(stock.getRemain() >= buy.getBuyCnt()) {
-//				stock.setRemain(stock.getRemain() - buy.getBuyCnt());
-//				stockService.update(stock);
-//			}
+			BuyCheckVO buy = buyIt.next();
+			long shopSeq = buy.getShop().getShopSeq();
+			Iterator<BuyItemVO> buyItemIt = buy.getBuyItemList().iterator();
+			while (buyItemIt.hasNext()) {
+				BuyItemVO buyItem = buyItemIt.next();
+				ItemVO item = buyItem.getItem();
+				long buyCnt = buyItem.getBuyCnt();
+				StockVO stock = new StockVO();
+				stock.setShopSeq(shopSeq);
+				stock.setCategorySeq(item.getCategorySeq());
+				stock.setItemSeq(item.getItemSeq());
+				stock = stockService.select(stock);
+				stock.setSold(stock.getSold() + buyCnt);
+				if (stock.getRemain() >= buyCnt) {
+					stock.setRemain(stock.getRemain() - buyCnt);
+					stockService.update(stock);
+				}
+			}
+
 		}
 
 		session.removeAttribute("buyList");
-		return "forward:buy.do";
+		return "redirect:" + PATH + "buy.do";
 	}
 }

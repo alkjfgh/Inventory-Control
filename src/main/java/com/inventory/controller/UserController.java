@@ -15,7 +15,10 @@ import com.inventory.app.domain.UserVO;
 import com.inventory.app.service.UserService;
 
 @Controller
+@RequestMapping("/user/")
 public class UserController {
+
+	private final static String PATH = "/user/";
 
 	@Autowired
 	private UserService service;
@@ -26,11 +29,11 @@ public class UserController {
 		if (user != null) {
 			int level = user.getUserLevel();
 			if (level == 1)
-				return "redirect:ShopInfo.do";
+				return "redirect:/shop/ShopInfo.do";
 			else if (level == 9)
-				return "master";
+				return "redirect:/master/master.do";
 		}
-		return "signIn";
+		return PATH + "signIn";
 	}
 
 	@RequestMapping(value = "SignIn.do", method = RequestMethod.POST)
@@ -40,12 +43,12 @@ public class UserController {
 			System.out.println("success");
 			session.setAttribute("user", get);
 			if (get.getUserLevel() == 9)
-				return "master";
-			return "redirect:ShopInfo.do";
+				return "redirect:/master/master.do";
+			return "redirect:/shop/ShopInfo.do";
 		} else {
 			System.out.println("failed");
 			alert("잘못된 아이디 또는 비밀번호 입니다.", response);
-			return "signIn";
+			return PATH + "signIn";
 		}
 	}
 
@@ -55,11 +58,11 @@ public class UserController {
 		if (user != null) {
 			int level = user.getUserLevel();
 			if (level == 1)
-				return "redirect:ShopInfo.do";
+				return "redirect:/shop/ShopInfo.do";
 			else if (level == 9)
-				return "master";
+				return "redirect:/master/master.do";
 		}
-		return "signUp";
+		return PATH + "signUp";
 	}
 
 	@RequestMapping(value = "SignUp.do", method = RequestMethod.POST)
@@ -67,13 +70,13 @@ public class UserController {
 		vo.setUserLevel((short) 1);
 		service.insert(vo);
 		session.setAttribute("user", vo);
-		return "insertShop";
+		return "redirect:" + PATH + "insertShop";
 	}
 
 	@RequestMapping(value = "SignOut.do", method = RequestMethod.GET)
 	public String signOut(HttpSession session) {
 		session.invalidate();
-		return "index";
+		return "redirect:/home.do";
 	}
 
 	public void alert(String msg, HttpServletResponse response) throws IOException {

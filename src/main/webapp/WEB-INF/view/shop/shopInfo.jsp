@@ -118,7 +118,7 @@
 		<br />
 		<a href="check.do">결산</a>
 		<br />
-		<a href="SignOut.do">로그아웃</a>
+		<a href="../user/SignOut.do">로그아웃</a>
 	</c:if>
 </body>
 </html>

@@ -34,9 +34,9 @@ h1{
 <body class="signin">
 	<h1>Index</h1>
 	<div>
-		<a href="SignIn.do">Sign in</a>
-		<a href="SignUp.do">Sign up</a>
-		<a href="buy.do">buy</a>
+		<a href="user/SignIn.do">Sign in</a>
+		<a href="user/SignUp.do">Sign up</a>
+		<a href="buy/buy.do">buy</a>
 	</div>
 </body>
 </html>

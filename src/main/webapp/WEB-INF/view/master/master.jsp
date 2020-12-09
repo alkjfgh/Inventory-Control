@@ -21,10 +21,8 @@
         }
         .menu{
             text-align: center; 
-            margin-top: 200px;
-
+            margin-top: 150px;
         }
-
         .menu li {
             text-align: center;
             list-style: none;
@@ -43,9 +41,6 @@
             transition: 0.7s all;
             padding: 10px 20px;
             text-transform: uppercase;
-
-			
-
         }
         .menu li a::before{
             content: '';
@@ -55,28 +50,28 @@
             bottom: 0;
             right: 350px;
             transition: 0.7s all;
-
         }
         .menu li a:hover::before{
             right: 0;
         }
         .logout{
-			width: 100%;
-			margin : 0 auto;
-			padding: 0;
+			margin: 0 auto;
 			text-align: center;
-			
         }
         .logout a{
-        	text-decoration: none;
 			font-size: 24px;
 			font-family:'Do Hyeon', sans-serif;
+            position: fixed;
+			text-decoration: none;
 			color: black;
+			width: 100px;
+            height: 50px;
+            bottom: 20px;
         }
         .logout a:hover{
         	color: green;
         	transition: 0.7s all;
-        }
+        } 
     </style>
 </head>
 <body>
@@ -84,28 +79,22 @@
     <ul class="menu">
         <li>
             <a href="shopList.do">매장리스트</a>
-    
         </li>
         <li>
             <a href="ownerList.do">회원목록(점주)</a>
-    
         </li>
         <li>
             <a href="updateCategory.do">물품 카테고리 추가 삭제</a>
-    
         </li>
         <li>
             <a href="masterUpdateItem.do">물품 추가 삭제</a>
-    
         </li>
         <li>
             <a href="totalItem.do">총 재고현황</a>
-    
         </li>
-
     </ul>
     <div class="logout">
-    <a href="SignOut.do">로그아웃</a>
+    	<a href="../user/SignOut.do">로그아웃</a>
     </div>
 </body>
 </html>

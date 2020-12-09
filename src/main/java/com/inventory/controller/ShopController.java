@@ -29,7 +29,10 @@ import com.inventory.app.service.StockService;
 import com.inventory.app.service.UserService;
 
 @Controller
+@RequestMapping("/shop/")
 public class ShopController {
+
+	private final static String PATH = "/shop/";
 
 	@Autowired
 	private ShopService shopService;
@@ -86,11 +89,12 @@ public class ShopController {
 				}
 			}
 			if (itemInfoList.size() > 0)
-				categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
+				categoryList.add(
+						new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
 		}
 		session.setAttribute("categoryList", categoryList);
 		session.setAttribute("shop", shop);
-		return "shopInfo";
+		return PATH + "shopInfo";
 	}
 
 	@RequestMapping(value = "updateItem.do")
@@ -122,7 +126,7 @@ public class ShopController {
 			}
 		}
 		session.setAttribute("categoryItemList", categoryItemList);
-		return "updateItem";
+		return PATH + "updateItem";
 	}
 
 	@RequestMapping(value = "insertItem.do", method = RequestMethod.POST)
@@ -140,7 +144,7 @@ public class ShopController {
 			stock.setTotal(total);
 			stockService.insert(stock);
 		}
-		return "redirect:ShopInfo.do";
+		return "redirect:" + PATH + "ShopInfo.do";
 	}
 
 	@RequestMapping(value = "deleteItem.do", method = RequestMethod.POST)
@@ -164,7 +168,12 @@ public class ShopController {
 				}
 			}
 		}
-		return "redirect:ShopInfo.do";
+		return "redirect:" + PATH + "ShopInfo.do";
+	}
+
+	@RequestMapping(value = "check.do", method = RequestMethod.GET)
+	public String checkView() {
+		return PATH + "check";
 	}
 
 	@RequestMapping(value = "check.do", method = RequestMethod.POST)
@@ -195,8 +204,7 @@ public class ShopController {
 				masterStock.setItemSeq(itemSeq);
 				masterStock = stockService.select(masterStock);
 				masterStock.setRemain(masterStock.getRemain() - (autoSup - remain));
-				
-				
+
 				stockService.update(shopStock);
 				stockService.update(masterStock);
 			}
@@ -204,7 +212,7 @@ public class ShopController {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		shop.setShopCount(shop.getShopCount() + 1);
 		shopService.update(shop);
-		return "forward:ShopInfo.do";
+		return "redirect:" + PATH + "ShopInfo.do";
 	}
 
 	@RequestMapping(value = "updateShop.do", method = RequestMethod.POST)
@@ -217,13 +225,13 @@ public class ShopController {
 //		for(int i=1;i<=length;i++) {
 //			System.out.println(request.getParameter("need."+i));
 //		}
-		return "shopInfo";
+		return PATH + "shopInfo";
 	}
 
 	@RequestMapping(value = "graph.do")
 	public String graph(HttpServletRequest request, HttpSession session) {
 //		List<ItemListVO> categoryList = (List<ItemListVO>) session.getAttribute("categoryList");
-		return "graph";
+		return PATH + "graph";
 	}
 
 	@RequestMapping(value = "insertShop.do")
@@ -232,9 +240,7 @@ public class ShopController {
 		user = userService.select(user);
 		session.setAttribute("user", user);
 		vo.setShopSeq(user.getShopSeq());
-		System.out.println(user);
-		System.out.println(vo);
 		shopService.insert(vo);
-		return "forward:ShopInfo.do";
+		return "redirect:" + PATH + "ShopInfo.do";
 	}
 }

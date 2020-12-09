@@ -13,6 +13,7 @@
 	<button>추가</button>
 	<form action="buyCheck.do" name=fr method="post">
 		<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
+		<input type="text" hidden="hidden" name="cntCheck" value="" id="cntCheck" />
 		<table class="insertItem">
 			<tr>
 				<th>shop name</th>
@@ -29,17 +30,21 @@
 <script>
 
 	var cnt = 1;
+	var cntCheck = 0;
 	$('button').click(function() {
+		cntCheck++;
 		var html = '<tr><td><select id="shop_' + cnt + '" name="shop_' + cnt +'" onchange="shopChange(this)" required="required"><option value="">상점을 선택해주세요</option><c:forEach items="${shopInfoList }" var="shopInfo"><option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option></c:forEach></select></td><td><select id="category_' + cnt + '" name="category_' + cnt + '" onchange="categoryChange(this)" required="required"><option value="">카테고리를 선택해주세요</option></select></td><td><select id="item_'+ cnt +'" name="item_'+ cnt + '" required="required" onchange="itemChange(this)"><option value="">아이템을 선택해주세요</option></select></td><td><input type="number" name="total_'+ cnt + '" required="required" min = "1" max = "0" onblur="numberCheck(this);"/>'
 		html += '<td><span name = "alertMoney_'+ cnt + '" ></span>';
 		html += '<span name = "price_'+ cnt++ + '"  hidden="hidden" ></span></td>';
 		html += '<td><button type="button" class="btnDel">Del</button>';
 		html += '</td></tr>';
 		$("input[name=cnt]").attr("value", cnt);
+		$("input[name=cntCheck]").attr("value", cntCheck);
 		$('.insertItem').append(html);
 		$(".insertItem").on("click", ".btnDel", function() {
-		    $(this).parent().parent().remove(); 
-		  }); 
+		    $(this).parent().parent().remove();
+		    cntCheck--;
+		 });
 	});
 	var shopList = new Array();
 	<c:forEach items="${shopInfoList }" var="shopInfo">
