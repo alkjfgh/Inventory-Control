@@ -54,6 +54,8 @@ public class BuyerController {
 		while (shopIt.hasNext()) {
 			List<ItemListVO> categoryList = new ArrayList<ItemListVO>();
 			ShopVO shop = shopIt.next();
+			if(shop.getShopSeq() == 2)
+				shop = shopIt.next();
 			long shopSeq = shop.getShopSeq();
 			int categorySize = categoryService.selectCnt();
 			for (int i = 1; i <= categorySize; i++) {
@@ -127,11 +129,13 @@ public class BuyerController {
 			stock.setItemSeq(buy.getItem().getItemSeq());
 			stock = stockService.select(stock);
 			stock.setSold(stock.getSold() + buy.getBuyCnt());
-			stock.setRemain(stock.getRemain() - buy.getBuyCnt());
-			stockService.update(stock);
+			if(stock.getRemain() >= buy.getBuyCnt()) {
+				stock.setRemain(stock.getRemain() - buy.getBuyCnt());
+				stockService.update(stock);
+			}
 		}
 		
 		session.removeAttribute("buyList");
-		return "index";
+		return "forward:buy.do";
 	}
 }

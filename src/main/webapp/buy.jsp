@@ -137,6 +137,7 @@
 		var shop_seq = $("select[name = shop_" + id + "] option:selected").val();
 		var category_seq = $("select[name = category_" + id + "] option:selected").val();
 		var item_seq = $("select[name = item_" + id + "] option:selected").val();
+		$("input[name = total_" + id + "]").val(0);
 		var shopLength = shopList.length;
 		for(var i=0;i<shopLength;i++){
 			var shop = shopList[i];
@@ -162,6 +163,13 @@
 				}
 			}
 		}
+		var total = 0;
+		for(i=1;i<=cnt;i++){
+			var price = parseInt($("span[name = alertMoney_" + i + "]").text());
+			if(!Number.isNaN(price))
+				total += price;
+		} 	
+		$("#totalPrice").html("총 금액 : " + total);
 	}
 	function numberCheck(e){
 		var value = parseInt(e.value);
@@ -184,7 +192,7 @@
 			var price = parseInt($("span[name = alertMoney_" + i + "]").text());
 			if(!Number.isNaN(price))
 				total += price;
-		} 
+		} 	
 		$("#totalPrice").html("총 금액 : " + total);
 		
 	}

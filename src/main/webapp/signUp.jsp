@@ -10,7 +10,7 @@
 	<h1>Sign Up</h1>
 	
 
-	<form action="SignUp.do"  name=fr method="post" onsubmit="fun2()">
+	<form action="SignUp.do" name=fr method="post" onsubmit="return fun2()">
 		<table width=750 border="1px" align=center>
 			<tr>
 				<th colspan="2" bgcolor="#E4F7BA">Sign Up</th>
@@ -18,8 +18,8 @@
 			<tr>
 				<td>아이디</td>
 				<td><input type="text" name="userId" onkeyup="fun3()">
-				<span id="alert_text"><span style="color: #777">아이디를 입력해주세요</span></span>
-					</td>
+					<span id="alert_text"><span style="color: #777">아이디를 입력해주세요</span></span>
+				</td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>
@@ -55,8 +55,8 @@
 			</tr>
 		</table>
 		<p align=center>
-			<input type="submit" value="회원 가입"  onclick="fun2()"> <input type="reset"
-				name="reset" value="다시 입력">
+			<input type="submit" value="회원 가입">
+			<input type="reset" name="reset" value="다시 입력">
 		</p>
 	</form>
 
@@ -65,7 +65,6 @@
 <script>
 	var phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/;
 	var emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
     function fun1() {
         var obj = document.fr;        
         obj.id.focus();
@@ -79,71 +78,52 @@
         if(obj.userId.value == '') {
             alert('아이디를 입력하세요');
             obj.userId.focus();
-            obj.action = "SignUpView.do";
-            obj.method = "get";
             return false;
         }
         if (obj.userId.value.length < 4 || obj.userId.value.length > 12) {
             alert('아이디는 4~12자 사이로 입력하세요');
             obj.userId.value = "";
             obj.userId.focus();
-            obj.action = "SignUpView.do";
-            	obj.method = "get";
             return false;
         }
         if(obj.userPassword.value == '') {
             alert('패스워드를 입력하세요');
             obj.userPassword.focus();
-            obj.action = "SignUpView.do";
-            	obj.method = "get"
             return false;
         }
         if(obj.userPassword1.value == '' || obj.userPassword1.value != obj.userPassword.value) {
             alert('패스워드를 정확히 입력해주세요');
             obj.userPassword1.value = "";
             obj.userPassword1.focus();
-            obj.action = "SignUpView.do";
-            	obj.method = "get";
             return false;
         }
         if(obj.userEmail.value == '') {
             alert('이메일을 입력해주세요');
             obj.userEmail.focus();
-            obj.action = "SignUpView.do";
-            	obj.method = "get";
             return false;
         }
         if(emailRegExp.test(obj.userEmail.value)==false) {
             alert('이메일을 알맞게 입력해주세요.');
             obj.userEmail.focus();
-            obj.action = "SignUpView.do";
-            	obj.method = "get";
             return false;
         }
         if(obj.userName.value == '') {
             alert('이름을 입력하세요');
             obj.userName.focus();
-            obj.action = "SignUpView.do";
-            	obj.method = "get";
             return false;
         }
         if(obj.userPhone.value == '') {
             alert('핸드폰번호를 입력해주세요');
             obj.userPhone.focus();
-            obj.action = "SignUpView.do";
-            	obj.method = "get";
             return false;
         }
         if(phoneRegExp.test(obj.userPhone.value)==false) {
             alert('핸드폰번호를 알맞게 입력해주세요.');
             obj.userPhone.focus();
-            obj.action = "SignUpView.do";
-            	obj.method = "get";
             return false;
         }
         
- 
-        obj.submit();
+ 		obj.submit();
         obj.reset();
         document.getElementById("alert_text").innerHTML=('<span style="color: #777">아이디를 입력해주세요</span>');    
         document.getElementById("alert_pwd").innerHTML=('<span style="color: #777">패스워드를 한번 더 입력해주세요</span>');        
