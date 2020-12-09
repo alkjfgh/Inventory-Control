@@ -223,7 +223,6 @@ public class ShopController {
 	@RequestMapping(value = "graph.do")
 	public String graph(HttpServletRequest request, HttpSession session) {
 //		List<ItemListVO> categoryList = (List<ItemListVO>) session.getAttribute("categoryList");
-
 		return "graph";
 	}
 

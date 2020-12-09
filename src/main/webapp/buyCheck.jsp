@@ -82,9 +82,9 @@
 		<a id="arrowLeft" class="arrows" href="#"><img src="img/arrowLeft.png" alt=""></a>
 		<a id="arrowRight" class="arrows" href="#"><img src="img/arrowRight.png" alt=""></a>
 		<ul id="receipt_container">
+		<c:forEach items="${buyList }" var="buyCheck">
 			<li class="receipt_li">
 				<div>
-					<c:forEach items="${buyList }" var="buyCheck">
 					<table>
 						<tr>
 							<td>상점 이름:  </td>
@@ -102,23 +102,23 @@
 					<hr />
 					<table>
 						<tr>
-							<th>카테고리 이름</th>
 							<th>아이템 이름</th>
 							<th>단가</th>
 							<th>수량</th>
 							<th>금액</th>
 						</tr>
+						<c:forEach items="${buyCheck.buyItemList }" var="item">
 						<tr>
-							<td>${buyCheck.category.categoryName }</td>
-							<td>${buyCheck.item.itemName }</td>
-							<td>${buyCheck.item.itemPrice }</td>
-							<td>${buyCheck.buyCnt}</td>
-							<td><span class = "total">${buyCheck.item.itemPrice*buyCheck.buyCnt}</span></td>
+							<td>${item.item.itemName }</td>
+							<td>${item.item.itemPrice }</td>
+							<td>${item.buyCnt}</td>
+							<td><span class = "total">${item.item.itemPrice*item.buyCnt}</span></td>
 						</tr>
+						</c:forEach>
 					</table>
-					</c:forEach>
 				</div>
 			</li>
+		</c:forEach>
 		</ul>
 	</div>
 	<span id="buyTotal" >총금액 : </span><input type="submit" value="결재 완료" />
@@ -142,6 +142,7 @@
 		var quotient = (li_Length/3).toFixed(0);
 		var remainder = li_Length%3;
 		var minLeft = -((li_width * 3 * quotient) - (li_width * (3 - remainder)));
+		if(quotient < 3) minLeft = 0;
 		$("#receipt_slide").css({width : li_width * 3 + "px"});
 		$(".receipt_li").css({width : li_width + "px"});
 		
@@ -150,8 +151,6 @@
 		}
 		
 		$("#arrowLeft").click(function(){
-
-		console.log(minLeft);
 			var leftVal = parseInt(container.css("left").split('p')[0]);
 			var result = (leftVal + li_width * 3);
 			if(0 < result) result = 0;

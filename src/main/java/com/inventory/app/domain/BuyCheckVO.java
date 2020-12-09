@@ -1,17 +1,19 @@
 package com.inventory.app.domain;
 
+import java.util.List;
+
 public class BuyCheckVO {
 	private ShopVO shop;
-	private CategoryVO category;
-	private ItemVO item;
-	private long buyCnt;
+	private List<BuyItemVO> buyItemList;
 
-	public BuyCheckVO(ShopVO shop, CategoryVO category, ItemVO item, long buyCnt) {
+	public BuyCheckVO() {
+		super();
+	}
+
+	public BuyCheckVO(ShopVO shop, List<BuyItemVO> buyItemList) {
 		super();
 		this.shop = shop;
-		this.category = category;
-		this.item = item;
-		this.buyCnt = buyCnt;
+		this.buyItemList = buyItemList;
 	}
 
 	public ShopVO getShop() {
@@ -22,36 +24,19 @@ public class BuyCheckVO {
 		this.shop = shop;
 	}
 
-	public CategoryVO getCategory() {
-		return category;
+	public List<BuyItemVO> getBuyItemList() {
+		return buyItemList;
 	}
 
-	public void setCategory(CategoryVO category) {
-		this.category = category;
-	}
-
-	public ItemVO getItem() {
-		return item;
-	}
-
-	public void setItem(ItemVO item) {
-		this.item = item;
-	}
-
-	public long getBuyCnt() {
-		return buyCnt;
-	}
-
-	public void setBuyCnt(long buyCnt) {
-		this.buyCnt = buyCnt;
+	public void setBuyItemList(List<BuyItemVO> buyItemList) {
+		this.buyItemList = buyItemList;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
-		result = prime * result + ((item == null) ? 0 : item.hashCode());
+		result = prime * result + ((buyItemList == null) ? 0 : buyItemList.hashCode());
 		result = prime * result + ((shop == null) ? 0 : shop.hashCode());
 		return result;
 	}
@@ -65,15 +50,10 @@ public class BuyCheckVO {
 		if (getClass() != obj.getClass())
 			return false;
 		BuyCheckVO other = (BuyCheckVO) obj;
-		if (category == null) {
-			if (other.category != null)
+		if (buyItemList == null) {
+			if (other.buyItemList != null)
 				return false;
-		} else if (!category.equals(other.category))
-			return false;
-		if (item == null) {
-			if (other.item != null)
-				return false;
-		} else if (!item.equals(other.item))
+		} else if (!buyItemList.equals(other.buyItemList))
 			return false;
 		if (shop == null) {
 			if (other.shop != null)
@@ -85,7 +65,7 @@ public class BuyCheckVO {
 
 	@Override
 	public String toString() {
-		return "buyCheckVO [shop=" + shop + ", category=" + category + ", item=" + item + ", buyCnt=" + buyCnt + "]";
+		return "BuyCheckVO [shop=" + shop + ", buyItemList=" + buyItemList + "]";
 	}
 
 }

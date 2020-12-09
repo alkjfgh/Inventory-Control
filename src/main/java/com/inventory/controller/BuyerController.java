@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.inventory.app.domain.BuyCheckVO;
+import com.inventory.app.domain.BuyItemVO;
 import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
 import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopInfoVO;
 import com.inventory.app.domain.ShopVO;
-import com.inventory.app.domain.StockVO;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemService;
@@ -54,15 +54,15 @@ public class BuyerController {
 		while (shopIt.hasNext()) {
 			List<ItemListVO> categoryList = new ArrayList<ItemListVO>();
 			ShopVO shop = shopIt.next();
-			if(shop.getShopSeq() == 2)
+			if (shop.getShopSeq() == 2)
 				shop = shopIt.next();
 			long shopSeq = shop.getShopSeq();
 			int categorySize = categoryService.selectCnt();
 			for (int i = 1; i <= categorySize; i++) {
 				List<ItemInfoVO> itemInfoList = itemInfoService.selectList(shopSeq, i);
 				int itemInfoListSize = itemInfoList.size();
-				for(int j=0;j<itemInfoListSize;j++) {
-					if(itemInfoList.get(j).getRemain()==0) {
+				for (int j = 0; j < itemInfoListSize; j++) {
+					if (itemInfoList.get(j).getRemain() == 0) {
 						itemInfoList.remove(j);
 						j--;
 						itemInfoListSize--;
@@ -75,7 +75,7 @@ public class BuyerController {
 					categoryList.add(new ItemListVO(category, itemInfoListSize, itemInfoList));
 				}
 			}
-			if(categoryList.size() > 0)
+			if (categoryList.size() > 0)
 				shopInfoList.add(new ShopInfoVO(shop, categoryList.size(), categoryList));
 		}
 
@@ -90,7 +90,9 @@ public class BuyerController {
 			return "index";
 		int cnt = Integer.parseInt(cntCheck);
 		List<BuyCheckVO> buyList = new ArrayList<BuyCheckVO>();
-		Set<BuyCheckVO> buySet = new HashSet<BuyCheckVO>();
+		Set<ItemVO> duplicateCheck = new HashSet<ItemVO>();
+		List<BuyItemVO> itemList = new ArrayList<BuyItemVO>();
+		ShopVO shop = new ShopVO();
 		for (int i = 1; i <= cnt; i++) {
 			String nullCheck = request.getParameter("shop_" + i);
 			if (nullCheck != null && !nullCheck.equals("")) {
@@ -98,20 +100,29 @@ public class BuyerController {
 				long categorySeq = Long.parseLong(request.getParameter("category_" + i));
 				long itemSeq = Long.parseLong(request.getParameter("item_" + i));
 				long buyCnt = Long.parseLong(request.getParameter("total_" + i));
-				ShopVO shop = new ShopVO();
+				if (shop.getShopSeq()!= null && shopSeq != shop.getShopSeq()) {
+					if (itemList.size() > 0) {
+						System.out.println(itemList);
+						buyList.add(new BuyCheckVO(shop, itemList));
+						itemList = new ArrayList<BuyItemVO>();
+						duplicateCheck.clear();
+					}
+				}
 				shop.setShopSeq(shopSeq);
-				CategoryVO category = new CategoryVO();
-				category.setCategorySeq(categorySeq);
+				shop = shopService.select(shop);
 				ItemVO item = new ItemVO();
 				item.setCategorySeq(categorySeq);
 				item.setItemSeq(itemSeq);
-				BuyCheckVO buyCheck = new BuyCheckVO(shopService.select(shop), categoryService.select(category),
-						itemService.select(item), buyCnt);
-				if (!buySet.contains(buyCheck)) {
-					buySet.add(buyCheck);
-					buyList.add(buyCheck);
+				item = itemService.select(item);
+				BuyItemVO buyItem = new BuyItemVO(item, buyCnt);
+				if (!duplicateCheck.contains(item)) {
+					duplicateCheck.add(item);
+					itemList.add(buyItem);
 				}
 			}
+		}
+		if (itemList.size() > 0) {
+			buyList.add(new BuyCheckVO(shop, itemList));
 		}
 		session.setAttribute("buyList", buyList);
 		return "buyCheck";
@@ -121,20 +132,20 @@ public class BuyerController {
 	public String buyCheck(HttpServletRequest request, HttpSession session) {
 		@SuppressWarnings("unchecked")
 		Iterator<BuyCheckVO> buyIt = ((List<BuyCheckVO>) session.getAttribute("buyList")).iterator();
-		while(buyIt.hasNext()) {
-			BuyCheckVO buy = buyIt.next();
-			StockVO stock = new StockVO();
-			stock.setShopSeq(buy.getShop().getShopSeq());
-			stock.setCategorySeq(buy.getCategory().getCategorySeq());
-			stock.setItemSeq(buy.getItem().getItemSeq());
-			stock = stockService.select(stock);
-			stock.setSold(stock.getSold() + buy.getBuyCnt());
-			if(stock.getRemain() >= buy.getBuyCnt()) {
-				stock.setRemain(stock.getRemain() - buy.getBuyCnt());
-				stockService.update(stock);
-			}
+		while (buyIt.hasNext()) {
+//			BuyCheckVO buy = buyIt.next();
+//			StockVO stock = new StockVO();
+//			stock.setShopSeq(buy.getShop().getShopSeq());
+//			stock.setCategorySeq(buy.getCategory().getCategorySeq());
+//			stock.setItemSeq(buy.getItem().getItemSeq());
+//			stock = stockService.select(stock);
+//			stock.setSold(stock.getSold() + buy.getBuyCnt());
+//			if(stock.getRemain() >= buy.getBuyCnt()) {
+//				stock.setRemain(stock.getRemain() - buy.getBuyCnt());
+//				stockService.update(stock);
+//			}
 		}
-		
+
 		session.removeAttribute("buyList");
 		return "forward:buy.do";
 	}
