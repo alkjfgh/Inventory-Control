@@ -9,66 +9,201 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <style>
-#select {
-    width: 80%;
-    margin: 0 auto;
-}
-.add,
-	.delete {
+	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+	body {
+		font-family: 'Do Hyeon', sans-serif;
+		background-color: hsl(60, 100%, 98%);
+		text-align: center;
+	}
+	h1{
+		font-size: 1.5em;
+	}
+	#main {
+		margin: auto;
+		padding: 50px;
+		text-align: center;
+	}
+	button.change, 
+	button.del
+	{
+		font-size: 20px;
+	}
+	#adda{
+		background-color: white;
+		font-family: 'Do Hyeon', sans-serif;
+		color: black;
+		border: 2px solid #D1B6E1;
+		padding: 10px 20px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+	}
+	#adda:hover{
+		background-color: #D1B6E1;
+		color: white;
+	}
+	#dela{
+		background-color: white;
+		font-family: 'Do Hyeon', sans-serif;
+		color: black;
+		border: 2px solid #519D9E;
+		padding: 10px 20px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+	}
+	#dela:hover {
+		background-color: #519D9E;
+		color: white;
+	}
+	.insertadd{
+		margin: 20px 0px;
+		border: 1px solid #D1B6E1;
+		background: none;
+		padding: 8px 18px;
+		font-size: 16px;
+		font-family: 'Do Hyeon', sans-serif;
+		cursor: pointer;
+		transition: 0.8s;
+		background: #D1B6E1;
+		border-radius: 25px;
+	}
+	.insertadd::before{
+		content: "";
+		position: absolute;
+		left: 0;
+		transition: 0.8s;
+	}
+	.addline{
+		font-size: 25px;
+	}
+	select{
+		width: 210px;
+		padding: .6em .4em; 
+		font-family: inherit; 
+		font-size : 18px;
+		background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;  
+		border: 1px solid #999;
+		border-radius: 0px;
+		-webkit-appearance: none;
+		-moz-appearance: none; 
+		appearance: none; 
+	}
+	option, select{
+		font-family: 'Do Hyeon', sans-serif;
+		
+	}
+	.btnDel{
+		background: gary;
+		border-radius: 50%;
+		font-weight: bold;
+	}
+	.delete table{
+		font-size : 1.2em;
+		margin: 0 auto;
+		width: 40%;
+	} 
+	.delete table input{
+		width: 25px;
+		height: 25px;
+	}
+	input[type="checkbox"]:checked {
+	  content: "";
+	  width: 10px;
+	  top: -5px;
+	  left: 5px;
+	  border-radius: 0;
+	  opacity:1; 
+	  background: transparent;
+	  border-color:transparent #6cc0e5 #6cc0e5 transparent;
+	  border-top-color:transparent;
+	  border-left-color:transparent;
+	  -ms-transform:rotate(45deg);
+	  -webkit-transform:rotate(45deg);
+	  transform:rotate(45deg);
+	}
+	.add input{
+		height: 35px;
+	}
+	.submit{
+		font-family: 'Do Hyeon', sans-serif;
+		font-size:16px;
+		margin-top : 25px;
+		border: 1px solid #D1B6E1;
+		background: none;
+		padding: 8px 18px;
+		cursor: pointer;
+		transition: 0.8s;
+		background: #D1B6E1;
+		border-radius: 25px;
+	}
+	.back{
+		margin-left: 50px;
+	}
+	.back a{
+		text-decoration: none;
+		color: black;
+	}
+	.add, .delete {
   	  display: none;
 	} 
 </style>
 <body>
 	<h1>아이템 추가 삭제 페이지</h1>
 	<div id="select">
-		<button class="change">추가</button>
-		<button  class="del">삭제</button>
+		<button class="change" id="adda">아이템 추가</button>
+		<button  class="del" id="dela">아이템 삭제</button>
 	</div>
-	<div class="add">
-		<hr />
-		이곳은 추가하는곳
-		<button class="insertadd">목록추가</button>
-		<form action="insertItem.do" method="post" class="insertItem">
-		<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
-		<input type="submit" value="적용" /> <br />
-		</form>
-	</div>
-	<div class="delete">
-		<hr />
-		이곳은 삭제하는 곳
-		<form action="deleteItem.do" method="post">
-			<table>
-				<tr>
-					<th>카테고리</th>
-					<th>상품 번호</th>
-					<th>상품 이름</th>
-					<th>상품 가격</th>
-					<th>체크</th>
-				</tr>
-				<c:forEach items="${categoryList }" var="categoryItem">
-				<tr>
-					<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName }</td>
-				<c:forEach items="${categoryItem.itemList }" var="item">
-					<td>${item.itemSeq }</td>
-					<td>${item.itemName }</td>
-					<td>${item.itemPrice }</td>
-					<td><input type="checkbox" name="${categoryItem.category.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
-				</tr>
-				</c:forEach>
-				<tr>
-					<td hidden=""></td>
-					<td hidden=""></td>
-					<td hidden=""></td>
-					<td hidden=""></td>
-					<td hidden=""></td>
-				</tr>
-				</c:forEach>
-			</table>
-			<input type="submit" value="완료(삭제작업 ㄱㄱ)" />
-		</form>
-	</div>
-	<div class="back">
-		<a href="ShopInfo.do">뒤로가기</a>
+	<div id="main">
+		<div class="add">
+			이곳은 추가하는곳
+			<button class="insertadd">아이템 목록 추가</button>
+			<form action="insertItem.do" method="post">
+				<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
+				<div class="insertItem"></div>
+					<input class="submit" type="submit" value="적용" />
+					<span class="back">
+					<a href="ShopInfo.do">뒤로가기</a>
+				</span>
+				<br />
+			</form>
+		</div>
+		<div class="delete">
+			이곳은 삭제하는 곳
+			<form action="deleteItem.do" method="post">
+				<table>
+					<tr>
+						<th>카테고리</th>
+						<th>상품 번호</th>
+						<th>상품 이름</th>
+						<th>상품 가격</th>
+						<th>체크</th>
+					</tr>
+					<c:forEach items="${categoryList }" var="categoryItem">
+					<tr>
+						<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName }</td>
+					<c:forEach items="${categoryItem.itemList }" var="item">
+						<td>${item.itemSeq }</td>
+						<td>${item.itemName }</td>
+						<td>${item.itemPrice }</td>
+						<td><input type="checkbox" name="${categoryItem.category.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
+					</tr>
+					</c:forEach>
+					<tr>
+						<td hidden=""></td>
+						<td hidden=""></td>
+						<td hidden=""></td>
+						<td hidden=""></td>
+						<td hidden=""></td>
+					</tr>
+					</c:forEach>
+				</table>
+				<input type="submit" class="submit" value="삭제적용" />
+				<span class="back">
+					<a href="ShopInfo.do">뒤로가기</a>
+				</span>
+			</form>
+		</div>
 	</div>
 </body>
 <script>

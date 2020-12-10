@@ -8,66 +8,69 @@
 <title>Buy</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-		body {
-            margin: 20px;
-            padding: 50px;
-            background: hsl(60, 100%, 98%);
-			font-family:'Do Hyeon', sans-serif;
-        }
-		body h1 {
-			font-size: 50px;
-			margin-left: 20px;
-		}
-		.item_add{
-			margin-left: 20px;
-			border: 0;
-			outline: 0;
-			font-family:'Do Hyeon', sans-serif;
-			position: relative;
-            display: inline-block;
-            padding: 12px 36px;
-            margin: 10px 0;
-            color: #ffffff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 18px;
-            letter-spacing: 2px;
-            border-radius: 40px;
-            overflow: hidden;
-            background: linear-gradient(90deg, #005dc0, #55e7fc);
-		}
-		table{
-			margin: 50px;
-			font-size: 21px;
-		}
-		.last_buy{
-			margin: auto;
-			padding: auto;
-			width: 100%;
-			text-align: center;
-		}
-		.buy{
-			margin-left: 20px;
-			border: 0;
-			outline: 0;
-			font-family:'Do Hyeon', sans-serif;
-			position: relative;
-            display: inline-block;
-            padding: 12px 36px;
-            margin: 10px 0;
-            color: #ffffff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 18px;
-            letter-spacing: 2px;
-            border-radius: 40px;
-            overflow: hidden;
-            background: linear-gradient(90deg, #755bea, #ff72c0);
-		}
-		#totalPrice{
-			font-size: 24px;
-		}
+	    @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+	    body {
+	        margin: 20px;
+	        padding: 50px;
+	        background: hsl(60, 100%, 98%);
+	        font-family: 'Do Hyeon', sans-serif;
+	        text-align: center;
+	    }
+	    body h1 {
+	        font-size: 50px;
+	        margin-left: 20px;
+	    }
+	    .item_add {
+	        text-align: center;
+	        border: 0;
+	        outline: 0;
+	        font-family: 'Do Hyeon', sans-serif;
+	        cursor: pointer;
+	        position: relative;
+	        display: inline-block;
+	        padding: 12px 36px;
+	        margin: 10px 0;
+	        color: #ffffff;
+	        text-decoration: none;
+	        text-transform: uppercase;
+	        font-size: 18px;
+	        letter-spacing: 2px;
+	        border-radius: 40px;
+	        background: linear-gradient(90deg, #005dc0, #55e7fc);
+	    }
+	    table {
+	        margin: auto;
+	        padding: auto;
+	        text-align: center;
+	    }
+	    .last_buy {
+	        margin: auto;
+	        padding: auto;
+	        width: 100%;
+	        text-align: center;
+	    }
+	    .buy {
+	        margin-left: 20px;
+	        border: 0;
+	        outline: 0;
+	        font-family: 'Do Hyeon', sans-serif;
+	        position: relative;
+	        display: inline-block;
+	        padding: 12px 36px;
+	        margin: 10px 0;
+	        color: #ffffff;
+	        text-decoration: none;
+	        text-transform: uppercase;
+	        font-size: 18px;
+	        letter-spacing: 2px;
+	        border-radius: 40px;
+	        overflow: hidden;
+	        background: linear-gradient(90deg, #755bea, #ff72c0);
+	        cursor: pointer;
+	    }
+	    #totalPrice {
+	        font-size: 24px;
+	    }
 	</style>
 </head>
 <body>
@@ -199,7 +202,6 @@
 			target2.appendChild(opt);
 		}
 	}
-	
 	function itemChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
 		var id = btn.id.charAt(btn.id.length-1);
@@ -251,11 +253,9 @@
 			e.value = max;
 		if(value < min)
 			e.value = min;
-		
 		var index = e.name.charAt(e.name.length-1);
 		var price = parseInt($("span[name = price_" + index + "]").text());
 		$("span[name = alertMoney_" + index + "]").html(price * e.value);
-		
 		var total = 0;
 		for(i=1;i<=cnt;i++){
 			var price = parseInt($("span[name = alertMoney_" + i + "]").text());
