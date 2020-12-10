@@ -150,7 +150,7 @@
 	</c:forEach>
 	function shopChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
-		var id = btn.id.charAt(btn.id.length-1);
+		var id = btn.id.split('_')[1];
 		var target = document.getElementById("category_" + id);
 		for (var i = 0; i < shopList.length; i++) {
 			if (e.value == shopList[i].shopSeq) {
@@ -172,7 +172,7 @@
 	}
 	function categoryChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
-		var id = btn.id.charAt(btn.id.length-1);
+		var id = btn.id.split('_')[1];
 		var target1 = document.getElementById("shop_" + id);
 		var target2 = document.getElementById("item_" + id);
 		var index;
@@ -204,7 +204,7 @@
 	}
 	function itemChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
-		var id = btn.id.charAt(btn.id.length-1);
+		var id = btn.id.split('_')[1];
 		var shop_seq = $("select[name = shop_" + id + "] option:selected").val();
 		var category_seq = $("select[name = category_" + id + "] option:selected").val();
 		var item_seq = $("select[name = item_" + id + "] option:selected").val();
@@ -253,7 +253,7 @@
 			e.value = max;
 		if(value < min)
 			e.value = min;
-		var index = e.name.charAt(e.name.length-1);
+		var index = e.name.split('_')[1];
 		var price = parseInt($("span[name = price_" + index + "]").text());
 		$("span[name = alertMoney_" + index + "]").html(price * e.value);
 		var total = 0;

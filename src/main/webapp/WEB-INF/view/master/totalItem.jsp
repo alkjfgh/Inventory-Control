@@ -6,6 +6,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+		body {
+			font-family: 'Do Hyeon', sans-serif;
+			padding: 0;
+			background: hsl(60, 100%, 98%);
+			padding: 40px;
+			text-align: center;
+		}
+		table {
+			margin: 0 auto;
+			text-align: center;
+		}
+		table, th, td{
+			border: 2px solid black;
+			border-collapse: collapse;
+		}
+		th, td{
+			padding: 5px;
+		}
+	</style>
 </head>
 <body>
 <h1>재고 리스트 </h1>
@@ -18,15 +40,18 @@
 			<th>재고</th>
 		</tr>
 		<c:forEach items="${totalItemList }" var="totalItem">
-		<tr>
-			<td rowspan="${totalItem.size }">${totalItem.category.categoryName  }</td>
+		<tr class="showList_${totalItem.category.categorySeq }">
+			<td colspan="5">${totalItem.category.categoryName  }</td>
+		</tr>
+		<tr class="list_${totalItem.category.categorySeq }">
+			<td class="hideList_${totalItem.category.categorySeq }" rowspan="${totalItem.size }">${totalItem.category.categoryName  }</td>
 			<c:forEach items="${totalItem.itemList }" var="item">
 			<td>${item.itemSeq }</td>
 			<td>${item.itemName }</td>
 			<td>${item.itemPrice }</td>
 			<td>${item.remain }</td>
 		</tr>
-		<tr>
+		<tr class="list_${totalItem.category.categorySeq }">
 			</c:forEach>
 			<td hidden=""></td>
 			<td hidden=""></td>
@@ -36,5 +61,24 @@
 		</tr>
 		</c:forEach>
 	</table>
+	<div id="back">
+		<a href="master.do" >뒤로가기</a>
+	</div>
 </body>
+<script>
+	var duration = 300;
+	$("tr[class^='list_']").hide(0);
+	$(document).ready(function(){
+		$("tr[class^='showList_']").click(function(){
+			var thisIndex = $(this).attr("class").split('_')[1];
+			$(this).hide(0);
+			$(".list_" + thisIndex).show(duration);
+		});
+		$("td[class^='hideList_']").click(function(){
+			var thisIndex = $(this).attr("class").split('_')[1];
+			$(".list_" + thisIndex).hide(0);
+			$(".showList_" + thisIndex).show(duration);
+		});
+	});
+</script>
 </html>
