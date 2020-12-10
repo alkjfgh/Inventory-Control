@@ -112,59 +112,59 @@
 </style>
 </head>
 <body>
-<h1>구매 확인  페이지</h1>
-<form action="buyComplete.do" method="post">
+	<h1>구매 확인  페이지</h1>
+	<form action="buyComplete.do" method="post">
+		<div id="receipt_slide">
+			<a id="arrowLeft" class="arrows" href="#"><img src="../resources/img/arrowLeft.png" alt=""></a>
+			<a id="arrowRight" class="arrows" href="#"><img src="../resources/img/arrowRight.png" alt=""></a>
+			<ul id="receipt_container">
+			<c:forEach items="${buyList }" var="buyCheck">
+				<li class="receipt_li">
+					<div>
+						<table class="shop">
+							<tr>
+								<td>상점 이름:  </td>
+								<td>${buyCheck.shop.shopName }</td>
+							</tr>
+							<tr>
+								<td>상점 전화번호:  </td>
+								<td>${buyCheck.shop.shopPhone }</td>
+							</tr>
+							<tr>
+								<td>상점 주소:  </td>
+								<td>${buyCheck.shop.shopAddress }</td>
+							</tr>
+						</table>
+						<hr />
+						<table class="item">
+							<tr>
+								<th>아이템 이름</th>
+								<th>단가</th>
+								<th>수량</th>
+								<th>금액</th>
+							</tr>
+							<c:forEach items="${buyCheck.buyItemList }" var="item">
+							<tr>
+								<td>${item.item.itemName }</td>
+								<td>${item.item.itemPrice }</td>
+								<td>${item.buyCnt}</td>
+								<td><span class = "total">${item.item.itemPrice*item.buyCnt}</span></td>
+							</tr>
+							</c:forEach>
+						</table>
+					</div>
+				</li>
+			</c:forEach>
+			</ul>
+		</div>
+		<div class="buyTotal">
+			<span id="buyTotal" >총금액 : </span>
+			<input type="submit" value="결재 완료" />
+		</div>
+	</form>
 	<div id="back">
 		<a href="../home.do" >취소</a>
 	</div>
-	<div id="receipt_slide">
-		<a id="arrowLeft" class="arrows" href="#"><img src="../resources/img/arrowLeft.png" alt=""></a>
-		<a id="arrowRight" class="arrows" href="#"><img src="../resources/img/arrowRight.png" alt=""></a>
-		<ul id="receipt_container">
-		<c:forEach items="${buyList }" var="buyCheck">
-			<li class="receipt_li">
-				<div>
-					<table class="shop">
-						<tr>
-							<td>상점 이름:  </td>
-							<td>${buyCheck.shop.shopName }</td>
-						</tr>
-						<tr>
-							<td>상점 전화번호:  </td>
-							<td>${buyCheck.shop.shopPhone }</td>
-						</tr>
-						<tr>
-							<td>상점 주소:  </td>
-							<td>${buyCheck.shop.shopAddress }</td>
-						</tr>
-					</table>
-					<hr />
-					<table class="item">
-						<tr>
-							<th>아이템 이름</th>
-							<th>단가</th>
-							<th>수량</th>
-							<th>금액</th>
-						</tr>
-						<c:forEach items="${buyCheck.buyItemList }" var="item">
-						<tr>
-							<td>${item.item.itemName }</td>
-							<td>${item.item.itemPrice }</td>
-							<td>${item.buyCnt}</td>
-							<td><span class = "total">${item.item.itemPrice*item.buyCnt}</span></td>
-						</tr>
-						</c:forEach>
-					</table>
-				</div>
-			</li>
-		</c:forEach>
-		</ul>
-	</div>
-	<div class="buyTotal">
-		<span id="buyTotal" >총금액 : </span>
-		<input type="submit" value="결재 완료" />
-	</div>
-</form>
 </body>
 <script>
 	$(function(){

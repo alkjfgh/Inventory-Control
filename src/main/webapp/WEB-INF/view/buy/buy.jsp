@@ -7,12 +7,75 @@
 <meta charset="UTF-8">
 <title>Buy</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+		body {
+            margin: 20px;
+            padding: 50px;
+            background: hsl(60, 100%, 98%);
+			font-family:'Do Hyeon', sans-serif;
+        }
+		body h1 {
+			font-size: 50px;
+			margin-left: 20px;
+		}
+		.item_add{
+			margin-left: 20px;
+			border: 0;
+			outline: 0;
+			font-family:'Do Hyeon', sans-serif;
+			position: relative;
+            display: inline-block;
+            padding: 12px 36px;
+            margin: 10px 0;
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 18px;
+            letter-spacing: 2px;
+            border-radius: 40px;
+            overflow: hidden;
+            background: linear-gradient(90deg, #005dc0, #55e7fc);
+		}
+		table{
+			margin: 50px;
+			font-size: 21px;
+		}
+		.last_buy{
+			margin: auto;
+			padding: auto;
+			width: 100%;
+			text-align: center;
+		}
+		.buy{
+			margin-left: 20px;
+			border: 0;
+			outline: 0;
+			font-family:'Do Hyeon', sans-serif;
+			position: relative;
+            display: inline-block;
+            padding: 12px 36px;
+            margin: 10px 0;
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 18px;
+            letter-spacing: 2px;
+            border-radius: 40px;
+            overflow: hidden;
+            background: linear-gradient(90deg, #755bea, #ff72c0);
+		}
+		#totalPrice{
+			font-size: 24px;
+		}
+	</style>
 </head>
 <body>
+	<h1>회원 전용 구매 페이지 </h1>
 	<div id="back">
 		<a href="../home.do" >뒤로가기</a>
 	</div>
-	<button>추가</button>
+	<button class="item_add">구매목록 추가하기</button>
 	<form action="buyCheck.do" name=fr method="post">
 		<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
 		<input type="text" hidden="hidden" name="cntCheck" value="" id="cntCheck" />
@@ -25,8 +88,10 @@
 				<th>금액(원)</th>
 			</tr>
 		</table>
-		<span id="totalPrice">총 금액 : </span>
-		<input type="submit" value="구매">
+		<div class="last_buy">
+			<span id="totalPrice">총 금액 : </span>
+			<input type="submit" value="구매">
+		</div>
 	</form>
 </body>
 <script>

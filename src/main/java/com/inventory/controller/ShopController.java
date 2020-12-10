@@ -57,7 +57,7 @@ public class ShopController {
 		long shopSeq = -1;
 		if (request.getParameter("shopSeq") != null && !request.getParameter("shopSeq").equals(""))
 			shopSeq = Long.parseLong(request.getParameter("shopSeq"));
-			UserVO user = new UserVO();
+		UserVO user = new UserVO();
 		if (shopSeq != -1) {
 			user.setShopSeq(shopSeq);
 		} else {
@@ -66,23 +66,38 @@ public class ShopController {
 		ShopVO shop = new ShopVO();
 		shop.setShopSeq(user.getShopSeq());
 		shop = shopService.select(shop);
-		StockVO stock = new StockVO();
-		stock.setShopSeq(user.getShopSeq());
+
+		session.setAttribute("categoryList", createCategoryList(user, shop, 0));
+		session.setAttribute("shop", shop);
+		return PATH + "shopInfo";
+	}
+
+	@RequestMapping(value = "check.do", method = RequestMethod.GET)
+	public String checkView(HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		ShopVO shop = new ShopVO();
+		shop.setShopSeq(user.getShopSeq());
+		shop = shopService.select(shop);
+		session.setAttribute("categoryList", createCategoryList(user, shop, 1));
+		return PATH + "check";
+	}
+
+	private List<ItemListVO> createCategoryList(UserVO user, ShopVO shop, int state) {
+		long shopSeq = shop.getShopSeq();
 		Iterator<CategoryVO> categoryIt = categoryService.selectList(null).iterator();
 		List<ItemListVO> categoryList = new ArrayList<ItemListVO>();
 		long shopCount = shop.getShopCount();
-		if(shopCount == 7) {
+		if (state == 1 && shopCount == 7) {
 			shop.setShopSeq(0l);
 			shopService.update(shop);
 		}
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryIt.next();
-			shopSeq = shop.getShopSeq();
 			long categorySeq = category.getCategorySeq();
 			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(shopSeq, categorySeq);
 			for (ItemInfoVO itemInfo : itemInfoList) {
 				long total = itemInfo.getTotal();
-				if (shopCount == 7) {
+				if (state == 1 && shopCount == 7) {
 					double sold = itemInfo.getSold();
 					double targetSold = total * shopCount;
 					double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
@@ -93,11 +108,51 @@ public class ShopController {
 				}
 			}
 			if (itemInfoList.size() > 0)
-				categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
+				categoryList.add( new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
 		}
-		session.setAttribute("categoryList", categoryList);
-		session.setAttribute("shop", shop);
-		return PATH + "shopInfo";
+		return categoryList;
+	}
+
+	@RequestMapping(value = "check.do", method = RequestMethod.POST)
+	public String check(HttpSession session, HttpServletRequest request) {
+		@SuppressWarnings("unchecked")
+		Iterator<ItemListVO> itemListIt = ((List<ItemListVO>) session.getAttribute("categoryList")).iterator();
+		while (itemListIt.hasNext()) {
+			Iterator<ItemInfoVO> itemInfoIt = itemListIt.next().getItemList().iterator();
+			while (itemInfoIt.hasNext()) {
+				ItemInfoVO itemInfo = itemInfoIt.next();
+				long shopSeq = itemInfo.getShopSeq();
+				long categorySeq = itemInfo.getCategorySeq();
+				long itemSeq = itemInfo.getItemSeq();
+				long remain = itemInfo.getRemain();
+				long sold = itemInfo.getSold();
+				long autoSup = Long.parseLong(request.getParameter(categorySeq + "_" + itemSeq + "_autoSup"));
+				if (autoSup < remain)
+					autoSup = remain;
+				StockVO shopStock = new StockVO();
+				shopStock.setShopSeq(shopSeq);
+				shopStock.setCategorySeq(categorySeq);
+				shopStock.setItemSeq(itemSeq);
+				shopStock.setTotal(autoSup);
+				shopStock.setRemain(autoSup);
+				shopStock.setSold(sold);
+
+				StockVO masterStock = new StockVO();
+				masterStock.setShopSeq(2);
+				masterStock.setCategorySeq(categorySeq);
+				masterStock.setItemSeq(itemSeq);
+				masterStock = stockService.select(masterStock);
+				masterStock.setRemain(masterStock.getRemain() - (autoSup - remain));
+				masterStock.setSold((autoSup - remain));
+
+				stockService.update(shopStock);
+				stockService.update(masterStock);
+			}
+		}
+		ShopVO shop = (ShopVO) session.getAttribute("shop");
+		shop.setShopCount(shop.getShopCount() + 1);
+		shopService.update(shop);
+		return "redirect:" + PATH + "ShopInfo.do";
 	}
 
 	@RequestMapping(value = "updateItem.do")
@@ -172,63 +227,6 @@ public class ShopController {
 			}
 		}
 		return "redirect:" + PATH + "ShopInfo.do";
-	}
-
-	@RequestMapping(value = "check.do", method = RequestMethod.GET)
-	public String checkView() {
-		return PATH + "check";
-	}
-
-	@RequestMapping(value = "check.do", method = RequestMethod.POST)
-	public String check(HttpSession session, HttpServletRequest request) {
-		@SuppressWarnings("unchecked")
-		Iterator<ItemListVO> itemListIt = ((List<ItemListVO>) session.getAttribute("categoryList")).iterator();
-		while (itemListIt.hasNext()) {
-			Iterator<ItemInfoVO> itemInfoIt = itemListIt.next().getItemList().iterator();
-			while (itemInfoIt.hasNext()) {
-				ItemInfoVO itemInfo = itemInfoIt.next();
-				long shopSeq = itemInfo.getShopSeq();
-				long categorySeq = itemInfo.getCategorySeq();
-				long itemSeq = itemInfo.getItemSeq();
-				long remain = itemInfo.getRemain();
-				long autoSup = Long.parseLong(request.getParameter(categorySeq + "_" + itemSeq + "_autoSup"));
-				if (autoSup < remain)
-					autoSup = remain;
-				StockVO shopStock = new StockVO();
-				shopStock.setShopSeq(shopSeq);
-				shopStock.setCategorySeq(categorySeq);
-				shopStock.setItemSeq(itemSeq);
-				shopStock.setTotal(autoSup);
-				shopStock.setRemain(autoSup);
-
-				StockVO masterStock = new StockVO();
-				masterStock.setShopSeq(2);
-				masterStock.setCategorySeq(categorySeq);
-				masterStock.setItemSeq(itemSeq);
-				masterStock = stockService.select(masterStock);
-				masterStock.setRemain(masterStock.getRemain() - (autoSup - remain));
-
-				stockService.update(shopStock);
-				stockService.update(masterStock);
-			}
-		}
-		ShopVO shop = (ShopVO) session.getAttribute("shop");
-		shop.setShopCount(shop.getShopCount() + 1);
-		shopService.update(shop);
-		return "redirect:" + PATH + "ShopInfo.do";
-	}
-
-	@RequestMapping(value = "updateShop.do", method = RequestMethod.POST)
-	public String updateShop(HttpServletRequest request, HttpSession session) {
-//		List<CategoryVO> categoryList = (List<CategoryVO>) session.getAttribute("categoryList");
-//		int size = categoryList.size();
-//		int length =0;
-//		for(int i =0;i<size;i++)
-//			length += categoryList.get(i).getSize();
-//		for(int i=1;i<=length;i++) {
-//			System.out.println(request.getParameter("need."+i));
-//		}
-		return PATH + "shopInfo";
 	}
 
 	@RequestMapping(value = "graph.do", method = RequestMethod.GET)

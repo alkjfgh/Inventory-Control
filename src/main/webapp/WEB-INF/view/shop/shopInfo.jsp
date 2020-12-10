@@ -36,6 +36,34 @@
 		font-size: 50px;
 		text-align: center; 
 	}
+	.modi { 
+			height: 30px;
+			background: #58C9B9;
+			color: black;
+			font-size: 20px;
+			border: none;
+			border-radius: 25px;
+			cursor: pointer;
+			font-family : 'Do Hyeon', sans-serif;
+	}
+	.modi:hover {
+		color: white;
+	}
+	.requ { 
+			height: 25px;
+			background: hsl(60, 100%, 98%);
+			color: black;
+			font-size: 17px;			
+			cursor: pointer;
+			font-family : 'Do Hyeon', sans-serif;
+	}	
+	.requ:hover {
+		background-color: grey;
+	}
+	.requ:focus {
+		background-color: grey;
+		color: white;
+	}
 </style>
 </head>
 <body>
