@@ -34,12 +34,12 @@
 		#{sold,jdbcType=DECIMAL})
 	</insert>
 	<update id="update" parameterType="stock">
-		UPDATE stock SET TOTAL =
-		#{total,jdbcType=DECIMAL}, remain = #{remain,jdbcType=DECIMAL} WHERE
-		shop_seq =
-		#{shopSeq,jdbcType=DECIMAL} AND category_seq =
-		#{categorySeq,jdbcType=DECIMAL} AND item_seq =
-		#{itemSeq,jdbcType=DECIMAL}
+		UPDATE stock SET TOTAL = #{total,jdbcType=DECIMAL},
+		remain = #{remain,jdbcType=DECIMAL},
+		sold = #{sold,jdbcType=DECIMAL} WHERE
+		shop_seq = #{shopSeq,jdbcType=DECIMAL} AND
+		category_seq = #{categorySeq,jdbcType=DECIMAL} AND
+		item_seq = #{itemSeq,jdbcType=DECIMAL}
 	</update>
 	<select id="select" parameterType="stock"
 		resultMap="BaseResultMap">

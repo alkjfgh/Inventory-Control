@@ -9,63 +9,49 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-
 		* {
 			margin: 0;
 			padding: 0;
 			box-sizing: border-box;
 		}
-
 		body {
 			font-family: 'Do Hyeon', sans-serif;
 			height: 100vh;
 			background-color: hsl(60, 100%, 98%);
 			background-size: cover;
 			color: #9DC8C8 #519D9E #D1B6E1 #58C9B9 hsl(60, 100%, 98%);
-
 		}
-
 		a {
 			text-decoration: none
 		}
-
 		body a:link {
 			color: black;
 		}
-
 		body a:visited {
 			color: black;
 		}
-
 		h1 {
 			font-size: 50px;
 			margin: 10px;
 			padding: 30px;
 		}
-
 		.shop_list_wrap {
 			padding: 50px;
 		}
-
 		.shop_list {
 			width: 100%;
 		}
-
 		.shop_list>thead>tr {
 			font-size: 24px;
 			border-bottom: 1px solid #000;
 		}
-
 		.shop_list tbody tr {
 			font-size: 18px;
 		}
-		
 		.shop_list tbody tr td {
 			text-align: center;
 		}
-
 		.btn{
-			
 			border: 1px solid #58C9B9;
 			background: none;
 			padding: 8px 18px;
@@ -114,14 +100,14 @@
 					<td>${shop.shopPhone }</td>
 					<td>${shop.shopAddress }</td>
 					<td>${shop.shopRegdate }</td>
-					<td>
-						<a class="btn area" href="ShopInfo.do?shopSeq=${shop.shopSeq }">상세보기</a>
-					</td>
+					<td><a class="btn area" href="../shop/ShopInfo.do?shopSeq=${shop.shopSeq }">상세보기</a></td>
 				</tr>
 			</c:forEach>
 			</tbody>
 		</table>
-		<a href="master.do">관리자페이지</a>
 	</section>
+	<div id="back">
+		<a href="master.do">뒤로가기</a>
+	</div>
 </body>
 </html>

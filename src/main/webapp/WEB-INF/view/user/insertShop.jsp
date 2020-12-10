@@ -67,9 +67,7 @@
 			transition: all .5s ease;
 
 		}
-
-
-
+		
 		.int-area input:focus+label,
 		.int-area input:valid+label {
 			top: -2px;

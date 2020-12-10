@@ -111,5 +111,10 @@
 		<br />
 		<a href="../user/SignOut.do">로그아웃</a>
 	</c:if>
+	<c:if test="${level eq 9}">
+		<div id="back">
+			<a href="javascript:history.back()" >뒤로가기</a>
+		</div>
+	</c:if>
 </body>
 </html>

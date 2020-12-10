@@ -148,6 +148,9 @@
 			</tbody>
 		</table>
 	</section>
+	<div id="back">
+		<a href="master.do">뒤로가기</a>
+	</div>
 	<div id="bottom">
 		<a href="#top" class="gotopbtn">▲</a>
 	</div>

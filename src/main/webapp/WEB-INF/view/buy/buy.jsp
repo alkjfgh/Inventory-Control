@@ -6,10 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Buy</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+	<div id="back">
+		<a href="../home.do" >뒤로가기</a>
+	</div>
 	<button>추가</button>
 	<form action="buyCheck.do" name=fr method="post">
 		<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />

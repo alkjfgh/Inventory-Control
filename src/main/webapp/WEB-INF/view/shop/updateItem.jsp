@@ -25,6 +25,9 @@
 </style>
 <body>
 	<h1>아이템 추가 삭제 페이지</h1>
+	<div id="back">
+		<a href="javascript:history.back()" >뒤로가기</a>
+	</div>
 	<div id="select">
 		<a href="#" class="change">추가</a> <a href="#" class="del">삭제</a>
 	</div>

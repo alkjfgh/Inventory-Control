@@ -57,7 +57,7 @@ public class ShopController {
 		long shopSeq = -1;
 		if (request.getParameter("shopSeq") != null && !request.getParameter("shopSeq").equals(""))
 			shopSeq = Long.parseLong(request.getParameter("shopSeq"));
-		UserVO user = new UserVO();
+			UserVO user = new UserVO();
 		if (shopSeq != -1) {
 			user.setShopSeq(shopSeq);
 		} else {
@@ -71,6 +71,10 @@ public class ShopController {
 		Iterator<CategoryVO> categoryIt = categoryService.selectList(null).iterator();
 		List<ItemListVO> categoryList = new ArrayList<ItemListVO>();
 		long shopCount = shop.getShopCount();
+		if(shopCount == 7) {
+			shop.setShopSeq(0l);
+			shopService.update(shop);
+		}
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryIt.next();
 			shopSeq = shop.getShopSeq();
@@ -78,7 +82,7 @@ public class ShopController {
 			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(shopSeq, categorySeq);
 			for (ItemInfoVO itemInfo : itemInfoList) {
 				long total = itemInfo.getTotal();
-				if (shopCount > 6) {
+				if (shopCount == 7) {
 					double sold = itemInfo.getSold();
 					double targetSold = total * shopCount;
 					double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
@@ -89,8 +93,7 @@ public class ShopController {
 				}
 			}
 			if (itemInfoList.size() > 0)
-				categoryList.add(
-						new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
+				categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
 		}
 		session.setAttribute("categoryList", categoryList);
 		session.setAttribute("shop", shop);
@@ -228,9 +231,8 @@ public class ShopController {
 		return PATH + "shopInfo";
 	}
 
-	@RequestMapping(value = "graph.do")
-	public String graph(HttpServletRequest request, HttpSession session) {
-//		List<ItemListVO> categoryList = (List<ItemListVO>) session.getAttribute("categoryList");
+	@RequestMapping(value = "graph.do", method = RequestMethod.GET)
+	public String graphView(HttpServletRequest request, HttpSession session) {
 		return PATH + "graph";
 	}
 

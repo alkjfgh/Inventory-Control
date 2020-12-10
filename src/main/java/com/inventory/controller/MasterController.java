@@ -25,7 +25,6 @@ import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemService;
 import com.inventory.app.service.ShopService;
-import com.inventory.app.service.StockService;
 import com.inventory.app.service.UserService;
 
 @Controller
@@ -49,8 +48,6 @@ public class MasterController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private StockService stockService;
 	@RequestMapping(value = "master.do")
 	public String masterView() {
 		return PATH + "master";
@@ -159,6 +156,7 @@ public class MasterController {
 	@RequestMapping(value = "shopList.do", method = RequestMethod.GET)
 	public String shopList(HttpServletRequest request, Model model) {
 		List<ShopVO> shopList = shopService.selectList(null);
+		shopList.remove(1);
 		model.addAttribute("shopList", shopList);
 		return PATH + "shopList";
 	}
@@ -173,13 +171,13 @@ public class MasterController {
 	@RequestMapping(value = "totalItem.do")
 	public String totalItem(Model model, HttpSession session) {
 		StockVO vo = new StockVO();
-		vo.setShopSeq(0l);
+		vo.setShopSeq(2l);
 		Iterator<CategoryVO> categoryList = categoryService.selectList(null).iterator();
 		List<ItemListVO> totalItemList = new ArrayList<ItemListVO>();
 		while (categoryList.hasNext()) {
 			CategoryVO category = categoryList.next();
 			long categorySeq = category.getCategorySeq();
-			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(0l, categorySeq);
+			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(2l, categorySeq);
 			if (itemInfoList.size() > 0)
 				totalItemList.add(new ItemListVO(category, itemService.selectCntByCategory(category), itemInfoList));
 		}

@@ -194,7 +194,7 @@
 		</div>
 	</section>
 	<div id="back">
-		<a href="javascript:history.back()" >뒤로가기</a>
+		<a href="master.do" >뒤로가기</a>
 	</div>
 </body>
 <script>

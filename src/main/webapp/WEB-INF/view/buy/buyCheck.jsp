@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style >
-@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 	body{
 		background: hsl(60, 100%, 98%);
 	}
@@ -114,6 +114,9 @@
 <body>
 <h1>구매 확인  페이지</h1>
 <form action="buyComplete.do" method="post">
+	<div id="back">
+		<a href="../home.do" >취소</a>
+	</div>
 	<div id="receipt_slide">
 		<a id="arrowLeft" class="arrows" href="#"><img src="../resources/img/arrowLeft.png" alt=""></a>
 		<a id="arrowRight" class="arrows" href="#"><img src="../resources/img/arrowRight.png" alt=""></a>

@@ -151,13 +151,12 @@ public class BuyerController {
 				stock = stockService.select(stock);
 				stock.setSold(stock.getSold() + buyCnt);
 				if (stock.getRemain() >= buyCnt) {
+					System.out.println(stock);
 					stock.setRemain(stock.getRemain() - buyCnt);
 					stockService.update(stock);
 				}
 			}
-
 		}
-
 		session.removeAttribute("buyList");
 		return "redirect:" + PATH + "buy.do";
 	}
