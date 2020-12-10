@@ -28,7 +28,6 @@
 	</form>
 </body>
 <script>
-
 	var cnt = 1;
 	var cntCheck = 0;
 	$('button').click(function() {
@@ -79,7 +78,6 @@
 			itemList : itemInfoList
 		});
 	</c:forEach>
-	
 	function shopChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
 		var id = btn.id.charAt(btn.id.length-1);
@@ -102,7 +100,6 @@
 			target.appendChild(opt);
 		}
 	}
-	
 	function categoryChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
 		var id = btn.id.charAt(btn.id.length-1);
@@ -199,31 +196,6 @@
 				total += price;
 		} 	
 		$("#totalPrice").html("총 금액 : " + total);
-		
 	}
-	
-	
 </script>
 </html>
-<!-- 
-<td>
-    <select name="shop_' + cnt + '" id="shop_' + cnt + '" onchange="shopChange(this)" required="required">
-    <c:forEach items="${shopInfoList }" var="shopInfo">
-        <option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option>
-    </c:forEach>
-    </select>
-</td>
-<td>
-    <select id="category_' + cnt + '" name="category_' + cnt + '" onchange="categoryChange(this)" required="required">
-        <option value="">카테고리를 선택해주세요</option>
-    </select>
-</td>
-<td>
-    <select id="item_'+ cnt +'" name="item_'+ cnt + '" required="required">
-        <option value="">아이템을 선택해주세요</option>
-    </select>
-</td>
-<td>
-	<input type="number" name="total_'+ cnt++ + '" required="required"/>
-</td>
-<br> -->

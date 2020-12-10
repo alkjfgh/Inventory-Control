@@ -2,11 +2,9 @@
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="UTF-8">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 	<title>Insert title here</title>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
@@ -107,7 +105,6 @@
 		}
 	</style>
 </head>
-
 <body>
 	<section class="login-form">
 		<h1>Insert Shop</h1>
@@ -136,7 +133,6 @@
 </body>
 <script>
 	var phoneRegExp = /^\d{2,3}-\d{3,4}-\d{4}$/;
-	
 	function fun1(){
 		if(obj.shopPhone.value == '') {
 		    alert('핸드폰번호를 입력해주세요');
@@ -151,11 +147,8 @@
 		obj.submit();
 	    obj.reset();
 	}
-	
 	function fun2() {
-		
 	    var obj = document.fr;
-	
 	    if(phoneRegExp.test(obj.shopPhone.value)==false) {
 	        document.getElementById("alert_phone").innerHTML=('<span style="color: red;">전화번호 형식이 맞지않습니다.</span>');            
 	        return false;
@@ -164,5 +157,4 @@
 	    }
 	}
 </script>
-
 </html>

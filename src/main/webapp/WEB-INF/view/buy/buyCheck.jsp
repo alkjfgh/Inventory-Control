@@ -164,59 +164,52 @@
 </form>
 </body>
 <script>
-$(function(){
-    var total = 0;
-    var totalLength = $(".total").length;
-    var totalval = $(".total").html();
-    for(i=0; i<totalLength;i++){
-        total += parseInt($(".total").eq(i).html());
-    }
-    $("#buyTotal").html("총 금액 : " + total);
-
-})
-$(document).ready(function(){
-	var li_width = 400;
-	var li_Length = $(".receipt_li").length;
-	var container = $("#receipt_container");
-	var quotient = (li_Length/3).toFixed(0);
-	var remainder = li_Length%3;
-	var minLeft = -((li_width * 3 * quotient) - (li_width * (3 - remainder)));
-	
-	if(li_Length < 3){
-		$("#arrowRight").hide(0); 
-		minLeft = 0;
-	}
-	$("#receipt_slide").css({width : li_width * 3 + "px"});
-	$(".receipt_li").css({width : li_width + "px"});
-	
-	
-	for (var i = 1; i <= li_Length; i++) {
-		$(".receipt_li:nth-of-type(" + i + ")").css({left : li_width * (i - 1) + "px"});
-	}
-	
-	$("#arrowLeft").hide(0); 
-	
-	$("#arrowLeft").click(function(){
-		var leftVal = parseInt(container.css("left").split('p')[0]);
-		var result = (leftVal + li_width * 3);
-		if(0 < result){
-			 $("#arrowLeft").hide(0); 
-			result = 0;
+	$(function(){
+	    var total = 0;
+	    var totalLength = $(".total").length;
+	    var totalval = $(".total").html();
+	    for(i=0; i<totalLength;i++){
+	        total += parseInt($(".total").eq(i).html());
+	    }
+	    $("#buyTotal").html("총 금액 : " + total);
+	})
+	$(document).ready(function(){
+		var li_width = 400;
+		var li_Length = $(".receipt_li").length;
+		var container = $("#receipt_container");
+		var quotient = (li_Length/3).toFixed(0);
+		var remainder = li_Length%3;
+		var minLeft = -((li_width * 3 * quotient) - (li_width * (3 - remainder)));
+		$("#arrowLeft").hide(0); 
+		if(li_Length < 3){
+			$("#arrowRight").hide(0); 
+			minLeft = 0;
 		}
-		$("#arrowRight").show(0); 
-		container.stop().animate({left : result * 3 + "px"});
-	});
-	
-	$("#arrowRight").click(function(){
-		var leftVal = parseInt(container.css("left").split('p')[0]);
-		var result = (leftVal - li_width * 3);
-		if(minLeft > result){
-			$("#arrowRight").hide(0);
-			result = minLeft;
+		$("#receipt_slide").css({width : li_width * 3 + "px"});
+		$(".receipt_li").css({width : li_width + "px"});
+		for (var i = 1; i <= li_Length; i++) {
+			$(".receipt_li:nth-of-type(" + i + ")").css({left : li_width * (i - 1) + "px"});
 		}
-		$("#arrowLeft").show(0);
-		container.stop().animate({left : result + "px"});
+		$("#arrowLeft").click(function(){
+			var leftVal = parseInt(container.css("left").split('p')[0]);
+			var result = (leftVal + li_width * 3);
+			if(0 < result){
+				 $("#arrowLeft").hide(0); 
+				result = 0;
+			}
+			$("#arrowRight").show(0); 
+			container.stop().animate({left : result * 3 + "px"});
+		});
+		$("#arrowRight").click(function(){
+			var leftVal = parseInt(container.css("left").split('p')[0]);
+			var result = (leftVal - li_width * 3);
+			if(minLeft > result){
+				$("#arrowRight").hide(0);
+				result = minLeft;
+			}
+			$("#arrowLeft").show(0);
+			container.stop().animate({left : result + "px"});
+		});
 	});
-});
 </script>
 </html>

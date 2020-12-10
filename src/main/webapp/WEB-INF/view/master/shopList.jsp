@@ -59,9 +59,7 @@
 		.shop_list tbody tr {
 			font-size: 18px;
 		}
-
-
-
+		
 		.shop_list tbody tr td {
 			text-align: center;
 		}

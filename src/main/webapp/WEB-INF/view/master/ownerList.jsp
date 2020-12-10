@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
@@ -25,7 +24,6 @@
 			background-color: hsl(60, 100%, 98%);
 			background-size: cover;
 			color: #9DC8C8 #519D9E #D1B6E1 #58C9B9 hsl(60, 100%, 98%);
-
 		}
 
 		a {
@@ -64,14 +62,11 @@
 			font-size: 18px;
 		}
 
-
-
 		.owner_list tbody tr td {
 			text-align: center;
 		}
 
 		.btn {
-
 			border: 1px solid #58C9B9;
 			background: none;
 			padding: 8px 18px;
@@ -102,23 +97,17 @@
 		.gotopbtn{
             position: fixed;
             width: 50px;
-            height: 50px;
-            
+            height: 50px
             bottom: 40px;
             right: 5px;
             cursor: pointer;
-           
             font-family: 'Do Hyeon', sans-serif;
-
             text-decoration: none;
             text-align: center;
             line-height: 50px;
             color: white;
             font-size: 26px;
 			border: 0;
-			
-			
-		
         }
 	</style>
 </head>
@@ -141,7 +130,6 @@
 				</tr>
 			</thead>
 			<tbody>
-
 				<c:forEach items="${userList }" var="user">
 					<form action="shopInfo.do">
 						<tr>
@@ -160,7 +148,6 @@
 			</tbody>
 		</table>
 	</section>
-
 	<div id="bottom">
 		<a href="#top" class="gotopbtn">▲</a>
 	</div>

@@ -149,7 +149,6 @@
 		<div class="caption">
 			<a href="">Forgot Password</a>
 		</div>
-		</form>
 	</section>
 	<script>
 		let id = $('#id');

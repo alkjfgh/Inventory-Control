@@ -65,7 +65,6 @@
          	right : 5px;
     }
     
-	
 	h1 { 
 		font-size: 50px;
 		text-align: center; 
@@ -104,7 +103,6 @@
 		background-color: grey;
 		color: white;
 	}
-	
 </style>
 </head>
 <body>
@@ -146,7 +144,7 @@
 				</tr>
 			</c:forEach>
 		</table>
-	<br />
+	<br/>
 	<input class="app" type="submit" value="적용">
 	<a href="#" class="canC" onclick="window.history.back()">취소</a>
 	</form>

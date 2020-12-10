@@ -16,15 +16,16 @@
 </head>
 <body>
 <h1>여기는 master 물품 추가삭제 페이지</h1>
-<div id="select">
-		<a href="#" class="add">물품 추가아아아아아 </a> <a href="#"
-			class="del"> 물품 삭제에에에에에</a>
-</div>
+	<div id="select">
+		<a href="#" class="add">물품 추가</a>
+		<a href="#" class="del"> 물품 삭제</a>
+		<!-- 버튼으로 바꿀것 -->
+	</div>
 	<div class="itemAdd">
 		<button class="insertadd">추가</button>
 		<form action="masterInsertItem.do" method="post" class="masterInsertItem">
 			<input type="submit" value="물품추가하기" /><br />
-		<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
+			<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
 		</form>
 	</div>
 	<div class="itemDelete">
@@ -39,16 +40,16 @@
 					<th>체크</th>
 				</tr>
 				<c:forEach items="${categoryItemList }" var="categoryItem">
-					<tr>
-						<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
-						<c:forEach items="${categoryItem.itemList }" var="item">
-							<td>${item.itemSeq }</td>
-							<td>${item.itemName }</td>
-							<td>${item.itemPrice }</td>
-							<th>${item.itemMaker }</th>
-							<td><input type="checkbox" name="${categoryItem.category.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
-					</tr>
-				</c:forEach>
+				<tr>
+					<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
+					<c:forEach items="${categoryItem.itemList }" var="item">
+					<td>${item.itemSeq }</td>
+					<td>${item.itemName }</td>
+					<td>${item.itemPrice }</td>
+					<th>${item.itemMaker }</th>
+					<td><input type="checkbox" name="${categoryItem.category.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
+				</tr>
+					</c:forEach>
 				<tr>
 					<td hidden=""></td>
 					<td hidden=""></td>
@@ -56,35 +57,34 @@
 					<td hidden=""></td>
 					<td hidden=""></td>
 				</tr>
-				</c:forEach>
-				
+			</c:forEach>			
 			</table>
 			<input type="submit" value="완료(삭제작업 ㄱㄱ)" />
 		</form>
 	</div>
 </body>
 <script>
-$('.add').click(function() {
-	$('.itemAdd').show();
-	$('.itemDelete').hide();
-});
-$('.del').click(function() {
-	$('.itemAdd').hide();
-	$('.itemDelete').show();
-});
-var cnt = 1;
-$('button').click(function(){
-	$("input[name=cnt]").attr("value", cnt);
-	$('.masterInsertItem').append('<label for="category">카테고리선택</label>' 
-			+'<select class="form-control" id="category" name="categorySeq_'+ cnt +'" required="required">'
-			+'<option>카테고리를 선택해주세요</option>'
-			+'<c:forEach items="${categoryList}" var="categoryItem">'
-			+	'<option value="${categoryItem.categorySeq }">${categoryItem.categoryName  }</option>'
-			+'</c:forEach>'
-			+'</select><br />'
-		+'물품이름<input type="text" name="itemName_'+ cnt +'" />'
-		+'물품가격<input type="number" name="itemPrice_'+ cnt +'" />'
-		+'물품 재조사<input type="text" name="itemMaker_'+ cnt++ +'" /> </br>');
-});
+	$('.add').click(function() {
+		$('.itemAdd').show();
+		$('.itemDelete').hide();
+	});
+	$('.del').click(function() {
+		$('.itemAdd').hide();
+		$('.itemDelete').show();
+	});
+	var cnt = 1;
+	$('button').click(function(){
+		$("input[name=cnt]").attr("value", cnt);
+		$('.masterInsertItem').append('<label for="category">카테고리선택</label>' 
+				+'<select class="form-control" id="category" name="categorySeq_'+ cnt +'" required="required">'
+				+'<option>카테고리를 선택해주세요</option>'
+				+'<c:forEach items="${categoryList}" var="categoryItem">'
+				+	'<option value="${categoryItem.categorySeq }">${categoryItem.categoryName  }</option>'
+				+'</c:forEach>'
+				+'</select><br />'
+			+'물품이름<input type="text" name="itemName_'+ cnt +'" />'
+			+'물품가격<input type="number" name="itemPrice_'+ cnt +'" />'
+			+'물품 재조사<input type="text" name="itemMaker_'+ cnt++ +'" /> </br>');
+	});
 </script>
 </html>

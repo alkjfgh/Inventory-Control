@@ -25,12 +25,13 @@ table, tr, th, td {
 				<th>재고</th>
 			</tr>
 			<tr>
-				<td><select name="category">
+				<td>
+					<select name="category">
 						<option value="categorySeq">categoryName</option>
-				</select>
-				<td><input type="text" name="itemName" /></td>
-				<td><input type="number" name="itemPrice" min="1" max="1000000" />
+					</select>
 				</td>
+				<td><input type="text" name="itemName" /></td>
+				<td><input type="number" name="itemPrice" min="1" max="1000000" /></td>
 				<td><input type="text" name="itemMaker" /></td>
 				<td><input type="text" name="itemDesc" /></td>
 				<td><input type="number" name="stock" /></td>

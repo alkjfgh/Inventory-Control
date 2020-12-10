@@ -18,24 +18,23 @@
 			<th>재고</th>
 		</tr>
 		<c:forEach items="${totalItemList }" var="totalItem">
-				<tr>
-					<td rowspan="${totalItem.size }">${totalItem.category.categoryName  }</td>
-					<c:forEach items="${totalItem.itemList }" var="item">
-					<td>${item.itemSeq }</td>
-					<td>${item.itemName }</td>
-					<td>${item.itemPrice }</td>
-					<td>${item.remain }</td>
-				</tr>
-				<tr>
-					</c:forEach>
-					<td hidden=""></td>
-					<td hidden=""></td>
-					<td hidden=""></td>
-					<td hidden=""></td>
-					<td hidden=""></td>
-				</tr>
+		<tr>
+			<td rowspan="${totalItem.size }">${totalItem.category.categoryName  }</td>
+			<c:forEach items="${totalItem.itemList }" var="item">
+			<td>${item.itemSeq }</td>
+			<td>${item.itemName }</td>
+			<td>${item.itemPrice }</td>
+			<td>${item.remain }</td>
+		</tr>
+		<tr>
+			</c:forEach>
+			<td hidden=""></td>
+			<td hidden=""></td>
+			<td hidden=""></td>
+			<td hidden=""></td>
+			<td hidden=""></td>
+		</tr>
 		</c:forEach>
 	</table>
-
 </body>
 </html>

@@ -8,11 +8,9 @@
 <title>Shop Info</title>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-
  	a:link {text-decoration: underline; color:black; font-size: 20px; margin-left: 15px;}
 	a:visited {text-decoration: underline; color:black; font-size: 20px; margin-left: 15px;}
 	a:hover {text-decoration: underline; color:#58C9B9; font-size: 20px; margin-left: 15px;}
- 	
 	table, th, td {
 		border: 1px solid black;
 		border-collapse: collapse;
@@ -23,7 +21,6 @@
         padding-bottom: 5px;
         padding-left: 10px;
 	}
-	
 	table {
 		display: inline-block;
 		padding-top: 0px;
@@ -31,19 +28,14 @@
         padding-bottom: 0px;
         padding-left: 0px;
 	}
-	
 	body {
 		font-family: 'Do Hyeon', sans-serif;
 		background-color: hsl(60, 100%, 98%);
 	}	
-	
 	h1 { 
 		font-size: 50px;
 		text-align: center; 
 	}
-	
-	
-
 </style>
 </head>
 <body>
@@ -99,7 +91,6 @@
 					<td>${item.total }</td>
 					<td>${item.remain }</td>
 					<td>${item.necessity }</td>
-					<!-- input 나중에 삭제하고 결산으로 옮기기 -->
 				</tr>
 				<tr>
 				</c:forEach>
