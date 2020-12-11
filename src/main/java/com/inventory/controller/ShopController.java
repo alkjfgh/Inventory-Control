@@ -19,12 +19,14 @@ import com.inventory.app.domain.ItemInfoVO;
 import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
+import com.inventory.app.domain.SoldLogVO;
 import com.inventory.app.domain.StockVO;
 import com.inventory.app.domain.UserVO;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemService;
 import com.inventory.app.service.ShopService;
+import com.inventory.app.service.SoldLogService;
 import com.inventory.app.service.StockService;
 import com.inventory.app.service.UserService;
 
@@ -51,6 +53,9 @@ public class ShopController {
 
 	@Autowired
 	private ItemInfoService itemInfoService;
+
+	@Autowired
+	private SoldLogService soldLogService;
 
 	@RequestMapping(value = "ShopInfo.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public String shopInfo(HttpSession session, Model model, HttpServletRequest request) {
@@ -145,8 +150,14 @@ public class ShopController {
 				masterStock.setRemain(masterStock.getRemain() - (autoSup - remain));
 				masterStock.setSold((autoSup - remain));
 
+				ShopVO shop = new ShopVO();
+				shop.setShopSeq(shopSeq);
+				shop = shopService.select(shop);
+				SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), (autoSup - remain), shopSeq, categorySeq, itemSeq);
+				
 				stockService.update(shopStock);
 				stockService.update(masterStock);
+				soldLogService.insert(soldLog);
 			}
 		}
 		ShopVO shop = (ShopVO) session.getAttribute("shop");

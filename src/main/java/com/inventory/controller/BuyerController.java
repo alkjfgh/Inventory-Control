@@ -23,11 +23,13 @@ import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopInfoVO;
 import com.inventory.app.domain.ShopVO;
+import com.inventory.app.domain.SoldLogVO;
 import com.inventory.app.domain.StockVO;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemService;
 import com.inventory.app.service.ShopService;
+import com.inventory.app.service.SoldLogService;
 import com.inventory.app.service.StockService;
 
 @Controller
@@ -50,6 +52,9 @@ public class BuyerController {
 
 	@Autowired
 	private ItemInfoService itemInfoService;
+	
+	@Autowired
+	private SoldLogService soldLogService;
 
 	@RequestMapping(value = "buy.do", method = RequestMethod.GET)
 	public String buyView(Model model) {
@@ -138,22 +143,27 @@ public class BuyerController {
 		Iterator<BuyCheckVO> buyIt = ((List<BuyCheckVO>) session.getAttribute("buyList")).iterator();
 		while (buyIt.hasNext()) {
 			BuyCheckVO buy = buyIt.next();
-			long shopSeq = buy.getShop().getShopSeq();
+			ShopVO shop = buy.getShop();
+			long shopSeq = shop.getShopSeq();
 			Iterator<BuyItemVO> buyItemIt = buy.getBuyItemList().iterator();
 			while (buyItemIt.hasNext()) {
 				BuyItemVO buyItem = buyItemIt.next();
 				ItemVO item = buyItem.getItem();
+				long categorySeq = item.getCategorySeq();
+				long itemSeq = item.getItemSeq();
 				long buyCnt = buyItem.getBuyCnt();
 				StockVO stock = new StockVO();
 				stock.setShopSeq(shopSeq);
-				stock.setCategorySeq(item.getCategorySeq());
-				stock.setItemSeq(item.getItemSeq());
+				stock.setCategorySeq(categorySeq);
+				stock.setItemSeq(itemSeq);
 				stock = stockService.select(stock);
 				stock.setSold(stock.getSold() + buyCnt);
-				if (stock.getRemain() >= buyCnt) {
-					System.out.println(stock);
-					stock.setRemain(stock.getRemain() - buyCnt);
+				long remain = stock.getRemain();
+				if (remain >= buyCnt) {
+					stock.setRemain(remain - buyCnt);
 					stockService.update(stock);
+					SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), buyCnt, shopSeq, categorySeq, itemSeq);
+					soldLogService.insert(soldLog);
 				}
 			}
 		}
