@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="soldLogMapper">
+	<resultMap id="BaseResultMap" type="soldLog">
+		<result column="log_count" jdbcType="DECIMAL" property="logCount" />
+		<result column="log_sold" jdbcType="DECIMAL" property="logSold" />
+		<result column="shop_seq" jdbcType="DECIMAL" property="shopSeq" />
+		<result column="category_seq" jdbcType="DECIMAL" property="categorySeq" />
+		<result column="item_seq" jdbcType="DECIMAL" property="itemSeq" />
+	</resultMap>
+	<delete id="delete" parameterType="soldLog">
+		DELETE FROM soldLog WHERE
+		shop_seq = #{shopSeq,jdbcType=DECIMAL} AND
+		category_seq = #{categorySeq,jdbcType=DECIMAL} AND
+		item_seq = #{itemSeq,jdbcType=DECIMAL}
+	</delete>
+	<delete id="deleteAll">
+		DELETE FROM soldLog
+	</delete>
+	<insert id="insert" parameterType="soldLog">
+		INSERT INTO soldLog values(#{logCount,jdbcType=DECIMAL}, #{logSold,jdbcType=DECIMAL}, #{shopSeq,jdbcType=DECIMAL}, #{categorySeq,jdbcType=DECIMAL}, #{itemSeq,jdbcType=DECIMAL})
+	</insert>
+	<update id="update" parameterType="soldLog">
+		UPDATE soldLog SET log_count = #{logCount,jdbcType=DECIMAL}, log_sold = #{logSold,jdbcType=DECIMAL} WHERE shop_seq = #{shopSeq,jdbcType=DECIMAL} and category_seq = #{categorySeq,jdbcType=DECIMAL} and item_seq = #{itemSeq,jdbcType=DECIMAL} 
+	</update>
+	<select id="select" parameterType="soldLog" resultMap="BaseResultMap">
+		SELECT * FROM soldLog WHERE shop_seq = #{shopSeq,jdbcType=DECIMAL} and category_seq = #{categorySeq,jdbcType=DECIMAL} and item_seq = #{itemSeq,jdbcType=DECIMAL}
+	</select>
+	<select id="selectList" resultMap="BaseResultMap">
+		SELECT * FROM soldLog
+	</select>
+	<select id="selectWeek" parameterType="soldLog" resultType="long">
+		<choose>
+			<when test="week lt 7">
+ 				SELECT * FROM soldLog WHERE shop_seq = -999
+			</when>
+			<otherwise>
+				<![CDATA[
+				SELECT SUM(log_sold) FROM soldLog WHERE log_count > ((#{week,jdbcType=DECIMAL} - 1) * 7) and log_count <= (#{week,jdbcType=DECIMAL} * 7) and shop_seq = 1 and category_seq = 1 and item_seq = 1;
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+	<select id="selectMonth" parameterType="soldLog" resultType="long">
+		SELECT * FROM soldLog
+	</select>
+	<select id="selectPeriod" parameterType="soldLog" resultType="long">
+		SELECT * FROM soldLog
+	</select>
+	<select id="selectCnt" resultType="int">
+		SELECT COUNT(*) FROM soldLog
+	</select>
+</mapper>
