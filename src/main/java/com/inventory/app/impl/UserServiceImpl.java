@@ -1,13 +1,11 @@
 package com.inventory.app.impl;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.inventory.app.domain.UserVO;
-import com.inventory.app.security.SecurityUse;
 import com.inventory.app.service.UserService;
 
 @Service("UserService")
@@ -16,8 +14,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDAO dao;
 	
-	@Autowired
-	private SecurityUse security;
+//	@Autowired
+//	private SecurityUse security;
 	
 	@Override
 	public int insert(UserVO vo) {
