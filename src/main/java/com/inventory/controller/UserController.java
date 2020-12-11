@@ -70,7 +70,7 @@ public class UserController {
 		vo.setUserLevel((short) 1);
 		service.insert(vo);
 		session.setAttribute("user", vo);
-		return "redirect:" + PATH + "insertShop";
+		return "redirect:/shop/insertShop.do";
 	}
 
 	@RequestMapping(value = "SignOut.do", method = RequestMethod.GET)

@@ -234,7 +234,13 @@ public class ShopController {
 		return PATH + "graph";
 	}
 
-	@RequestMapping(value = "insertShop.do")
+	@RequestMapping(value = "insertShop.do", method = RequestMethod.GET)
+	public String insertShopView(ShopVO vo, HttpSession session) {
+		System.out.println("view");
+		return PATH+"insertShop";
+	}
+	
+	@RequestMapping(value = "insertShop.do", method = RequestMethod.POST)
 	public String insertShop(ShopVO vo, HttpSession session) {
 		UserVO user = (UserVO) session.getAttribute("user");
 		user = userService.select(user);
