@@ -241,7 +241,7 @@ public class ShopController {
 	}
 
 	@RequestMapping(value = "graph.do", method = RequestMethod.GET)
-	public String graphView(HttpServletRequest request, HttpSession session) {
+	public String graphView(HttpServletRequest request, Model model) {
 		return PATH + "graph";
 	}
 
