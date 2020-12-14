@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.inventory.app.domain.CategoryVO;
+import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.SoldLogVO;
 
 @Repository("SoldLogDAO")
@@ -13,7 +15,7 @@ public class SoldLogDAO {
 
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;
-	
+
 	public int insert(SoldLogVO vo) {
 		return sessionTemplate.insert("soldLogMapper.insert", vo);
 	}
@@ -34,16 +36,48 @@ public class SoldLogDAO {
 		return sessionTemplate.selectList("soldLogMapper.selectList");
 	}
 
-	public long selectWeek(SoldLogVO vo) {
-		return sessionTemplate.selectOne("soldLogMapper.selectWeek", vo);
+	public List<SoldLogVO> selectWeek(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectWeek", vo);
 	}
 
-	public long selectMonth(SoldLogVO vo) {
-		return sessionTemplate.selectOne("soldLogMapper.selectMonth", vo);
+	public List<SoldLogVO> selectMonth(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectMonth", vo);
 	}
 
-	public long selectPeriod(SoldLogVO vo) {
-		return sessionTemplate.selectOne("soldLogMapper.selectPeriod", vo);
+	public List<SoldLogVO> selectPeriod(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectPeriod", vo);
+	}
+
+	public List<CategoryVO> selectCategoryList(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectCategoryList", vo);
+	}
+
+	public List<CategoryVO> selectCategoryWeek(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectCategoryWeek", vo);
+	}
+
+	public List<CategoryVO> selectCategoryMonth(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectCategoryMonth", vo);
+	}
+
+	public List<CategoryVO> selectCategoryPeriod(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectCategoryPeriod", vo);
+	}
+
+	public List<ItemVO> selectItemList(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectItemList", vo);
+	}
+
+	public List<ItemVO> selectItemWeek(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectItemWeek", vo);
+	}
+
+	public List<ItemVO> selectItemMonth(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectItemMonth", vo);
+	}
+
+	public List<ItemVO> selectItemPeriod(SoldLogVO vo) {
+		return sessionTemplate.selectList("soldLogMapper.selectItemPeriod", vo);
 	}
 
 	public long selectMaxCount() {
@@ -57,5 +91,5 @@ public class SoldLogDAO {
 	public int selectCnt() {
 		return sessionTemplate.selectOne("soldLogMapper.selectCnt");
 	}
-	
+
 }

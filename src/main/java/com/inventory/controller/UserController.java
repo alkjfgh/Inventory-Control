@@ -3,6 +3,8 @@ package com.inventory.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -24,8 +26,21 @@ public class UserController {
 	private UserService service;
 
 	@RequestMapping(value = "SignIn.do", method = RequestMethod.GET)
-	public String signInView(HttpSession session) {
+	public String signInView(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		UserVO user = (UserVO) session.getAttribute("user");
+		if (user == null) {
+			Cookie[] cookies = request.getCookies();
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("user")) {
+					System.out.println("get user cookie");
+					user = new UserVO();
+					user.setUserId(cookie.getValue());
+					user = service.select(user);
+					session.setAttribute("user", user);
+					break;
+				}
+			}
+		}
 		if (user != null) {
 			int level = user.getUserLevel();
 			if (level == 1)
@@ -37,16 +52,22 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "SignIn.do", method = RequestMethod.POST)
-	public String signIn(UserVO vo, HttpServletResponse response, HttpSession session) throws IOException {
+	public String signIn(UserVO vo, HttpServletResponse response, HttpSession session, HttpServletRequest request)
+			throws IOException {
 		UserVO get = service.select(vo);
 		if (get != null && get.getUserPassword().equals(vo.getUserPassword())) {
-			System.out.println("success");
+			if (request.getParameter("keepLogin") != null && request.getParameter("keepLogin").equals("on")) {
+				Cookie cookie = new Cookie("user", get.getUserId());
+				cookie.setComment("접속 아이디");
+				cookie.setPath("/");
+				cookie.setMaxAge(60 * 60 * 24 * 365);
+				response.addCookie(cookie);
+			}
 			session.setAttribute("user", get);
 			if (get.getUserLevel() == 9)
 				return "redirect:/master/master.do";
 			return "redirect:/shop/ShopInfo.do";
 		} else {
-			System.out.println("failed");
 			alert("잘못된 아이디 또는 비밀번호 입니다.", response);
 			return PATH + "signIn";
 		}
@@ -74,8 +95,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "SignOut.do", method = RequestMethod.GET)
-	public String signOut(HttpSession session) {
+	public String signOut(HttpSession session, HttpServletResponse response, HttpServletRequest request) {
 		session.invalidate();
+		Cookie cookie = new Cookie("user", null);
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		response.addCookie(cookie);
 		return "redirect:/home.do";
 	}
 

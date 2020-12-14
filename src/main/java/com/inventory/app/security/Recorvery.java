@@ -10,7 +10,6 @@ public class Recorvery {
 		StringBuffer result = new StringBuffer(data.substring(0, data.length() - 1));
 		while (n-- > 0) {
 			int key = result.charAt(result.length() - 1) % 7;
-			System.out.println(result);
 			if (key == 1)
 				result = new StringBuffer(recorvery1(result.toString()));
 			else if (key == 2)

@@ -128,6 +128,27 @@
 			color: black;
 			text-decoration: none;
 		}
+		.checkbox{
+			margin: 10px;
+		}
+		.login_append{
+			display: inline-block
+		}
+		a{
+			text-decoration: none;
+		}
+		a:link {
+			color: black;
+			text-decoration: none;
+		}
+		a:visited {
+			color: black;
+			text-decoration: none;
+		}
+		a:hover {
+			color: black;
+			text-decoration: underline;
+		}
 	</style>
 </head>
 <body>
@@ -141,6 +162,15 @@
 			<div class="int-area">
 				<input type="password" name="userPassword" id="pwd" autocomplete="off" required="required" value="">
 				<label for="id">password</label>
+			</div>
+			<div class="checkbox">
+				<input name="keepLogin" type="checkbox" id="keepLogin" class="inp_radio" >
+				<label for="keepLogin">
+				<span class="img_top ico_check"></span>
+				<span class="txt_lab">로그인 상태 유지</span>
+				</label>
+				&nbsp;&nbsp;&nbsp;
+				<a href="" class="link_find">아이디</a>/ <a href="" class="link_find">비밀번호 찾기</a>
 			</div>
 			<div class="btn-area">
 				<input type="submit" id="btn" value="Signin" value="Signin"></input>

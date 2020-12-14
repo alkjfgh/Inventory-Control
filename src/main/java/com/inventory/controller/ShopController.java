@@ -19,6 +19,7 @@ import com.inventory.app.domain.ItemInfoVO;
 import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
+import com.inventory.app.domain.SoldCategoryVO;
 import com.inventory.app.domain.SoldLogVO;
 import com.inventory.app.domain.StockVO;
 import com.inventory.app.domain.UserVO;
@@ -241,13 +242,47 @@ public class ShopController {
 	}
 
 	@RequestMapping(value = "graph.do", method = RequestMethod.GET)
-	public String graphView(HttpServletRequest request, Model model) {
+	public String graphView(HttpSession session, Model model) {
+		ShopVO shop = (ShopVO) session.getAttribute("shop");
+		SoldLogVO soldLog = new SoldLogVO(0, 0, shop.getShopSeq(), 0, 0);
+		soldLog.setStart(shop.getShopCount());
+		soldLog.setEnd(shop.getShopCount());
+		Iterator<CategoryVO> categoryIt = soldLogService.selectCategoryPeriod(soldLog).iterator();
+		List<SoldCategoryVO> soldList = new ArrayList<SoldCategoryVO>();
+		while(categoryIt.hasNext()) {
+			CategoryVO category = categoryService.select(categoryIt.next());
+			soldLog.setCategorySeq(category.getCategorySeq());
+			List<SoldLogVO> soldLogList = soldLogService.selectPeriod(soldLog);
+			if(soldLogList.size() > 0) {
+				soldList.add(new SoldCategoryVO(category, soldLogList));
+			}
+		}
+		model.addAttribute("soldList", soldList);
+		return PATH + "graph";
+	}
+	
+	@RequestMapping(value = "graph.do", method = RequestMethod.POST)
+	public String graph(HttpSession session, Model model) {
+		ShopVO shop = (ShopVO) session.getAttribute("shop");
+		SoldLogVO soldLog = new SoldLogVO(0, 0, shop.getShopSeq(), 0, 0);
+		soldLog.setStart(shop.getShopCount());
+		soldLog.setEnd(shop.getShopCount());
+		Iterator<CategoryVO> categoryIt = soldLogService.selectCategoryPeriod(soldLog).iterator();
+		List<SoldCategoryVO> soldList = new ArrayList<SoldCategoryVO>();
+		while(categoryIt.hasNext()) {
+			CategoryVO category = categoryService.select(categoryIt.next());
+			soldLog.setCategorySeq(category.getCategorySeq());
+			List<SoldLogVO> soldLogList = soldLogService.selectPeriod(soldLog);
+			if(soldLogList.size() > 0) {
+				soldList.add(new SoldCategoryVO(category, soldLogList));
+			}
+		}
+		model.addAttribute("soldList", soldList);
 		return PATH + "graph";
 	}
 
 	@RequestMapping(value = "insertShop.do", method = RequestMethod.GET)
 	public String insertShopView(ShopVO vo, HttpSession session) {
-		System.out.println("view");
 		return PATH+"insertShop";
 	}
 	

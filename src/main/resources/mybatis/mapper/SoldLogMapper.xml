@@ -10,6 +10,28 @@
 			property="categorySeq" />
 		<result column="item_seq" jdbcType="DECIMAL" property="itemSeq" />
 	</resultMap>
+	<resultMap id="CategoryMap" type="category">
+		<result column="category_seq" jdbcType="DECIMAL" property="categorySeq"/>
+		<result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+	</resultMap>
+	<resultMap id="ItemMap" type="item">
+		<id column="item_seq" jdbcType="DECIMAL" property="itemSeq" />
+		<result column="category_seq" jdbcType="DECIMAL"
+			property="categorySeq" />
+		<result column="item_name" jdbcType="VARCHAR"
+			property="itemName" />
+		<result column="item_price" jdbcType="DECIMAL"
+			property="itemPrice" />
+		<result column="item_regdate" jdbcType="TIMESTAMP"
+			property="itemRegdate" />
+		<result column="item_fwdate" jdbcType="TIMESTAMP"
+			property="itemFwdate" />
+		<result column="item_desc" jdbcType="VARCHAR"
+			property="itemDesc" />
+		<result column="item_maker" jdbcType="VARCHAR"
+			property="itemMaker" />
+		<result column="item_img" jdbcType="BLOB" property="itemImg" />
+	</resultMap>
 	<delete id="delete" parameterType="soldLog">
 		DELETE FROM soldLog WHERE
 		log_count = #{logCount,jdbcType=DECIMAL} AND shop_seq =
@@ -45,24 +67,60 @@
 	<select id="selectList" resultMap="BaseResultMap">
 		SELECT * FROM soldLog
 	</select>
-	<select id="selectWeek" parameterType="soldLog"
-		resultType="long">
+	<select id="selectWeek" parameterType="soldLog" resultMap="BaseResultMap">
 	<![CDATA[
-		SELECT SUM(log_sold) FROM soldLog WHERE log_count > ((#{week,jdbcType=DECIMAL} - 1) * 7) AND log_count <= (#{week,jdbcType=DECIMAL} * 7) AND shop_seq = #{shopSeq,jdbcType=DECIMAL} AND category_seq = #{categorySeq,jdbcType=DECIMAL} AND item_seq = #{itemSeq,jdbcType=DECIMAL}
+		SELECT * FROM (SELECT shop_seq, category_seq, item_seq, SUM(log_sold) log_sold FROM soldLog WHERE log_count > ((#{week,jdbcType=DECIMAL} - 1) * 7) AND log_count <= (#{week,jdbcType=DECIMAL} * 7) AND shop_seq = #{shopSeq,jdbcType=DECIMAL} AND category_seq = #{categorySeq,jdbcType=DECIMAL} GROUP BY item_seq WITH ROLLUP ORDER BY item_seq) tmp WHERE NOT item_seq IS NULL
 	]]>
 	</select>
-	<select id="selectMonth" parameterType="soldLog"
-		resultType="long">
+	<select id="selectMonth" parameterType="soldLog" resultMap="BaseResultMap">
 	<![CDATA[
-		SELECT SUM(log_sold) FROM soldLog WHERE log_count > ((#{month,jdbcType=DECIMAL} - 1) * 30) AND log_count <= (#{month,jdbcType=DECIMAL} * 30) AND shop_seq = #{shopSeq,jdbcType=DECIMAL} AND category_seq = #{categorySeq,jdbcType=DECIMAL} AND item_seq = #{itemSeq,jdbcType=DECIMAL}
+		SELECT * FROM (SELECT shop_seq, category_seq, item_seq, SUM(log_sold) log_sold FROM soldLog WHERE log_count > ((#{month,jdbcType=DECIMAL} - 1) * 30) AND log_count <= (#{month,jdbcType=DECIMAL} * 30) AND shop_seq = #{shopSeq,jdbcType=DECIMAL} AND category_seq = #{categorySeq,jdbcType=DECIMAL} GROUP BY item_seq WITH ROLLUP ORDER BY item_seq) tmp WHERE NOT item_seq IS NULL
 	]]>
 	</select>
-	<select id="selectPeriod" parameterType="soldLog"
-		resultType="long">
+	<select id="selectPeriod" parameterType="soldLog" resultMap="BaseResultMap">
 	<![CDATA[
-		SELECT SUM(log_sold) FROM soldLog WHERE log_count >= #{start,jdbcType=DECIMAL} AND log_count <=(#{end,jdbcType=DECIMAL} AND shop_seq = #{shopSeq,jdbcType=DECIMAL} AND category_seq = #{categorySeq,jdbcType=DECIMAL} AND item_seq = #{itemSeq,jdbcType=DECIMAL}
+		SELECT * FROM (SELECT shop_seq, category_seq, item_seq, SUM(log_sold) log_sold FROM soldLog WHERE log_count >= #{start,jdbcType=DECIMAL} AND log_count <= #{end,jdbcType=DECIMAL} AND shop_seq = #{shopSeq,jdbcType=DECIMAL} AND category_seq = #{categorySeq,jdbcType=DECIMAL} GROUP BY item_seq WITH ROLLUP ORDER BY item_seq) tmp WHERE NOT item_seq IS NULL
 	]]>
 	</select>
+	
+	<select id="selectCategoryList" resultMap="CategoryMap">
+		SELECT DISTINCT category_seq FROM soldLog WHERE shop_seq = #{shopSeq,jdbcType=DECIMAL}
+	</select>
+	<select id="selectCategoryWeek" parameterType="soldLog" resultMap="CategoryMap">
+	<![CDATA[
+		SELECT DISTINCT category_seq FROM soldLog WHERE log_count > ((#{week,jdbcType=DECIMAL} - 1) * 7) AND log_count <= (#{week,jdbcType=DECIMAL} * 7) AND shop_seq = #{shopSeq,jdbcType=DECIMAL}
+	]]>
+	</select>
+	<select id="selectCategoryMonth" parameterType="soldLog" resultMap="CategoryMap">
+	<![CDATA[
+		SELECT DISTINCT category_seq FROM soldLog WHERE log_count > ((#{month,jdbcType=DECIMAL} - 1) * 30) AND log_count <= (#{month,jdbcType=DECIMAL} * 30) AND shop_seq = #{shopSeq,jdbcType=DECIMAL}
+	]]>
+	</select>
+	<select id="selectCategoryPeriod" parameterType="soldLog" resultMap="CategoryMap">
+	<![CDATA[
+		SELECT DISTINCT category_seq FROM soldLog WHERE log_count >= #{start,jdbcType=DECIMAL} AND log_count <= #{end,jdbcType=DECIMAL} AND shop_seq = #{shopSeq,jdbcType=DECIMAL}
+	]]>
+	</select>
+	
+	<select id="selectItemList" resultMap="ItemMap">
+		SELECT DISTINCT item_seq FROM soldLog
+	</select>
+	<select id="selectItemWeek" parameterType="soldLog" resultMap="ItemMap">
+	<![CDATA[
+		SELECT DISTINCT item_seq FROM soldLog WHERE log_count > ((#{week,jdbcType=DECIMAL} - 1) * 7) AND log_count <= (#{week,jdbcType=DECIMAL} * 7) AND shop_seq = #{shopSeq,jdbcType=DECIMAL} AND category_seq = #{categorySeq,jdbcType=DECIMAL}
+	]]>
+	</select>
+	<select id="selectItemMonth" parameterType="soldLog" resultMap="ItemMap">
+	<![CDATA[
+		SELECT DISTINCT item_seq FROM soldLog WHERE log_count > ((#{month,jdbcType=DECIMAL} - 1) * 30) AND log_count <= (#{month,jdbcType=DECIMAL} * 30) AND shop_seq = #{shopSeq,jdbcType=DECIMAL} AND category_seq = #{categorySeq,jdbcType=DECIMAL}
+	]]>
+	</select>
+	<select id="selectItemPeriod" parameterType="soldLog" resultMap="ItemMap">
+	<![CDATA[
+		SELECT DISTINCT item_seq FROM soldLog WHERE log_count >= #{start,jdbcType=DECIMAL} AND log_count <= #{end,jdbcType=DECIMAL} AND shop_seq = #{shopSeq,jdbcType=DECIMAL} AND category_seq = #{categorySeq,jdbcType=DECIMAL}
+	]]>
+	</select>
+	
 	<select id="selectMaxCount" resultType="long">
 		SELECT MAX(log_count)
 		FROM soldLog;
