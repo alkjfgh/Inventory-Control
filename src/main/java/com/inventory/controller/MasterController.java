@@ -1,10 +1,12 @@
 package com.inventory.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,23 +50,34 @@ public class MasterController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "master.do")
-	public String masterView() {
-		return PATH + "master";
+	@RequestMapping(value = "master.do", method = RequestMethod.GET)
+	public String masterView(HttpSession session, HttpServletResponse response) throws IOException {
+		System.out.println("masterView");
+		String url = masterCheck(session, response);
+		if (url != null)
+			return url;
+		return PATH + "master";	
 	}
 
-	@RequestMapping(value = "updateCategory.do")
-	public String updateCategoryView(Model model) {
+	@RequestMapping(value = "updateCategory.do", method = RequestMethod.GET)
+	public String updateCategoryView(Model model, HttpSession session, HttpServletResponse response)
+			throws IOException {
+		String url = masterCheck(session, response);
+		if (url != null)
+			return url;
 		List<CategoryVO> categoryList = categoryService.selectList(null);
 		model.addAttribute("categoryList", categoryList);
 		return PATH + "updateCategory";
 	}
 
-	@RequestMapping(value = "masterUpdateItem.do")
-	public String masterUpdateItemView(Model model) {
+	@RequestMapping(value = "masterUpdateItem.do", method = RequestMethod.GET)
+	public String masterUpdateItemView(Model model, HttpSession session, HttpServletResponse response)
+			throws IOException {
+		String url = masterCheck(session, response);
+		if (url != null)
+			return url;
 		List<CategoryVO> categoryList = categoryService.selectList(null);
 		model.addAttribute("categoryList", categoryList);
-
 		Iterator<CategoryVO> categoryIt = categoryList.iterator();
 		List<CategoryItemVO> categoryItemList = new ArrayList<CategoryItemVO>();
 		while (categoryIt.hasNext()) {
@@ -126,7 +139,6 @@ public class MasterController {
 			item.setItemName(itemName);
 			item.setItemPrice(itemPrice);
 			item.setItemMaker(itemMaker);
-			System.out.println(item);
 			itemService.insert(item);
 		}
 		return "redirect:" + PATH + "master.do";
@@ -154,22 +166,32 @@ public class MasterController {
 	}
 
 	@RequestMapping(value = "shopList.do", method = RequestMethod.GET)
-	public String shopList(HttpServletRequest request, Model model) {
+	public String shopListView(HttpServletRequest request, Model model, HttpSession session,
+			HttpServletResponse response) throws IOException {
+		String url = masterCheck(session, response);
+		if (url != null)
+			return url;
 		List<ShopVO> shopList = shopService.selectList(null);
 		shopList.remove(1);
 		model.addAttribute("shopList", shopList);
 		return PATH + "shopList";
 	}
 
-	@RequestMapping(value = "ownerList.do")
-	public String ownerList(Model model) {
+	@RequestMapping(value = "ownerList.do", method = RequestMethod.GET)
+	public String ownerListView(Model model, HttpSession session, HttpServletResponse response) throws IOException {
+		String url = masterCheck(session, response);
+		if (url != null)
+			return url;
 		List<UserVO> userList = userService.selectList(null);
 		model.addAttribute("userList", userList);
 		return PATH + "ownerList";
 	}
 
-	@RequestMapping(value = "totalItem.do")
-	public String totalItem(Model model, HttpSession session) {
+	@RequestMapping(value = "totalItem.do", method = RequestMethod.GET)
+	public String totalItemView(Model model, HttpSession session, HttpServletResponse response) throws IOException {
+		String url = masterCheck(session, response);
+		if (url != null)
+			return url;
 		StockVO vo = new StockVO();
 		vo.setShopSeq(2l);
 		Iterator<CategoryVO> categoryList = categoryService.selectList(null).iterator();
@@ -183,5 +205,12 @@ public class MasterController {
 		}
 		model.addAttribute("totalItemList", totalItemList);
 		return PATH + "totalItem";
+	}
+
+	private String masterCheck(HttpSession session, HttpServletResponse response) throws IOException {
+		UserVO user = (UserVO) session.getAttribute("user");
+		if (user == null || user.getUserLevel() != 9)
+			return "redirect:../home.do";
+		return null;
 	}
 }

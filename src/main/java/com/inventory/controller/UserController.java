@@ -2,6 +2,7 @@ package com.inventory.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +33,9 @@ public class UserController {
 			Cookie[] cookies = request.getCookies();
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("user")) {
-					System.out.println("get user cookie");
 					user = new UserVO();
 					user.setUserId(cookie.getValue());
+					System.out.println(user);
 					user = service.select(user);
 					session.setAttribute("user", user);
 					break;
@@ -89,9 +90,14 @@ public class UserController {
 	@RequestMapping(value = "SignUp.do", method = RequestMethod.POST)
 	public String signUp(UserVO vo, HttpSession session) {
 		vo.setUserLevel((short) 1);
-		service.insert(vo);
-		session.setAttribute("user", vo);
-		return "redirect:/shop/insertShop.do";
+		try {
+			service.insert(vo);
+			session.setAttribute("user", vo);
+			return "redirect:/shop/insertShop.do";
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return "redirect:home.do";
+		}
 	}
 
 	@RequestMapping(value = "SignOut.do", method = RequestMethod.GET)

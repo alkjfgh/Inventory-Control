@@ -4,20 +4,99 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Sign Up</title>
+<title>Sign Up</title><style>
+    @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+    body{
+        font-family: 'Do Hyeon', sans-serif;
+        background-color: hsl(60, 100%, 98%);
+    }
+    h1{
+        margin: 50px;
+        text-align: center;  
+        font-family: 'Do Hyeon', sans-serif;
+
+    }
+    table{
+        width: 800px;
+        height: 400px;
+        margin: auto;
+        margin-top: 120px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th,td{
+        border: 0.125em solid black;
+        padding: 12px;
+        font-size: 18px;
+    }
+    .in_text{
+        color: rgba(41, 43, 41, 0.466);
+    }
+    input[type=text] {
+	    width: 35%;
+	    padding: 3px;
+	    margin: 8px 0;
+	    box-sizing: border-box;
+	    border: 3px solid #ccc;
+	    -webkit-transition: 0.5s;
+	    transition: 0.5s;
+	    outline: none;
+    }
+    input[type=text]:focus {
+    	border: 3px solid #555;
+    }
+    input[type=password] {
+	    width: 35%;
+	    padding: 3px;
+	    margin: 8px 0;
+	    box-sizing: border-box;
+	    border: 3px solid #ccc;
+	    -webkit-transition: 0.5s;
+	    transition: 0.5s;
+	    outline: none;
+    }
+    input[type=password]:focus {
+    	border: 3px solid #555;
+    }
+    p{
+	    width: 100px;
+	    margin: auto;
+	    margin-top: 50px;
+	    padding: auto;
+    }
+    .insert{
+	    font-family: 'Do Hyeon', sans-serif;
+	    background-color: #A593E0; 
+	    border: none;
+	    color: white;
+	    padding: 15px 32px;
+	    text-align: center;
+	    text-decoration: none;
+	    display: inline-block;
+	    font-size: 16px;
+	    margin: 4px 2px;
+	    cursor: pointer;
+	    -webkit-transition-duration: 0.4s; 
+	    transition-duration: 0.4s;
+    }
+    .insert:hover {
+    	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+</style>
 </head>
 <body>
 	<h1>Sign Up</h1>
-	<form action="SignUp.do" name=fr method="post" onsubmit="return fun2()">
-		<table width=750 border="1px" align=center>
+    <form action="SignUp.do" name=fr method="post" onsubmit="return fun2()" > 
+        <div class="singup"></div>
+		<table>
 			<tr>
-				<th colspan="2" bgcolor="#E4F7BA">Sign Up</th>
+				<th colspan="2">Sign Up</th>
 			</tr>
 			<tr>
 				<td>아이디</td>
 				<td>
 					<input type="text" name="userId" onkeyup="fun3()">
-					<span id="alert_text"><span style="color: #777">아이디를 입력해주세요</span></span>
+					<span  id="alert_text"><span class="in_text">아이디를 입력해주세요</span></span>
 				</td>
 			</tr>
 			<tr>
@@ -28,14 +107,14 @@
 				<td>비밀번호 확인</td>
 				<td>
 					<input type="password" name="userPassword1" onkeyup="fun4()">
-					<span id="alert_pwd"><span style="color: #777">패스워드를 한번 더 입력해주세요</span></span>
+					<span id="alert_pwd"><span class="in_text">패스워드를 한번 더 입력해주세요</span></span>
 				</td>
 			</tr>
 			<tr>
 				<td>메일주소</td>
 				<td>
 					<input type="text" name="userEmail" onkeyup="fun5()">
-					<span id="alert_email"><span style="color: #777">예)rmsdn@naver.com</span></span>
+					<span id="alert_email"><span class="in_text">예)rmsdn@naver.com</span></span>
 				</td>
 			</tr>
 			<tr>
@@ -50,14 +129,14 @@
 				<td>핸드폰번호</td>
 				<td>
 					<input type="text" name="userPhone" onkeyup="fun6()">
-					<span id="alert_phone"><span style="color: #777">예)010-0000-0000</span></span>
+					<span id="alert_phone"><span class="in_text">예)010-0000-0000</span></span>
 				</td>
 			</tr>
 		</table>
-		<p align=center>
-			<input type="submit" value="회원 가입">
-			<input type="reset" name="reset" value="다시 입력">
-		</p>
+		<p>
+			<input type="submit" class="insert" value="회원 가입">
+        </p>
+       </div>
 	</form>
 </body>
 <script>

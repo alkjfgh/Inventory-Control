@@ -2,6 +2,7 @@ package com.inventory.app.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class UserTest {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws UnsupportedEncodingException {
 		service.deleteAll();
 		assertEquals(service.selectCnt(), 0);
 

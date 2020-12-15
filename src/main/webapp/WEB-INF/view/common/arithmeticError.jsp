@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>기본 에러 화면</title>
+<title>산수 에러 화면</title>
 <style>
 	body{
 		background-color: #fff;
@@ -30,7 +30,7 @@
 <!-- 타이틀 시작 -->
 <table>
 	<tr>
-		<td class="orange"><b>기본 에러 화면입니다.</b></td>
+		<td class="orange"><b>산수 에러 화면입니다.</b></td>
 	</tr>
 </table>
 <br />
@@ -45,4 +45,5 @@
 	</tr>
 </table>
 </body>
+<a href="../home.do" >HOME</a>
 </html>

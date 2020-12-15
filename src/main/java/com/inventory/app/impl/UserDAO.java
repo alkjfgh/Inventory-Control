@@ -10,10 +10,11 @@ import com.inventory.app.domain.UserVO;
 
 @Repository("UserDAO")
 public class UserDAO {
+	
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;
 
-	public int insert(UserVO vo) {
+	public int insert(UserVO vo){
 		return sessionTemplate.insert("UserMapper.insert", vo);
 	}
 

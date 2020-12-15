@@ -11,8 +11,8 @@
 	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 	
 	html{
-            scroll-behavior: smooth;
-        }
+        scroll-behavior: smooth;
+    }
 	
 	.canC:link {text-decoration: underline; color:black; font-size: 20px; margin-left: 15px;}
 	.canC:visited {text-decoration: underline; color:black; font-size: 20px; margin-left: 15px;}
@@ -41,28 +41,28 @@
 	}
 	
 	section{
-            width: 100%;
-            background: hsl(60, 100%, 98%) ;
-            background-size: cover;
+        width: 100%;
+        background: hsl(60, 100%, 98%) ;
+        background-size: cover;
             
     }
     
     .gotopbtn{
-            position: fixed;
-            width: 50px;
-            height: 50px;
-            background: black;
-            bottom: 40px;
-            right: 50px;
-            cursor: pointer;
-            font-family: 'Do Hyeon', sans-serif;
-            text-decoration: none;
-            text-align: center;
-            line-height: 50px;
-            color: white;
-            font-size: 26px;
-         	border: 0;
-         	right : 5px;
+    	position: fixed;
+        width: 50px;
+        height: 50px;
+        background: black;
+        bottom: 40px;
+        right: 50px;
+        cursor: pointer;
+        font-family: 'Do Hyeon', sans-serif;
+        text-decoration: none;
+        text-align: center;
+        line-height: 50px;
+        color: white;
+        font-size: 26px;
+        border: 0;
+        right : 5px;
     }
     
 	h1 { 
@@ -87,12 +87,12 @@
 	}
 	
 	.requ { 
-			height: 25px;
-			background: hsl(60, 100%, 98%);
-			color: black;
-			font-size: 17px;			
-			cursor: pointer;
-			font-family : 'Do Hyeon', sans-serif;
+		height: 25px;
+		background: hsl(60, 100%, 98%);
+		color: black;
+		font-size: 17px;			
+		cursor: pointer;
+		font-family : 'Do Hyeon', sans-serif;
 	}	
 	
 	.requ:hover {

@@ -14,8 +14,8 @@ public class Recorvery {
 				result = new StringBuffer(recorvery1(result.toString()));
 			else if (key == 2)
 				result = new StringBuffer(recorvery2(result.toString()));
-			else if (key == 3)
-				result = new StringBuffer(recorvery3(result.toString()));
+//			else if (key == 3)
+//				result = new StringBuffer(recorvery3(result.toString()));
 			else if (key == 4)
 				result = new StringBuffer(recorvery4(result.toString()));
 			else if (key == 5)
@@ -42,6 +42,7 @@ public class Recorvery {
 		return recoveryData;
 	}
 
+	@SuppressWarnings("unused")
 	private StringBuffer recorvery3(String data) {
 		FileReader fr = null;
 		char[] key = new char[94];
