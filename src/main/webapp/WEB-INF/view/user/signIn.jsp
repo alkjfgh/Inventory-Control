@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Sign In</title>
+<title>로그인</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<title>Sign In</title>
@@ -20,9 +20,10 @@
 
 		body {
 			font-family: 'Do Hyeon', sans-serif;
-			display: flex;
-			justify-content: center;
-			align-items: center;
+			margin: auto;
+			padding: auto;
+			width: 400px;
+			text-align: center;
 			height: 100vh;
 			background-color: hsl(60, 100%, 98%);
 			background-size: cover;
@@ -38,7 +39,7 @@
 			font-size: 42px;
 			color: black;
 			text-align: center;
-			margin-bottom: 60px;
+			margin: 50px;
 		}
 
 		.int-area {
@@ -150,19 +151,22 @@
 			color: black;
 			text-decoration: underline;
 		}
+		#btn{
+			font-family: 'Do Hyeon', sans-serif;
+		}
 	</style>
 </head>
 <body>
 	<section class="login-form">
-		<h1>Sing In</h1>
+		<h1>로그인</h1>
 		<form action="SignIn.do" method="post">
 			<div class="int-area">
 				<input type="text" name="userId" id="id" autocomplete="off" required="required" value="">
-				<label for="id">User name</label>
+				<label for="id">아이디</label>
 			</div>
 			<div class="int-area">
 				<input type="password" name="userPassword" id="pwd" autocomplete="off" required="required" value="">
-				<label for="id">password</label>
+				<label for="id">패스워드</label>
 			</div>
 			<div class="checkbox">
 				<input name="keepLogin" type="checkbox" id="keepLogin" class="inp_radio" >
@@ -174,11 +178,11 @@
 				<a href="" class="link_find">아이디</a>/ <a href="" class="link_find">비밀번호 찾기</a>
 			</div>
 			<div class="btn-area">
-				<input type="submit" id="btn" value="Signin" value="Signin"></input>
+				<input type="submit" id="btn" value="로그인"></input>
 			</div>
 		</form>
 		<div class="caption">
-			<a href="">Forgot Password</a>
+			<a href="">뒤로가기</a>
 		</div>
 	</section>
 	<script>
