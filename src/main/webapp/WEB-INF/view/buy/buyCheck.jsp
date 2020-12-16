@@ -42,8 +42,10 @@
 	    list-style: none;
 	    position: absolute;
 	    font-family:'Do Hyeon', sans-serif;
-	    
+		overflow-y: scroll;
+   		-ms-overflow-style: none;
 	}
+	.receipt_li::-webkit-scrollbar{ display:none; }
 	.receipt {
 	    width: 100%;
 	    height: 100%;
@@ -70,10 +72,12 @@
 		height: 55px;
 		text-align: center;
 		margin: 0 auto;
+		font-size: 17px;
 	}
 	.buyTotal button{
 		border-radius: 10px;
 		font-family:'Do Hyeon', sans-serif;
+		font-size: 25px;
 	}
 	.show-more{
 		text-align: center;
@@ -151,201 +155,15 @@
 		                </table>
 		            </div>
 		        </div>
-		        <div class="receipt_li well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1">
-		            <div class="row">
-		                <div class="col-xs-6 col-sm-6 col-md-6">
-		                    <address>
-		                        <strong>${buyCheck.shop.shopName }</strong>
-		                        <br>
-		                       	${buyCheck.shop.shopAddress }
-		                        <br>
-		                        ${buyCheck.shop.shopRegdate }
-		                        <br>
-		                        <abbr title="Phone">P:</abbr> ${buyCheck.shop.shopPhone }
-		                    </address>
-		                </div>
-		                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-		                    <p>
-		                        <em class="receipt_count"></em>
-		                    </p>
-		                </div>
-		            </div>
-		            <div class="row">
-		                <div class="text-center">
-		                    <h1>Receipt</h1>
-		                </div>
-		                <table class="table table-hover">
-		                    <thead>
-		                        <tr>
-		                            <th>Product</th>
-		                            <th>Count</th>
-		                            <th class="text-center">Price</th>
-		                            <th class="text-center">Total</th>
-		                        </tr>
-		                    </thead>
-		                    <tbody>
-								<c:forEach items="${buyCheck.buyItemList }" var="item">
-		                        <tr>
-		                            <td class="col-md-9"><em>${item.item.itemName }</em></td>
-		                            <td class="col-md-1" style="text-align: center"> ${item.buyCnt} </td>
-		                            <td class="col-md-1 text-center">${item.item.itemPrice }</td>
-		                            <td class="col-md-1 text-center item-total">${item.item.itemPrice*item.buyCnt}</td>
-		                        </tr>
-								</c:forEach>
-		                        <tr>
-		                            <td>   </td>
-		                            <td>   </td>
-		                            <td class="text-right">
-			                            <p><strong>Subtotal: </strong></p>
-			                            <p><strong>Tax: </strong></p>
-		                            </td>
-			                            <td class="text-center">
-			                            <p><strong class="sub-total"></strong></p>
-			                            <p><strong class="tax"></strong></p>
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td>   </td>
-		                            <td>   </td>
-		                            <td class="text-right"><h4><strong>Total: </strong></h4></td>
-		                            <td class="text-center text-danger"><h4><strong class="total"></strong></h4></td>
-		                        </tr>
-		                    </tbody>
-		                </table>
-		            </div>
-		        </div>
-		        <div class="receipt_li well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1">
-		            <div class="row">
-		                <div class="col-xs-6 col-sm-6 col-md-6">
-		                    <address>
-		                        <strong>${buyCheck.shop.shopName }</strong>
-		                        <br>
-		                       	${buyCheck.shop.shopAddress }
-		                        <br>
-		                        ${buyCheck.shop.shopRegdate }
-		                        <br>
-		                        <abbr title="Phone">P:</abbr> ${buyCheck.shop.shopPhone }
-		                    </address>
-		                </div>
-		                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-		                    <p>
-		                        <em class="receipt_count"></em>
-		                    </p>
-		                </div>
-		            </div>
-		            <div class="row">
-		                <div class="text-center">
-		                    <h1>Receipt</h1>
-		                </div>
-		                <table class="table table-hover">
-		                    <thead>
-		                        <tr>
-		                            <th>Product</th>
-		                            <th>Count</th>
-		                            <th class="text-center">Price</th>
-		                            <th class="text-center">Total</th>
-		                        </tr>
-		                    </thead>
-		                    <tbody>
-								<c:forEach items="${buyCheck.buyItemList }" var="item">
-		                        <tr>
-		                            <td class="col-md-9"><em>${item.item.itemName }</em></td>
-		                            <td class="col-md-1" style="text-align: center"> ${item.buyCnt} </td>
-		                            <td class="col-md-1 text-center">${item.item.itemPrice }</td>
-		                            <td class="col-md-1 text-center item-total">${item.item.itemPrice*item.buyCnt}</td>
-		                        </tr>
-								</c:forEach>
-		                        <tr>
-		                            <td>   </td>
-		                            <td>   </td>
-		                            <td class="text-right">
-			                            <p><strong>Subtotal: </strong></p>
-			                            <p><strong>Tax: </strong></p>
-		                            </td>
-			                            <td class="text-center">
-			                            <p><strong class="sub-total"></strong></p>
-			                            <p><strong class="tax"></strong></p>
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td>   </td>
-		                            <td>   </td>
-		                            <td class="text-right"><h4><strong>Total: </strong></h4></td>
-		                            <td class="text-center text-danger"><h4><strong class="total"></strong></h4></td>
-		                        </tr>
-		                    </tbody>
-		                </table>
-		            </div>
-		        </div>
-		        <div class="receipt_li well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1">
-		            <div class="row">
-		                <div class="col-xs-6 col-sm-6 col-md-6">
-		                    <address>
-		                        <strong>${buyCheck.shop.shopName }</strong>
-		                        <br>
-		                       	${buyCheck.shop.shopAddress }
-		                        <br>
-		                        ${buyCheck.shop.shopRegdate }
-		                        <br>
-		                        <abbr title="Phone">P:</abbr> ${buyCheck.shop.shopPhone }
-		                    </address>
-		                </div>
-		                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-		                    <p>
-		                        <em class="receipt_count"></em>
-		                    </p>
-		                </div>
-		            </div>
-		            <div class="row">
-		                <div class="text-center">
-		                    <h1>Receipt</h1>
-		                </div>
-		                <table class="table table-hover">
-		                    <thead>
-		                        <tr>
-		                            <th>Product</th>
-		                            <th>Count</th>
-		                            <th class="text-center">Price</th>
-		                            <th class="text-center">Total</th>
-		                        </tr>
-		                    </thead>
-		                    <tbody>
-								<c:forEach items="${buyCheck.buyItemList }" var="item">
-		                        <tr>
-		                            <td class="col-md-9"><em>${item.item.itemName }</em></td>
-		                            <td class="col-md-1" style="text-align: center"> ${item.buyCnt} </td>
-		                            <td class="col-md-1 text-center">${item.item.itemPrice }</td>
-		                            <td class="col-md-1 text-center item-total">${item.item.itemPrice*item.buyCnt}</td>
-		                        </tr>
-								</c:forEach>
-		                        <tr>
-		                            <td>   </td>
-		                            <td>   </td>
-		                            <td class="text-right">
-			                            <p><strong>Subtotal: </strong></p>
-			                            <p><strong>Tax: </strong></p>
-		                            </td>
-			                            <td class="text-center">
-			                            <p><strong class="sub-total"></strong></p>
-			                            <p><strong class="tax"></strong></p>
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td>   </td>
-		                            <td>   </td>
-		                            <td class="text-right"><h4><strong>Total: </strong></h4></td>
-		                            <td class="text-center text-danger"><h4><strong class="total"></strong></h4></td>
-		                        </tr>
-		                    </tbody>
-		                </table>
-		            </div>
-		        </div>
 				</c:forEach>
 		    </div>
 		</div>
+		<div>
+			<h4 class="extended-price"></h4>
+		</div>
 		<div class="buyTotal">
     		<button type="submit" class="btn btn-success btn-lg btn-block">
-       		 	Pay Now   <span class="glyphicon glyphicon-chevron-right"></span>
+       		 	결제   <span class="glyphicon glyphicon-chevron-right"></span>
     		</button>
 		</div>
 	</form>
@@ -354,6 +172,7 @@
 	</div>
 </body>
 <script>
+	var total_pay = 0;
 	$(".receipt_li").each(function(i, table) {
 		var eq_table = $(".receipt_li").eq(i);
 		var item_total = eq_table.find(".item-total");
@@ -364,16 +183,13 @@
 	    	var eq_item = $(".item-total").eq(j);
 	        total += parseInt(eq_item.html());
 		});
-	    eq_table.find(".receipt_count").html(i);
+	    eq_table.find(".receipt_count").html(i + 1);
 	    eq_table.find(".sub-total").html(total + '₩');
 	    eq_table.find(".tax").html(total/10 + '₩');
 	    eq_table.find(".total").html(total + total/10 + '₩');
-	    
-	    if(eq_table.find("tbody").find("tr").length > 8){
-	    	eq_table.find("tbody").find("tr").eq(4).nextUntil(".details").hide(0);
-	    	eq_table.find("tbody").find("tr.details").after('<tr class="show-more"><td colspan="4">더보기</td></tr>');
-	    }
+	    total_pay += total + total/10;
 	});
+	$(".extended-price").html("총 결제 금액 : " + total_pay + "₩");
 	$(document).ready(function(){
 		var duration = 200;
 		var li_width = 500;
