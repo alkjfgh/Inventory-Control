@@ -11,8 +11,18 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<!-- 차트 링크 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
 <style>
 	form{
 		display : inline-block;
@@ -32,16 +42,25 @@
 	<h1>그래프</h1>
 	<div id="button">
 		<form action="graph.do" method="post">
-			<input type="text" name="start" min="1" max="${shop.shopCount }"/>
-			<input type="text" name="end" hidden="hidden" />
-			<input type="submit" value="하루판매량" />
+			<select name="searchCondition" id="" onchange="conditionClick(this)">
+				<option value="day" class="conditionDay">하루판매량</option>
+				<option value="week" class="conditionWeek">일주일 판매량</option>
+				<option value="month" class="conditionMonth">한달판매량</option>
+			</select>
+			<input type="number" class="searchKeyword" name="searchKeyword" min="1" max="1" required="required" />
+			<input type="submit" value="검색" />
+		</form>
+		<form action="graph.do" id="dayForm" method="post">
+			<input type="number" placeholder="" class="dayStart" value="3" name="start" min="1" max="${shop.shopCount }" onblur="dayChange(this)" />
+			<input type="number" class="dayEnd" name="end" value="" hidden="hidden" />
+			<input type="submit" class="daySubmit" value="하루판매량" />
 		</form>
 		<form action="graph.do" method="post">
-			<input type="text" name="week" value="1" hidden="hidden" />
+			<input type="number" class="weekInput" name="week"  value="3"   min="1" max="${shop.shopCount}/7"/>
 			<input type="submit" value="일주일 판매량" />
 		</form>
 		<form action="graph.do" method="post">
-			<input type="text" name="month" value="1" hidden="hidden" />
+			<input type="text" class="monthInput" name="month" min="1" max="${shop.shopCount}/30"/>
 			<input type="submit" value="한달 판매량" />
 		</form>
 		<button class="search">기간 검색(일)</button>
@@ -51,7 +70,9 @@
 				<input type="submit" value="검색" />
 			</form>
 		</div>
+		
 	</div>
+	
 	<div class="container">
 		<c:forEach items="${soldList }" var="soldCategory">
 			<canvas id="${soldCategory.category.categoryName }"></canvas>
@@ -62,20 +83,31 @@
 	<div class="back">
 		<a href="ShopInfo.do">뒤로가기</a>
 	</div>
-	<!-- 부트스트랩 -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
+	
 	<!-- 차트 -->
 	<script>
+		/* function dayChange(e){
+			var val1 = $(".dayStart").val();
+			var result = val1;
+			$(".dayEnd").val(result);
+		} */
+		countMax = parseInt("<c:out value="${shop.shopCount}" />");
+		function conditionClick(e){
+			if(e.value=='day'){
+				$('.searchKeyword').attr("max", countMax);
+			}
+			else if(e.value=='week'){
+				$('.searchKeyword').attr("max", countMax/7);
+			}
+			else if(e.value=='month'){
+				$('.searchKeyword').attr("max", countMax/30);
+			}
+			console.log(countMax);
+			console.log($('.searchKeyword').attr("max"));
+			
+		}
+		
+		
 		$('.search').click(function() {
 			$('.inputSearch').show();
 		});
