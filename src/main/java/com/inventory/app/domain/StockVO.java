@@ -81,6 +81,34 @@ public class StockVO {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (categorySeq ^ (categorySeq >>> 32));
+		result = prime * result + (int) (itemSeq ^ (itemSeq >>> 32));
+		result = prime * result + (int) (shopSeq ^ (shopSeq >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StockVO other = (StockVO) obj;
+		if (categorySeq != other.categorySeq)
+			return false;
+		if (itemSeq != other.itemSeq)
+			return false;
+		if (shopSeq != other.shopSeq)
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "StockVO [shopSeq=" + shopSeq + ", categorySeq=" + categorySeq + ", itemSeq=" + itemSeq + ", total="
 				+ total + ", remain=" + remain + ", necessity=" + necessity + ", sold=" + sold + "]";

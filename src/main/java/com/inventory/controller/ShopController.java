@@ -3,8 +3,10 @@ package com.inventory.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +64,8 @@ public class ShopController {
 	private SoldLogService soldLogService;
 
 	@RequestMapping(value = "ShopInfo.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public String shopInfo(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public String shopInfo(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		String url = userCheck(session, response);
 		if (url != null)
 			return url;
@@ -123,7 +126,8 @@ public class ShopController {
 				}
 			}
 			if (itemInfoList.size() > 0)
-				categoryList.add( new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
+				categoryList.add(
+						new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
 		}
 		return categoryList;
 	}
@@ -163,8 +167,9 @@ public class ShopController {
 				ShopVO shop = new ShopVO();
 				shop.setShopSeq(shopSeq);
 				shop = shopService.select(shop);
-				SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), (autoSup - remain), shopSeq, categorySeq, itemSeq);
-				
+				SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), (autoSup - remain), shopSeq, categorySeq,
+						itemSeq);
+
 				stockService.update(shopStock);
 				stockService.update(masterStock);
 				soldLogService.insert(soldLog);
@@ -176,7 +181,7 @@ public class ShopController {
 		return "redirect:" + PATH + "ShopInfo.do";
 	}
 
-	@RequestMapping(value = "updateItem.do", method =  RequestMethod.GET)
+	@RequestMapping(value = "updateItem.do", method = RequestMethod.GET)
 	public String updateItemView(HttpSession session, HttpServletResponse response) throws IOException {
 		String url = userCheck(session, response);
 		if (url != null)
@@ -215,16 +220,26 @@ public class ShopController {
 	public String insertItem(HttpServletRequest request, HttpSession session) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		int input_size = Integer.parseInt(request.getParameter("cnt"));
+		Set<StockVO> duplicateCheck = new HashSet<StockVO>();
 		for (int i = 1; i <= input_size; i++) {
+			if (request.getParameter("category_" + i) == null)
+				continue;
 			long categorySeq = Long.parseLong(request.getParameter("category_" + i));
+			if (request.getParameter("item_" + i) == null)
+				continue;
 			long itemSeq = Long.parseLong(request.getParameter("item_" + i));
+			if (request.getParameter("total_" + i) == null)
+				continue;
 			long total = Long.parseLong(request.getParameter("total_" + i));
 			StockVO stock = new StockVO();
 			stock.setCategorySeq(categorySeq);
 			stock.setItemSeq(itemSeq);
 			stock.setShopSeq(shop.getShopSeq());
 			stock.setTotal(total);
-			stockService.insert(stock);
+			if (!duplicateCheck.contains(stock)) {
+				stockService.insert(stock);
+				duplicateCheck.add(stock);
+			}
 		}
 		return "redirect:" + PATH + "ShopInfo.do";
 	}
@@ -264,48 +279,55 @@ public class ShopController {
 		soldLog.setEnd(shop.getShopCount());
 		Iterator<CategoryVO> categoryIt = soldLogService.selectCategoryPeriod(soldLog).iterator();
 		List<SoldCategoryVO> soldList = new ArrayList<SoldCategoryVO>();
-		while(categoryIt.hasNext()) {
+		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryService.select(categoryIt.next());
 			soldLog.setCategorySeq(category.getCategorySeq());
 			List<SoldLogVO> soldLogList = soldLogService.selectPeriod(soldLog);
-			if(soldLogList.size() > 0) {
+			if (soldLogList.size() > 0) {
 				soldList.add(new SoldCategoryVO(category, soldLogList));
 			}
 		}
 		model.addAttribute("soldList", soldList);
 		return PATH + "graph";
 	}
-	
+
 	@RequestMapping(value = "graph.do", method = RequestMethod.POST)
 	public String graph(HttpSession session, Model model, HttpServletRequest request) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		SoldLogVO soldLog = new SoldLogVO(0, 0, shop.getShopSeq(), 0, 0);
 		short c = 0;
-		if(request.getParameter("week") != null) { 
+		if (request.getParameter("week") != null) {
 			soldLog.setWeek(Long.parseLong(request.getParameter("week")));
-		} else if(request.getParameter("month") != null) {
+			c = 1;
+		} else if (request.getParameter("month") != null) {
 			soldLog.setMonth(Long.parseLong(request.getParameter("month")));
-		} else if(request.getParameter("start") != null && request.getParameter("end") != null) {
+			c = 2;
+		} else if (request.getParameter("start") != null && request.getParameter("end") != null) {
 			soldLog.setStart(Long.parseLong(request.getParameter("start")));
 			soldLog.setEnd(Long.parseLong(request.getParameter("end")));
+			c = 3;
 		}
+		System.out.println(soldLog);
 //		검색어를 입력 하지 않은 경우는 js로 검열
 
 		Iterator<CategoryVO> categoryIt = soldLogService.selectCategoryPeriod(soldLog).iterator();
 		List<SoldCategoryVO> soldList = new ArrayList<SoldCategoryVO>();
-		while(categoryIt.hasNext()) {
+		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryService.select(categoryIt.next());
 			soldLog.setCategorySeq(category.getCategorySeq());
 			List<SoldLogVO> soldLogList = null;
 			switch (c) {
-				case 1: soldLogList = soldLogService.selectWeek(soldLog);
-					break;
-				case 2: soldLogList = soldLogService.selectMonth(soldLog);
-					break;
-				case 3: soldLogList = soldLogService.selectPeriod(soldLog);
-					break;
+			case 1:
+				soldLogList = soldLogService.selectWeek(soldLog);
+				break;
+			case 2:
+				soldLogList = soldLogService.selectMonth(soldLog);
+				break;
+			case 3:
+				soldLogList = soldLogService.selectPeriod(soldLog);
+				break;
 			}
-			if(soldLogList.size() > 0) {
+			if (soldLogList.size() > 0) {
 				soldList.add(new SoldCategoryVO(category, soldLogList));
 			}
 		}
@@ -318,9 +340,9 @@ public class ShopController {
 		String url = userCheck(session, response);
 		if (url != null)
 			return url;
-		return PATH+"insertShop";
+		return PATH + "insertShop";
 	}
-	
+
 	@RequestMapping(value = "insertShop.do", method = RequestMethod.POST)
 	public String insertShop(ShopVO vo, HttpSession session) {
 		UserVO user = (UserVO) session.getAttribute("user");

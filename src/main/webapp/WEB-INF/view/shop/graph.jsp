@@ -20,22 +20,22 @@
 </style>
 </head>
 <body>
-	<form action="">
+	<form action="graph.do" method="post">
 		<input type="text" name="day" value="하루판매데이터 넘기는 값" hidden="hidden" />
 		<input type="submit" value="하루판매량" />
 	</form>
-	<form action="">
+	<form action="graph.do" method="post">
 		<input type="text" name="week" value="일주일 판매데이터 넘기는 값" hidden="hidden" />
 		<input type="submit" value="일주일 판매량" />
 	</form>
-	<form action="">
+	<form action="graph.do" method="post">
 		<input type="text" name="month" value="한달 판매데이터 넘기는 값" hidden="hidden" />
 		<input type="submit" value="한달 판매량" />
 	</form>
 	<button class="search">기간 검색(일)</button>
 	<div class="inputSearch" style="display : none;">
-		<form action="" class="searchForm">
-			<input type="number" /> ~ <input type="number" />
+		<form action="graph.do" class="searchForm" method="post">
+			<input type="number" name="start"/> ~ <input type="number" name="end"/>
 			<input type="submit" value="검색" />
 		</form>
 	</div>

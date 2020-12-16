@@ -111,7 +111,6 @@ public class BuyerController {
 				long buyCnt = Long.parseLong(request.getParameter("total_" + i));
 				if (shop.getShopSeq() != null && shopSeq != shop.getShopSeq()) {
 					if (itemList.size() > 0) {
-						System.out.println(itemList);
 						buyList.add(new BuyCheckVO(shop, itemList));
 						itemList = new ArrayList<BuyItemVO>();
 						duplicateCheck.clear();

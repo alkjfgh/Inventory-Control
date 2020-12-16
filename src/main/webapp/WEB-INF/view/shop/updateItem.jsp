@@ -109,7 +109,6 @@
 	}
 	input[type="checkbox"]:checked {
 	  content: "";
-	  width: 10px;
 	  top: -5px;
 	  left: 5px;
 	  border-radius: 0;
