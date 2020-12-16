@@ -6,6 +6,7 @@ public class SoldLogVO {
 	private long shopSeq;
 	private long categorySeq;
 	private long itemSeq;
+	private String itemName;
 	private long week;
 	private long month;
 	private long start;
@@ -94,6 +95,14 @@ public class SoldLogVO {
 
 	public void setEnd(long end) {
 		this.end = end;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
 	@Override

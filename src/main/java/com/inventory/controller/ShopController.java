@@ -284,6 +284,13 @@ public class ShopController {
 			soldLog.setCategorySeq(category.getCategorySeq());
 			List<SoldLogVO> soldLogList = soldLogService.selectPeriod(soldLog);
 			if (soldLogList.size() > 0) {
+				for(SoldLogVO log : soldLogList) {
+					ItemVO item = new ItemVO();
+					item.setCategorySeq(log.getCategorySeq());
+					item.setItemSeq(log.getItemSeq());
+					item = itemService.select(item);
+					log.setItemName(item.getItemName());
+				}
 				soldList.add(new SoldCategoryVO(category, soldLogList));
 			}
 		}
@@ -295,48 +302,26 @@ public class ShopController {
 	public String graph(HttpSession session, Model model, HttpServletRequest request) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		SoldLogVO soldLog = new SoldLogVO(0, 0, shop.getShopSeq(), 0, 0);
-		int c = 0;
 		if (request.getParameter("week") != null) {
-			soldLog.setWeek(Long.parseLong(request.getParameter("week")));
-			c = 1;
+			long week = Long.parseLong(request.getParameter("week"));
+			soldLog.setStart(week * 7 - 6);
+			soldLog.setEnd(week * 7);
 		} else if (request.getParameter("month") != null) {
-			soldLog.setMonth(Long.parseLong(request.getParameter("month")));
-			c = 2;
+			long month = Long.parseLong(request.getParameter("month"));
+			soldLog.setStart(month * 30 - 29);
+			soldLog.setEnd(month * 30);
 		} else if (request.getParameter("start") != null && request.getParameter("end") != null) {
 			soldLog.setStart(Long.parseLong(request.getParameter("start")));
 			soldLog.setEnd(Long.parseLong(request.getParameter("end")));
-			c = 3;
 		}
 //		검색어를 입력 하지 않은 경우는 js로 검열
 
-		Iterator<CategoryVO> categoryIt = null;
-		switch (c) {
-		case 1:
-			categoryIt = soldLogService.selectCategoryWeek(soldLog).iterator();
-			break;
-		case 2:
-			categoryIt = soldLogService.selectCategoryMonth(soldLog).iterator();
-			break;
-		case 3:
-			categoryIt = soldLogService.selectCategoryPeriod(soldLog).iterator();
-			break;
-		}
+		Iterator<CategoryVO> categoryIt = soldLogService.selectCategoryPeriod(soldLog).iterator();
 		List<SoldCategoryVO> soldList = new ArrayList<SoldCategoryVO>();
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryService.select(categoryIt.next());
 			soldLog.setCategorySeq(category.getCategorySeq());
-			List<SoldLogVO> soldLogList = null;
-			switch (c) {
-			case 1:
-				soldLogList = soldLogService.selectWeek(soldLog);
-				break;
-			case 2:
-				soldLogList = soldLogService.selectMonth(soldLog);
-				break;
-			case 3:
-				soldLogList = soldLogService.selectPeriod(soldLog);
-				break;
-			}
+			List<SoldLogVO> soldLogList = soldLogService.selectPeriod(soldLog);
 			if (soldLogList.size() > 0) {
 				soldList.add(new SoldCategoryVO(category, soldLogList));
 			}
