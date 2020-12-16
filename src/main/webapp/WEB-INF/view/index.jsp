@@ -6,29 +6,37 @@
 <meta charset="UTF-8">
 <title>Index</title>
 <style>
-a {
-	text-decoration: none
-}
+	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+	body {
+		font-family: 'Do Hyeon', sans-serif;
+		background-color: hsl(60, 100%, 98%);
+	}
+	h1{
+		font-size: 42px;
+		margin-top: 50px;
+	}
+	a {
+		text-decoration: none;
+		margin: 30px;
+		font-size: 24px;
+	}
 
-.signin {
-	width: 500px;
-	height: 500px;
-	margin: auto;
-	background-color: hsl(60, 100%, 98%);
-	text-align: center;
-	line-height: 100px;
-}
+	.signin {
+		width: 500px;
+		height: 500px;
+		margin: auto;
+		text-align: center;
+		line-height: 100px;
+	}
 
-div a:link {
-	color: black;
-}
+	div a:link {
+		color: black;
+	}
 
-div a:visited {
-	color: black;
-}
-h1{
-	margin-top: 100px;
-}
+	div a:visited {
+		color: black;
+	}
+	
 </style>
 </head>
 <body class="signin">
