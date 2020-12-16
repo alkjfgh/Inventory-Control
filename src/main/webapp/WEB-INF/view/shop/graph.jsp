@@ -32,7 +32,8 @@
 	<h1>그래프</h1>
 	<div id="button">
 		<form action="graph.do" method="post">
-			<input type="text" name="day" value="1" hidden="hidden" />
+			<input type="text" name="start" value="${shop.shopCount }" hidden="hidden" />
+			<input type="text" name="end" value="${shop.shopCount }" hidden="hidden" />
 			<input type="submit" value="하루판매량" />
 		</form>
 		<form action="graph.do" method="post">
@@ -46,7 +47,7 @@
 		<button class="search">기간 검색(일)</button>
 		<div class="inputSearch" style="display : none;">
 			<form action="graph.do" method="post" class="searchForm">
-				<input type="number" name="start" placeholder="ㅇㅇ" /> ~ <input type="number" name="end" />
+				<input type="number" name="start"/> ~ <input type="number" name="end" />
 				<input type="submit" value="검색" />
 			</form>
 		</div>
@@ -114,10 +115,17 @@
 				$("#" + thisClass).show(100);
 			})
 		});
-		console.log(labelList);
 		function graph(){
 			for(var i=0;i<size;i++){
 				var graphMax = Math.max.apply(null, dataList[i]);
+				var length = parseInt(String(graphMax).length);
+				var fst = parseInt(String(graphMax).charAt(0));
+				if(fst > 5){
+					graphMax = Math.pow(10, length);
+				} else{
+					graphMax = Math.pow(10, length - 1) * 5
+				};
+				
 				var myChart = new Chart(ctx[i], {
 					type : 'bar',
 					data : {
@@ -148,10 +156,10 @@
 								ticks : {
 									beginAtZero : true,
 									stepSize : graphMax/10,
-								    /* callback: function(value, index) {
-							        	if(value.toString().length > 3 || value>1000) return (parseInt(value / 1000)).toLocaleString("ko-KR") + "k";
+								    callback: function(value, index) {
+							        	if(value.toString().length > 4 || value>=1000) return ((value / 1000).toFixed(1)).toLocaleString("ko-KR") + "k";
 								        else return (parseInt(value)).toLocaleString("ko-KR");
-								    },  */
+								    },
 									min:0,
 								    max:graphMax
 								}
@@ -162,20 +170,6 @@
 			}
 		}
 		graph();
-		/* $("canvas").on('wheel', function(event){
-			if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
-		       // scroll up
-		    	wheelsize = wheelsize + 1;
-		    	console.log(wheelsize);
-		    	graph();
-		    }
-		    else{
-		        // scroll down
-		    	wheelsize= wheelsize- 1;
-		    	console.log(wheelsize);
-		    	graph();
-	     	}
-	    }); */
 	</script>
 </body>
 </html>
