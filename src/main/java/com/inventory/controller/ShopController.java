@@ -302,17 +302,24 @@ public class ShopController {
 	public String graph(HttpSession session, Model model, HttpServletRequest request) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		SoldLogVO soldLog = new SoldLogVO(0, 0, shop.getShopSeq(), 0, 0);
-		if (request.getParameter("week") != null) {
-			long week = Long.parseLong(request.getParameter("week"));
-			soldLog.setStart(week * 7 - 6);
-			soldLog.setEnd(week * 7);
-		} else if (request.getParameter("month") != null) {
-			long month = Long.parseLong(request.getParameter("month"));
-			soldLog.setStart(month * 30 - 29);
-			soldLog.setEnd(month * 30);
-		} else if (request.getParameter("start") != null && request.getParameter("end") != null) {
-			soldLog.setStart(Long.parseLong(request.getParameter("start")));
-			soldLog.setEnd(Long.parseLong(request.getParameter("end")));
+		String searchCondition = request.getParameter("searchCondition");
+		if(searchCondition != null) {
+			long searchKeyWord = Long.parseLong(request.getParameter("searchKeyWord"));
+			if (searchCondition.equals("day")) {
+				soldLog.setStart(searchKeyWord);
+				soldLog.setEnd(searchKeyWord);
+			} else if (searchCondition.equals("week")) {
+				soldLog.setStart(searchKeyWord * 7 - 6);
+				soldLog.setEnd(searchKeyWord * 7);
+			} else if (searchCondition.equals("month")) {
+				soldLog.setStart(searchKeyWord * 30 - 29);
+				soldLog.setEnd(searchKeyWord * 30);
+			}
+		} else {
+			long start = Long.parseLong(request.getParameter("start"));
+			long end = Long.parseLong(request.getParameter("end"));
+			soldLog.setStart(start);
+			soldLog.setEnd(end);
 		}
 //		검색어를 입력 하지 않은 경우는 js로 검열
 
