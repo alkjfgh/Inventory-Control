@@ -17,27 +17,39 @@
 	form{
 		display : inline-block;
 	}
+	#button{
+		margin: 0 auto;
+		text-align: center;
+	}
+	.category, .back{
+		margin: 0 auto;
+		text-align: center;
+	}
+	
 </style>
 </head>
 <body>
-	<form action="graph.do" method="post">
-		<input type="text" name="day" value="하루판매데이터 넘기는 값" hidden="hidden" />
-		<input type="submit" value="하루판매량" />
-	</form>
-	<form action="graph.do" method="post">
-		<input type="text" name="week" value="일주일 판매데이터 넘기는 값" hidden="hidden" />
-		<input type="submit" value="일주일 판매량" />
-	</form>
-	<form action="graph.do" method="post">
-		<input type="text" name="month" value="한달 판매데이터 넘기는 값" hidden="hidden" />
-		<input type="submit" value="한달 판매량" />
-	</form>
-	<button class="search">기간 검색(일)</button>
-	<div class="inputSearch" style="display : none;">
-		<form action="graph.do" class="searchForm" method="post">
-			<input type="number" name="start"/> ~ <input type="number" name="end"/>
-			<input type="submit" value="검색" />
+	<h1>그래프</h1>
+	<div id="button">
+		<form action="graph.do" method="post">
+			<input type="text" name="day" value="1" hidden="hidden" />
+			<input type="submit" value="하루판매량" />
 		</form>
+		<form action="graph.do" method="post">
+			<input type="text" name="week" value="1" hidden="hidden" />
+			<input type="submit" value="일주일 판매량" />
+		</form>
+		<form action="graph.do" method="post">
+			<input type="text" name="month" value="1" hidden="hidden" />
+			<input type="submit" value="한달 판매량" />
+		</form>
+		<button class="search">기간 검색(일)</button>
+		<div class="inputSearch" style="display : none;">
+			<form action="graph.do" method="post" class="searchForm">
+				<input type="number" name="start" placeholder="ㅇㅇ" /> ~ <input type="number" name="end" />
+				<input type="submit" value="검색" />
+			</form>
+		</div>
 	</div>
 	<div class="container">
 		<c:forEach items="${soldList }" var="soldCategory">
@@ -45,6 +57,9 @@
 		</c:forEach>
 	</div>
 	<div class="category">
+	</div>
+	<div class="back">
+		<a href="ShopInfo.do">뒤로가기</a>
 	</div>
 	<!-- 부트스트랩 -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -76,7 +91,7 @@
 		var labelList = new Array();
 		var dataList = new Array();
 		var size = 0;
-		var wheelsize = 1;
+		var wheelsize = 2;
 		<c:forEach items="${soldList }" var="soldCategory">
 			size++;
 			ctx.push(document.getElementById('${soldCategory.category.categoryName}'));
@@ -99,14 +114,16 @@
 				$("#" + thisClass).show(100);
 			})
 		});
+		console.log(labelList);
 		function graph(){
 			for(var i=0;i<size;i++){
+				var graphMax = Math.max.apply(null, dataList[i]);
 				var myChart = new Chart(ctx[i], {
 					type : 'bar',
 					data : {
 						labels : labelList[i],
 						datasets : [ {
-							label : '판매량',
+							label : labelList[i],
 							data : dataList[i],
 							backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
 					 			'rgba(54, 162, 235, 0.2)',
@@ -127,47 +144,38 @@
 					},
 					options : {
 						scales : {
-							yAxes : [ {
+							yAxes : [{
 								ticks : {
 									beginAtZero : true,
-									stepSize : wheelsize,
-								    callback: function(value, index) {
-							        	if(value.toString().length > 3) return (value / 1000).toLocaleString("ko-KR") + "k";
-								        else return value.toLocaleString("ko-KR");
-								    }
+									stepSize : graphMax/10,
+								    /* callback: function(value, index) {
+							        	if(value.toString().length > 3 || value>1000) return (parseInt(value / 1000)).toLocaleString("ko-KR") + "k";
+								        else return (parseInt(value)).toLocaleString("ko-KR");
+								    },  */
+									min:0,
+								    max:graphMax
 								}
-							} ]
+							}]
 						}
 					}
 				});
 			}
 		}
 		graph();
-		$("canvas").on('wheel', function(event){
+		/* $("canvas").on('wheel', function(event){
 			if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
 		       // scroll up
-		    	wheelsize = wheelsize + 0.1;
+		    	wheelsize = wheelsize + 1;
 		    	console.log(wheelsize);
 		    	graph();
 		    }
 		    else{
 		        // scroll down
-		    	wheelsize= wheelsize- 0.1;
+		    	wheelsize= wheelsize- 1;
 		    	console.log(wheelsize);
 		    	graph();
 	     	}
-	    });
-		function zoom(event) {
-		  event.preventDefault();
-		  scale += event.deltaY * -0.01;
-		  // Restrict scale
-		  scale = Math.min(Math.max(.125, scale), 4);
-		  // Apply scale transform
-		  el.style.transform = `scale(${scale})`;
-		}
-		let scale = 1;
-		const el = document.querySelector('div');
-		el.onwheel = zoom;
+	    }); */
 	</script>
 </body>
 </html>

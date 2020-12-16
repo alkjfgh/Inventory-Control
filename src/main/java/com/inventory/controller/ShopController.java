@@ -295,7 +295,7 @@ public class ShopController {
 	public String graph(HttpSession session, Model model, HttpServletRequest request) {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		SoldLogVO soldLog = new SoldLogVO(0, 0, shop.getShopSeq(), 0, 0);
-		short c = 0;
+		int c = 0;
 		if (request.getParameter("week") != null) {
 			soldLog.setWeek(Long.parseLong(request.getParameter("week")));
 			c = 1;
@@ -307,10 +307,20 @@ public class ShopController {
 			soldLog.setEnd(Long.parseLong(request.getParameter("end")));
 			c = 3;
 		}
-		System.out.println(soldLog);
 //		검색어를 입력 하지 않은 경우는 js로 검열
 
-		Iterator<CategoryVO> categoryIt = soldLogService.selectCategoryPeriod(soldLog).iterator();
+		Iterator<CategoryVO> categoryIt = null;
+		switch (c) {
+		case 1:
+			categoryIt = soldLogService.selectCategoryWeek(soldLog).iterator();
+			break;
+		case 2:
+			categoryIt = soldLogService.selectCategoryMonth(soldLog).iterator();
+			break;
+		case 3:
+			categoryIt = soldLogService.selectCategoryPeriod(soldLog).iterator();
+			break;
+		}
 		List<SoldCategoryVO> soldList = new ArrayList<SoldCategoryVO>();
 		while (categoryIt.hasNext()) {
 			CategoryVO category = categoryService.select(categoryIt.next());
