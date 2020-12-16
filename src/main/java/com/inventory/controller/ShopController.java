@@ -323,6 +323,13 @@ public class ShopController {
 			soldLog.setCategorySeq(category.getCategorySeq());
 			List<SoldLogVO> soldLogList = soldLogService.selectPeriod(soldLog);
 			if (soldLogList.size() > 0) {
+				for(SoldLogVO log : soldLogList) {
+					ItemVO item = new ItemVO();
+					item.setCategorySeq(log.getCategorySeq());
+					item.setItemSeq(log.getItemSeq());
+					item = itemService.select(item);
+					log.setItemName(item.getItemName());
+				}
 				soldList.add(new SoldCategoryVO(category, soldLogList));
 			}
 		}

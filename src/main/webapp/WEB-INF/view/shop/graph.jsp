@@ -91,20 +91,31 @@
 		var ctx = new Array();
 		var labelList = new Array();
 		var dataList = new Array();
+		var backGroundColorList = new Array(); 
+		var boderColorList = new Array(); 
+		var colorData = ['rgba(165, 147, 224,', 'rgba(224, 227, 218,', 'rgba(255, 255, 243,', 'rgba(86, 98, 112,'];
+		var index = 0;
 		var size = 0;
 		var wheelsize = 2;
 		<c:forEach items="${soldList }" var="soldCategory">
 			size++;
 			ctx.push(document.getElementById('${soldCategory.category.categoryName}'));
 			$(".category").append('<button class="${soldCategory.category.categoryName }">${soldCategory.category.categoryName }</button>');
-			labelItem = new Array();
-			dataItem = new Array();
+			var labelItem = new Array();
+			var dataItem = new Array();
+			var backGroundColorItem = new Array();
+			var boderColorItem = new Array();
 			<c:forEach items="${soldCategory.soldLogList }" var="soldLog">
-				labelItem.push('${soldLog.itemSeq}');
+				labelItem.push('${soldLog.itemName}');
 				dataItem.push('${soldLog.logSold}');
+				backGroundColorItem.push(colorData[index] + " 0.6)");
+				boderColorItem.push(colorData[index++] + " 1)");
+				if(index >= colorData.length) index = 0;
 			</c:forEach>
 			labelList.push(labelItem);
 			dataList.push(dataItem);
+			backGroundColorList.push(backGroundColorItem);
+			boderColorList.push(boderColorItem);
 		</c:forEach>
 		$("canvas").hide(0);  
 		$("canvas:nth-of-type(1)").show(0);
@@ -120,12 +131,8 @@
 				var graphMax = Math.max.apply(null, dataList[i]);
 				var length = parseInt(String(graphMax).length);
 				var fst = parseInt(String(graphMax).charAt(0));
-				if(fst > 5){
-					graphMax = Math.pow(10, length);
-				} else{
-					graphMax = Math.pow(10, length - 1) * 5
-				};
-				
+				if(fst > 5) graphMax = Math.pow(10, length);
+				else graphMax = Math.pow(10, length - 1) * 5;
 				var myChart = new Chart(ctx[i], {
 					type : 'bar',
 					data : {
@@ -133,20 +140,8 @@
 						datasets : [ {
 							label : labelList[i],
 							data : dataList[i],
-							backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
-					 			'rgba(54, 162, 235, 0.2)',
-								'rgba(255, 206, 86, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(255, 159, 64, 0.2)',
-								'rgba(255, 99, 132, 0.2)'],
-							borderColor : [ 'rgba(255, 99, 132, 1)',
-								'rgba(54, 162, 235, 1)',
-								'rgba(255, 206, 86, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(153, 102, 255, 1)',
-								'rgba(255, 159, 64, 1)',
-								'rgba(255, 99, 132, 1)'],
+							backgroundColor : backGroundColorList[i],
+							borderColor : boderColorList[i],
 							borderWidth : 1
 						} ]
 					},
