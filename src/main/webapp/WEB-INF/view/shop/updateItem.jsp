@@ -16,7 +16,8 @@
 		text-align: center;
 	}
 	h1{
-		font-size: 1.5em;
+		font-size: 42px;
+		margin-top: 50px;
 	}
 	#main {
 		margin: auto;

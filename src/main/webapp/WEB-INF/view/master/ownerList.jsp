@@ -25,7 +25,6 @@
 			background-size: cover;
 			color: #9DC8C8 #519D9E #D1B6E1 #58C9B9 hsl(60, 100%, 98%);
 		}
-
 		a {
 			text-decoration: none
 		}
@@ -39,9 +38,9 @@
 		}
 
 		h1 {
-			font-size: 50px;
-			margin: 10px;
-			padding: 30px;
+			margin: 50px;
+			text-align: center;  
+			font-size: 42px;
 		}
 
 		.owner_list_wrap {

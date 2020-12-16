@@ -371,7 +371,7 @@
 	    
 	    if(eq_table.find("tbody").find("tr").length > 8){
 	    	eq_table.find("tbody").find("tr").eq(4).nextUntil(".details").hide(0);
-	    	eq_table.find("tbody").find("tr..details").after('<tr class="show-more"><td colspan="4">더보기</td></tr>');
+	    	eq_table.find("tbody").find("tr.details").after('<tr class="show-more"><td colspan="4">더보기</td></tr>');
 	    }
 	});
 	$(document).ready(function(){

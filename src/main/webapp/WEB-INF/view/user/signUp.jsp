@@ -13,8 +13,7 @@
     h1{
         margin: 50px;
         text-align: center;  
-        font-family: 'Do Hyeon', sans-serif;
-
+        font-size: 42px;
     }
     table{
         width: 800px;
@@ -73,7 +72,7 @@
 	    text-align: center;
 	    text-decoration: none;
 	    display: inline-block;
-	    font-size: 16px;
+	    font-size: 18px;
 	    margin: 4px 2px;
 	    cursor: pointer;
 	    -webkit-transition-duration: 0.4s; 

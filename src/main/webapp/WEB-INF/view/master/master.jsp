@@ -15,7 +15,7 @@
             background: hsl(60, 100%, 98%);
         }
         h1{
-            margin-top: 80px;
+            margin-top: 50px;
             text-align: center;
             font-size: 45px;
         }

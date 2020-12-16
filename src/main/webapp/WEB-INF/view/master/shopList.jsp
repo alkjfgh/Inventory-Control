@@ -31,9 +31,9 @@
 			color: black;
 		}
 		h1 {
-			font-size: 50px;
-			margin: 10px;
-			padding: 30px;
+			margin: 50px;
+			text-align: center;  
+			font-size: 42px;
 		}
 		.shop_list_wrap {
 			padding: 50px;

@@ -16,9 +16,10 @@
 	        font-family: 'Do Hyeon', sans-serif;
 	        text-align: center;
 	    }
-	    body h1 {
-	        font-size: 50px;
-	        margin-left: 20px;
+	    h1 {
+	        margin: 50px;
+			text-align: center;  
+			font-size: 42px;
 	    }
 	    .item_add {
 	        text-align: center;
@@ -75,9 +76,7 @@
 </head>
 <body>
 	<h1>회원 전용 구매 페이지 </h1>
-	<div id="back">
-		<a href="../home.do" >뒤로가기</a>
-	</div>
+	
 	<button class="item_add">구매목록 추가하기</button>
 	<form action="buyCheck.do" name=fr method="post">
 		<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
@@ -96,6 +95,9 @@
 			<input type="submit" value="구매">
 		</div>
 	</form>
+	<div id="back">
+		<a href="../home.do" >뒤로가기</a>
+	</div>
 </body>
 <script>
 	var cnt = 1;

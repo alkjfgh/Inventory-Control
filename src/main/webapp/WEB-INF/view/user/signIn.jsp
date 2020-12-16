@@ -27,6 +27,7 @@
 			background-color: hsl(60, 100%, 98%);
 			background-size: cover;
 		}
+		
 
 		.login-form {
 			position: relative;
@@ -34,7 +35,7 @@
 		}
 
 		.login-form h1 {
-			font-size: 32px;
+			font-size: 42px;
 			color: black;
 			text-align: center;
 			margin-bottom: 60px;
@@ -111,7 +112,7 @@
 			height: 50px;
 			background: #58C9B9;
 			color: black;
-			font-size: 20px;
+			font-size: 18px;
 			border: none;
 			border-radius: 25px;
 			cursor: pointer;
@@ -124,7 +125,7 @@
 		}
 
 		.caption a {
-			font-size: 15px;
+			font-size: 18px;
 			color: black;
 			text-decoration: none;
 		}

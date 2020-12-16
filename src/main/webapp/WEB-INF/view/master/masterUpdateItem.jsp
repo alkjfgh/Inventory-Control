@@ -20,19 +20,16 @@
 	.itemAdd, .itemDelete {
 		display: none;
 	}
-	
     h1{
-    
-        text-align: center;
-        font-size: 50px;
+        margin: 50px;
+        text-align: center;  
+        font-size: 42px;
     }
-    
     #select{
         margin: 50px;
         padding: 0 auto;
         text-align: center;
     }
-    
 	/* 추가 */
 	.add {
 		display: inline-block;
@@ -48,14 +45,12 @@
 		cursor: pointer;
 		margin: 5px;
 	}
-
 	.add span {
 		cursor: pointer;
 		display: inline-block;
 		position: relative;
 		transition: 0.5s;
 	}
-
 	.add span:after {
 		content: '\00bb';
 		position: absolute;
@@ -64,16 +59,13 @@
 		right: -20px;
 		transition: 0.5s;
 	}
-
 	.add:hover span {
 		padding-right: 25px;
 	}
-
 	.add:hover span:after {
 		opacity: 1;
 		right: 0;
 	}
-	
 	/* 삭제  */
 	.del {
 		display: inline-block;
@@ -89,14 +81,12 @@
 		cursor: pointer;
 		margin: 5px;
 	}
-
 	.del span {
 		cursor: pointer;
 		display: inline-block;
 		position: relative;
 		transition: 0.5s;
 	}
-
 	.del span:after {
 		content: '\00bb';
 		position: absolute;
@@ -105,21 +95,17 @@
 		right: -20px;
 		transition: 0.5s;
 	}
-
 	.del:hover span {
 		padding-right: 25px;
 	}
-
 	.del:hover span:after {
 		opacity: 1;
 		right: 0;
 	}
-	
 	/* 목록추가하기 */
     .add,.del{
         font-size: 24px;
     }
-    
     .itemAdd{
         margin: 0 auto;
         width: 800px;
@@ -127,31 +113,26 @@
         padding: 10px;
         position: relative;
     }
-    
     .insertaddContainer{
     	width: 150px;
     	height: 50px;
     	margin: 0 auto;
     }
-    
     .insertadd{
     	width: 100%;
     	height: 100%;
     }
-    
 	.itemDelete{
         position: relative;
         width: 800px;
 		margin: 0 auto;
         padding: 10px;
         border: 3px solid #9DC8C8;
-	}
-	
+	}	
 	.masterInsertItem{
 		position: relative;
 		margin-top: 20px;
-	}
-	
+	}	
 	/* 목록추가하기 */
 	.insertadd {
 		display: inline-block;
@@ -167,56 +148,46 @@
 		border-radius: 15px;
 		box-shadow: 0 9px #999;
 	}
-
 	.insertadd:hover {background-color: #D1B6E1}
 
 	.insertadd:active {
 		background-color: #D1B6E1;
 		box-shadow: 0 5px #666;
 		transform: translateY(4px);
-	}
-	
+	}	
 	/*   */
 	#back {
 		margin: 30px;
 		text-align: center;
 
-	}	 
-	
+	}	 	
 	#back a {
 		text-decoration: none; 
 		color: black;
-	}
-	
+	}	
 	#iteminsert{
 		margin: 0 auto;
         width: 773px;
         position: relative;
 		text-align: center;
-	}
-	
+	}	
 	#iteminsert th:nth-of-type(1){
 		width: 201px;
 	}
-	
 	#iteminsert th:nth-of-type(2){
 		width: 190px;
-	}
-	
+	}	
 	#iteminsert th:nth-of-type(3){
 		width: 189px;
-	}
-	
+	}	
 	#iteminsert th:nth-of-type(4){
 		width: 189px;
-	}
-	
+	}	
 	.insert-submit-con{
 		margin: 0 auto;
 		width: 48.88px;
 		height: 32px;
-	}
-	
+	}	
 	.insert-submit{
 		font-size: 24px;
 		font-family:'Do Hyeon', sans-serif;
@@ -225,54 +196,44 @@
 		background-color: #D1B6E1;
 		border: none;
 		border-radius: 5px;
-	}
-	
+	}	
 	.insert-submit:hover{
        	color: red ;
        	transition: 0.7s all;
-    }
-	
+    }	
 	.itemInput input{
 		width: 160px;
 		height: 40px;
 		margin: 0;
 		border: none;
     	background-color: hsl(60, 100%, 98%);
-	}
-	
+	}	
 	.btnDel{
 		width: 40px;
-	}
-    
+	}    
 	/* 삭제 카테고리 */
 	table, td, th {  
 		border: 2px solid black;
-	}
-	
+	}	
 	thead{
 		text-align: center; 
-	}
-	
+	}	
 	tbody{
 		text-align: center;
-	}
-	
+	}	
 	table {
 		border-collapse: collapse;
 		width: 100%;
 	}
-
 	th, td {
 		padding: 12px;
-	}
-	
+	}	
 	.delete-submit-con{
 		margin: 0 auto;
 		width: 145.73px;
 		height: 92px;
 		text-align: center;
-	}
- 
+	} 
 	.delete-submit{
 		margin: 30px;
 		font-size: 24px;
@@ -282,17 +243,15 @@
 		background-color: #9DC8C8;
 		border: none;
 		border-radius: 5px;
-	}
-	
+	}	
 	body {
 	    -ms-overflow-style: none; /* IE and Edge */
 	    scrollbar-width: none; /* Firefox */
-	}
-	
+	}	
 	body::-webkit-scrollbar {
 	    display: none; /* Chrome, Safari, Opera*/
 	}
-</style>
+	</style>
 </head>
 <body>
 <h1>물품 추가삭제</h1>

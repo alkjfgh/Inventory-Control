@@ -7,27 +7,32 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-		body {
-			font-family: 'Do Hyeon', sans-serif;
-			padding: 0;
-			background: hsl(60, 100%, 98%);
-			padding: 40px;
-			text-align: center;
-		}
-		table {
-			margin: 0 auto;
-			text-align: center;
-		}
-		table, th, td{
-			border: 2px solid black;
-			border-collapse: collapse;
-		}
-		th, td{
-			padding: 5px;
-		}
-	</style>
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+	body {
+		font-family: 'Do Hyeon', sans-serif;
+		padding: 0;
+		background: hsl(60, 100%, 98%);
+		padding: 40px;
+		text-align: center;
+	}
+	h1{
+		margin: 50px;
+		text-align: center;  
+		font-size: 42px;
+	}
+	table {
+		margin: 0 auto;
+		text-align: center;
+	}
+	table, th, td{
+		border: 2px solid black;
+		border-collapse: collapse;
+	}
+	th, td{
+		padding: 5px;
+	}
+</style>
 </head>
 <body>
 <h1>재고 리스트 </h1>

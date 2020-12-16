@@ -7,150 +7,150 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-		body {
-			font-family: 'Do Hyeon', sans-serif;
-			width: 100%;
-			background-color: hsl(60, 100%, 98%);
-		}
-		.category {
-			margin: auto;
-			padding: 50px;
-			width: 100%;
-			text-align: left;
-		}
-		h1 {
-			font-size: 50px;
-			margin: 10px;
-			padding: 30px;
-		}
-		.select {
-			overflow: hidden;
-			border: 1px solid #ccc;
-			background-color: #f1f1f1;
-			display: inline block;
-		}
-		a.add, 
-		a.del
-		{
-			font-size: 24px;
-		}
-		#adda:link,
-		#adda:visited {
-			background-color: white;
-			color: black;
-			border: 2px solid #D1B6E1;
-			padding: 10px 20px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-		}
-		#adda:hover,
-		#adda:active {
-			background-color: #D1B6E1;
-			color: white;
-		}
-		#dela:link,
-		#dela:visited {
-			background-color: white;
-			color: black;
-			border: 2px solid #519D9E;
-			padding: 10px 20px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-		}
-		#dela:hover,
-		#dela:active {
-			background-color: #519D9E;
-			color: white;
-		}
-		/* 카테고리 추가 삭제 */
-		.categoryAdd,
-		.categoryDelete {
-			display: none;
-		}
-		#back {
-			margin: 0 auto;
-			text-align: center;
-		}
-		#back a{
-			position: fixed;
-			text-decoration: none;
-			color: black;
-			width: 50px;
-            height: 50px;
-            bottom: 20px;
-		}
-		.insertadd{
-			margin-top: 30px;
-			border: 1px solid #D1B6E1;
-			background: none;
-			padding: 8px 18px;
-			font-size: 16px;
-			font-family: 'Do Hyeon', sans-serif;
-			cursor: pointer;
-			transition: 0.8s;
-			background: #D1B6E1;
-			border-radius: 25px;
-		}
-		.insertadd::before{
-			content: "";
-			position: absolute;
-			left: 0;
-			transition: 0.8s;
-		}
-		.insertCategory{
-			margin-top: 30px;
-		}
-		.insertCategory_new{
-			margin-bottom: 30px;
-			border: 1px solid #D1B6E1;
-			background: none;
-			padding: 8px 18px;
-			font-size: 16px;
-			font-family: 'Do Hyeon', sans-serif;
-			cursor: pointer;
-			background: #D1B6E1;
-			border-radius: 25px;
-		}
-		table{
-			margin: 40px;
-			padding: 10px;
-			width: 400px;
-		}
-		th{
-			font-size: 21px; 
-			text-align: left;
-		}
-		th:nth-child(3){
-			text-align: center;
-		}
-		td:nth-child(1){
-			text-align: left;
-		}
-		td:nth-child(3){
-			text-align: center;
-		}
-		.delete_button{
-			margin-left: 30px;
-			border: 1px solid #519D9E;
-			background: none;
-			padding: 8px 18px;
-			font-size: 16px;
-			font-family: 'Do Hyeon', sans-serif;
-			cursor: pointer;
-			background: #519D9E;
-			border-radius: 25px;
-		}
-		.checkbox{
-			left: 20px;
-			top: 20px;
-			width: 20px;
-			height: 20px;
-		}
-	</style>
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+	body {
+		font-family: 'Do Hyeon', sans-serif;
+		width: 100%;
+		background-color: hsl(60, 100%, 98%);
+	}
+	.category {
+		margin: auto;
+		padding: 50px;
+		width: 100%;
+		text-align: left;
+	}
+	h1 {
+		margin: 50px;
+        text-align: center;  
+        font-size: 42px;
+	}
+	.select {
+		overflow: hidden;
+		border: 1px solid #ccc;
+		background-color: #f1f1f1;
+		display: inline block;
+	}
+	a.add, 
+	a.del
+	{
+		font-size: 24px;
+	}
+	#adda:link,
+	#adda:visited {
+		background-color: white;
+		color: black;
+		border: 2px solid #D1B6E1;
+		padding: 10px 20px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+	}
+	#adda:hover,
+	#adda:active {
+		background-color: #D1B6E1;
+		color: white;
+	}
+	#dela:link,
+	#dela:visited {
+		background-color: white;
+		color: black;
+		border: 2px solid #519D9E;
+		padding: 10px 20px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+	}
+	#dela:hover,
+	#dela:active {
+		background-color: #519D9E;
+		color: white;
+	}
+	/* 카테고리 추가 삭제 */
+	.categoryAdd,
+	.categoryDelete {
+		display: none;
+	}
+	#back {
+		margin: 0 auto;
+		text-align: center;
+	}
+	#back a{
+		position: fixed;
+		text-decoration: none;
+		color: black;
+		width: 50px;
+		height: 50px;
+		bottom: 20px;
+	}
+	.insertadd{
+		margin-top: 30px;
+		border: 1px solid #D1B6E1;
+		background: none;
+		padding: 8px 18px;
+		font-size: 16px;
+		font-family: 'Do Hyeon', sans-serif;
+		cursor: pointer;
+		transition: 0.8s;
+		background: #D1B6E1;
+		border-radius: 25px;
+	}
+	.insertadd::before{
+		content: "";
+		position: absolute;
+		left: 0;
+		transition: 0.8s;
+	}
+	.insertCategory{
+		margin-top: 30px;
+	}
+	.insertCategory_new{
+		margin-bottom: 30px;
+		border: 1px solid #D1B6E1;
+		background: none;
+		padding: 8px 18px;
+		font-size: 16px;
+		font-family: 'Do Hyeon', sans-serif;
+		cursor: pointer;
+		background: #D1B6E1;
+		border-radius: 25px;
+	}
+	table{
+		margin: 40px;
+		padding: 10px;
+		width: 400px;
+	}
+	th{
+		font-size: 21px; 
+		text-align: left;
+	}
+	th:nth-child(3){
+		text-align: center;
+	}
+	td:nth-child(1){
+		text-align: left;
+	}
+	td:nth-child(3){
+		text-align: center;
+	}
+	.delete_button{
+		margin-left: 30px;
+		border: 1px solid #519D9E;
+		background: none;
+		padding: 8px 18px;
+		font-size: 16px;
+		font-family: 'Do Hyeon', sans-serif;
+		cursor: pointer;
+		background: #519D9E;
+		border-radius: 25px;
+	}
+	.checkbox{
+		left: 20px;
+		top: 20px;
+		width: 20px;
+		height: 20px;
+	}
+</style>
 </head>
 <body>
 	<section>
