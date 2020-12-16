@@ -32,8 +32,8 @@
 	<h1>그래프</h1>
 	<div id="button">
 		<form action="graph.do" method="post">
-			<input type="text" name="start" value="${shop.shopCount }" hidden="hidden" />
-			<input type="text" name="end" value="${shop.shopCount }" hidden="hidden" />
+			<input type="text" name="start" min="1" max="${shop.shopCount }"/>
+			<input type="text" name="end" hidden="hidden" />
 			<input type="submit" value="하루판매량" />
 		</form>
 		<form action="graph.do" method="post">
