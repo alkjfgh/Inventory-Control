@@ -141,7 +141,7 @@
 	</c:if>
 	<c:if test="${level eq 9}">
 		<div id="back">
-			<a href="javascript:history.back()" >뒤로가기</a>
+			<a href="../master/shopList.do" >뒤로가기</a>
 		</div>
 	</c:if>
 </body>

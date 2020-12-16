@@ -368,8 +368,8 @@ public class ShopController {
 
 	private String userCheck(HttpSession session, HttpServletResponse response) throws IOException {
 		UserVO user = (UserVO) session.getAttribute("user");
-		if (user == null || user.getUserLevel() != 1)
-			return "../home";
+		if (user == null || (user.getUserLevel() != 1 && user.getUserLevel() != 9))
+			return "redirect:../home.do";
 		return null;
 	}
 }
