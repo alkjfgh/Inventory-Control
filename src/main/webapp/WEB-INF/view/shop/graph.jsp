@@ -125,6 +125,8 @@
 	<div id="button">
 		<button class="searchA"><span>단위검색</span></button>
 		<button class="searchB"><span>기간 검색(일)</span></button>
+		<button class="searchC"><span>매출 보기</span></button>
+		<button class="searchD"><span>개수 보기</span></button>
 		<div class="selectSearch" style="display : none;">
 			<form action="graph.do" method="post" class="searchCondition" >
 				<select name="searchCondition" id="" onchange="conditionClick(this)">
@@ -210,6 +212,7 @@
 		var ctx = new Array();
 		var labelList = new Array();
 		var dataList = new Array();
+		var priceList = new Array();
 		var backGroundColorList = new Array(); 
 		var boderColorList = new Array(); 
 		var colorData = ['rgba(165, 147, 224,', 'rgba(224, 227, 218,', 'rgba(255, 255, 243,', 'rgba(86, 98, 112,'];
@@ -222,17 +225,25 @@
 			$(".category").append('<button class="${soldCategory.category.categoryName }">${soldCategory.category.categoryName }</button>');
 			var labelItem = new Array();
 			var dataItem = new Array();
+			var priceItem = new Array();
 			var backGroundColorItem = new Array();
 			var boderColorItem = new Array();
+			
 			<c:forEach items="${soldCategory.soldLogList }" var="soldLog">
 				labelItem.push('${soldLog.itemName}');
 				dataItem.push('${soldLog.logSold}');
+				priceItem.push('${soldLog.itemPrice}')
 				backGroundColorItem.push(colorData[index] + " 0.6)");
 				boderColorItem.push(colorData[index++] + " 1)");
 				if(index >= colorData.length) index = 0;
 			</c:forEach>
+			var size3 = priceItem.length;
+			for(var k = 0 ; k<size3 ; k++){
+				priceItem[k] = priceItem[k]*dataItem[k];
+			}
 			labelList.push(labelItem);
 			dataList.push(dataItem);
+			priceList.push(priceItem);
 			backGroundColorList.push(backGroundColorItem);
 			boderColorList.push(boderColorItem);
 		</c:forEach>
@@ -241,18 +252,22 @@
 		$(document).ready(function(){
 			$("button").click(function(){
 				var thisClass = $(this).attr("class");
-				$("canvas").hide(0);
-				$("#" + thisClass).show(100);
+				if(thisClass != "searchC" && thisClass != "searchD"){
+					$("canvas").hide(0);
+					$("#" + thisClass).show(100);
+				}
 			})
 		});
+		var config = new Array();
+		var myChart = new Array();
 		function graph(){
 			for(var i=0;i<size;i++){
 				var graphMax = Math.max.apply(null, dataList[i]);
 				var length = parseInt(String(graphMax).length);
 				var fst = parseInt(String(graphMax).charAt(0));
-				if(fst > 5) graphMax = Math.pow(10, length);
+				if(fst > 4) graphMax = Math.pow(10, length);
 				else graphMax = Math.pow(10, length - 1) * 5;
-				var size2 = labelList.length;
+				var size2 = labelList[i].length;
 				dataset = new Array();
 				for(var j=0;j<size2;j++){
 					dataset.push({
@@ -262,8 +277,9 @@
 						borderColor : boderColorList[i][j],
 						borderWidth : 1
 					});
+					
 				}
-				var myChart = new Chart(ctx[i], {
+				config.push({
 					type : 'bar',
 					data : {
 						labels : ['물품 판매 현황'],
@@ -286,9 +302,44 @@
 						}
 					}
 				});
+				myChart.push(new Chart(ctx[i], config[i]));
 			}
 		}
 		graph();
+		$('.searchC').click(function(){
+			for(var i=0;i<myChart.length;i++){
+				var dataset = config[i].data.datasets;
+				for(var j=0;j<dataset.length;j++){
+					var data = dataset[j].data;
+					data[0] = priceList[i][j];
+				}
+				var graphMax = Math.max.apply(null, priceList[i]);
+				var length = parseInt(String(graphMax).length);
+				var fst = parseInt(String(graphMax).charAt(0));
+				if(fst > 4) graphMax = Math.pow(10, length);
+				else graphMax = Math.pow(10, length - 1) * 5;
+				config[i].options.scales.yAxes[0].ticks.max = graphMax;
+				config[i].options.scales.yAxes[0].ticks.stepSize = graphMax/10;
+				myChart[i].update();
+			}
+		});
+		$('.searchD').click(function(){
+			for(var i=0;i<myChart.length;i++){
+				var dataset = config[i].data.datasets;
+				for(var j=0;j<dataset.length;j++){
+					var data = dataset[j].data;
+					data[0] = dataList[i][j];
+				}
+				var graphMax = Math.max.apply(null, dataList[i]);
+				var length = parseInt(String(graphMax).length);
+				var fst = parseInt(String(graphMax).charAt(0));
+				if(fst > 4) graphMax = Math.pow(10, length);
+				else graphMax = Math.pow(10, length - 1) * 5;
+				config[i].options.scales.yAxes[0].ticks.max = graphMax;
+				config[i].options.scales.yAxes[0].ticks.stepSize = graphMax/10;
+				myChart[i].update();
+			}
+		});
 	</script>
 </body>
 </html>
