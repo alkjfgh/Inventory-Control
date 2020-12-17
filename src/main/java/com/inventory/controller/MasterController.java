@@ -213,9 +213,10 @@ public class MasterController {
 	}
 	
 	@RequestMapping(value = "itemMovement.do", method = RequestMethod.GET)
-	public String itemMovementView(HttpSession session, Model model, HttpServletRequest request) throws IOException {
-		ItemMovementVO itemMovement = new ItemMovementVO(0, 0, 0);
+	public String itemMovementView(Model model, HttpServletRequest request) throws IOException {
+		ItemMovementVO itemMovement = new ItemMovementVO(1, Long.parseLong(request.getParameter("categorySeq")),  Long.parseLong(request.getParameter("itemSeq")));
 		List<ItemMovementVO> itemMovementList = itemMovementService.selectView(itemMovement);
+		model.addAttribute(itemMovementList);
 		return PATH + "totalItem";
 	}
 
