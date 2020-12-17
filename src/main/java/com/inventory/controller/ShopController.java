@@ -303,8 +303,9 @@ public class ShopController {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		SoldLogVO soldLog = new SoldLogVO(0, 0, shop.getShopSeq(), 0, 0);
 		String searchCondition = request.getParameter("searchCondition");
+		System.out.println(searchCondition);
 		if(searchCondition != null) {
-			long searchKeyWord = Long.parseLong(request.getParameter("searchKeyWord"));
+			long searchKeyWord = Long.parseLong(request.getParameter("searchKeyword"));
 			if (searchCondition.equals("day")) {
 				soldLog.setStart(searchKeyWord);
 				soldLog.setEnd(searchKeyWord);

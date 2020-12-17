@@ -47,21 +47,8 @@
 				<option value="week" class="conditionWeek">일주일 판매량</option>
 				<option value="month" class="conditionMonth">한달판매량</option>
 			</select>
-			<input type="number" class="searchKeyword" name="searchKeyword" min="1" max="1" required="required" />
+			<input type="number" class="searchKeyword" name="searchKeyword" min="1" max="${shop.shopCount }" required="required" />
 			<input type="submit" value="검색" />
-		</form>
-		<form action="graph.do" id="dayForm" method="post">
-			<input type="number" placeholder="" class="dayStart" value="3" name="start" min="1" max="${shop.shopCount }" onblur="dayChange(this)" />
-			<input type="number" class="dayEnd" name="end" value="" hidden="hidden" />
-			<input type="submit" class="daySubmit" value="하루판매량" />
-		</form>
-		<form action="graph.do" method="post">
-			<input type="number" class="weekInput" name="week"  value="3"   min="1" max="${shop.shopCount}/7"/>
-			<input type="submit" value="일주일 판매량" />
-		</form>
-		<form action="graph.do" method="post">
-			<input type="text" class="monthInput" name="month" min="1" max="${shop.shopCount}/30"/>
-			<input type="submit" value="한달 판매량" />
 		</form>
 		<button class="search">기간 검색(일)</button>
 		<div class="inputSearch" style="display : none;">
@@ -84,7 +71,6 @@
 		<a href="ShopInfo.do">뒤로가기</a>
 	</div>
 	
-	<!-- 차트 -->
 	<script>
 		/* function dayChange(e){
 			var val1 = $(".dayStart").val();
@@ -94,19 +80,29 @@
 		countMax = parseInt("<c:out value="${shop.shopCount}" />");
 		function conditionClick(e){
 			if(e.value=='day'){
+				$('.searchKeyword').removeAttr("readonly");
+				$('.searchKeyword').removeAttr("placeholder");
 				$('.searchKeyword').attr("max", countMax);
 			}
 			else if(e.value=='week'){
+				if(countMax / 7 < 1){
+					$('.searchKeyword').val("");
+					$('.searchKeyword').attr("readonly", "");
+					$('.searchKeyword').attr("placeholder", "일주일 검색 불가");
+				}
 				$('.searchKeyword').attr("max", countMax/7);
 			}
 			else if(e.value=='month'){
+				if(countMax / 30 < 1){
+					$('.searchKeyword').val("");
+					$('.searchKeyword').attr("readonly", "");
+					$('.searchKeyword').attr("placeholder", "한달 검색 불가");
+				}
 				$('.searchKeyword').attr("max", countMax/30);
 			}
 			console.log(countMax);
 			console.log($('.searchKeyword').attr("max"));
-			
 		}
-		
 		
 		$('.search').click(function() {
 			$('.inputSearch').show();
