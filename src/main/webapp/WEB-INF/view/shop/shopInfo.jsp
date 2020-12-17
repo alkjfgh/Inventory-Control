@@ -6,70 +6,36 @@
 <head>
 <meta charset="UTF-8">
 <title>매장 정보</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
     body{
         font-family: 'Do Hyeon', sans-serif;
         background-color: hsl(60, 100%, 98%);
-        margin: 50px;
-        padding: auto;
         font-size: 18px;
     }
     h1{
         text-align: center;
         font-size: 42px;
     }
-    /* ul{
+    ul{
         margin: auto;
-        padding: auto;
-        width: 900px;
         list-style: none;
-        text-align: center;
-        height: 40px;
+        height: 45px;
+        padding: 0;
     }
     li{
+        height: 45px;
         float: left;
-    } */
-    
-    ul {
-    list-style-type: none;
-    margin: auto;
-    padding: auto;
-    overflow: hidden;
-    background-color: rgb(252, 149, 65);
-    position: fixed;
-    bottom: 0;
-    width: 900pz;
-    height: 40px;
-
-    }
-
-    li {
-    float: left;
-    }
-
-    li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    }
-
-    li a:hover:not(.active) {
-    background-color: rgb(252, 149, 65);
-    }
-
-    .active {
-    background-color: #4CAF50;
     }
     a:link {
+        height: 25px;
         display: block;
         width: 120px;
         font-weight: bold;
         background-color: rgb(252, 149, 65);
         text-align: center;
-        padding: 4px;
+        padding: 10px;
         color: black; text-decoration: none;
     }
     a:visited {
@@ -86,30 +52,8 @@
     table {
 		margin-left: auto;
 		margin-right: auto;
+		margin-bottom: 20px;
 	}
-    /* .checkbox{
-        margin: auto;
-        padding: 10px;
-        width: 200px;
-        text-align: center;
-    }
-    .check:link, .check:visited{
-        background-color: #f44336;
-        color: white;
-        padding: 14px 25px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-    }
-    .check:hover, .check:active {
-     background-color: red;
-    } */
-    .ul_li{
-        margin: auto;
-        padding: auto;
-        width: 50%;
-        text-align: center;
-    }
 </style>
 </head>
 <body>
@@ -144,23 +88,18 @@
             </tr>
             </thead>
         </table>
-        <div class="ul_li">
         <ul>
-            <li><a href="graph.do">그래프</a></li>
-            <li><a href="graph.do">그래프</a></li>
-            <li>
-                <a href="updateItem.do">상품 목록 수정</a>
-                <c:set var="level" value="${user.userLevel }" />
-                <c:if test="${level eq 1}">
-            <li><a href="check.do" class="check">결산</a></li>
-            <li><a href="../user/SignOut.do">로그아웃</a></li>
-                </c:if>
-                <c:if test="${level eq 9}">
-            <li><a href="../master/shopList.do" >뒤로가기</a></li>
-                </c:if>
-            </li>
+            <li><a href="graph.do" class="a_link">그래프</a></li>
+            <li><a href="updateItem.do" class="a_link">상품 목록 수정</a></li>
+            <c:set var="level" value="${user.userLevel }" />
+            <c:if test="${level eq 1}">
+            <li><a href="check.do" class="a_link">결산</a></li>
+            <li><a href="../user/SignOut.do" class="a_link">로그아웃</a></li>
+            </c:if>
+            <c:if test="${level eq 9}">
+            <li><a href="../master/shopList.do" class="a_link" >뒤로가기</a></li>
+            </c:if>
         </ul>
-        </div>
 		<br>
 		<table>
 			<tr>
@@ -196,5 +135,9 @@
 			</c:forEach>
         </table>
 	</div>
+	<script>
+		var li_length =  $("li").length;
+		$("ul").css({width : li_length * 140 + "px"});
+	</script>
 </body>
 </html>

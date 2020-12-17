@@ -22,6 +22,7 @@ import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
 import com.inventory.app.domain.ItemListVO;
+import com.inventory.app.domain.ItemMovementVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
 import com.inventory.app.domain.SoldCategoryVO;
@@ -30,6 +31,7 @@ import com.inventory.app.domain.StockVO;
 import com.inventory.app.domain.UserVO;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
+import com.inventory.app.service.ItemMovementService;
 import com.inventory.app.service.ItemService;
 import com.inventory.app.service.ShopService;
 import com.inventory.app.service.SoldLogService;
@@ -62,6 +64,9 @@ public class ShopController {
 
 	@Autowired
 	private SoldLogService soldLogService;
+	
+	@Autowired
+	private ItemMovementService itemMovementService;
 
 	@RequestMapping(value = "ShopInfo.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public String shopInfo(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response)
@@ -167,12 +172,16 @@ public class ShopController {
 				ShopVO shop = new ShopVO();
 				shop.setShopSeq(shopSeq);
 				shop = shopService.select(shop);
-				SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), (autoSup - remain), shopSeq, categorySeq,
-						itemSeq);
-
+				SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), (autoSup - remain), shopSeq, categorySeq, itemSeq);
+				
+				ItemMovementVO itemMovement = new ItemMovementVO(shop.getShopCount(), categorySeq, itemSeq);
+				itemMovement.setShopSeq(shopSeq);
+				itemMovement.setStockMove((autoSup - remain));
+				
 				stockService.update(shopStock);
 				stockService.update(masterStock);
 				soldLogService.insert(soldLog);
+				itemMovementService.insert(itemMovement);
 			}
 		}
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
