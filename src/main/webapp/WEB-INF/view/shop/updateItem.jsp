@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>아이템 추가 및 삭제</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <style>
@@ -149,7 +149,7 @@
 	} 
 </style>
 <body>
-	<h1>아이템 추가 삭제 페이지</h1>
+	<h1>아이템 추가 및 삭제</h1>
 	<div id="select">
 		<button class="change" id="adda">아이템 추가</button>
 		<button  class="del" id="dela">아이템 삭제</button>

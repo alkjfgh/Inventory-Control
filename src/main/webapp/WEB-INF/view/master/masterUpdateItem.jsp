@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MasterUpdateItem</title>
+<title>물품 추가 및 삭제</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
@@ -254,7 +254,7 @@
 	</style>
 </head>
 <body>
-<h1>물품 추가삭제</h1>
+<h1>물품 추가 및 삭제</h1>
 	<div id="select">
 		<button class="add"><span>추가</span></button>
 		<button class="del"><span>삭제</span></button>

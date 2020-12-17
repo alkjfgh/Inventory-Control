@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>카테고리 추가 및 삭제</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
@@ -154,7 +154,7 @@
 </head>
 <body>
 	<section>
-		<h1>카테고리 추가 삭제 페이지</h1>
+		<h1>카테고리 추가 및 삭제</h1>
 		<!-- 카테고리 추가 삭제 부분 -->
 		<div class="category">
 			<div id="select">

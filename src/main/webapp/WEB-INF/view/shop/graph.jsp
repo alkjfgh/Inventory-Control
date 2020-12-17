@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>부트스트랩 차트그리기</title>
+<title>판매 현황</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -39,7 +39,7 @@
 </style>
 </head>
 <body>
-	<h1>그래프</h1>
+	<h1>판매 현황</h1>
 	<div id="button">
 		<form action="graph.do" method="post">
 			<select name="searchCondition" id="" onchange="conditionClick(this)">
@@ -165,17 +165,22 @@
 				var fst = parseInt(String(graphMax).charAt(0));
 				if(fst > 5) graphMax = Math.pow(10, length);
 				else graphMax = Math.pow(10, length - 1) * 5;
+				var size2 = labelList.length;
+				dataset = new Array();
+				for(var j=0;j<size2;j++){
+					dataset.push({
+						label : labelList[i][j],
+						data : [dataList[i][j]],
+						backgroundColor : backGroundColorList[i][j],
+						borderColor : boderColorList[i][j],
+						borderWidth : 1
+					});
+				}
 				var myChart = new Chart(ctx[i], {
 					type : 'bar',
 					data : {
-						labels : labelList[i],
-						datasets : [ {
-							label : labelList[i],
-							data : dataList[i],
-							backgroundColor : backGroundColorList[i],
-							borderColor : boderColorList[i],
-							borderWidth : 1
-						} ]
+						labels : ['물품 판매 현황'],
+						datasets : dataset
 					},
 					options : {
 						scales : {

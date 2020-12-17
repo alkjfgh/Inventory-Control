@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Sign Up</title><style>
+<title>회원 가입</title><style>
     @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
     body{
         font-family: 'Do Hyeon', sans-serif;
@@ -84,7 +84,7 @@
 </style>
 </head>
 <body>
-	<h1>Sign Up</h1>
+	<h1>회원 가입</h1>
     <form action="SignUp.do" name=fr method="post" onsubmit="return fun2()" > 
         <div class="singup"></div>
 		<table>

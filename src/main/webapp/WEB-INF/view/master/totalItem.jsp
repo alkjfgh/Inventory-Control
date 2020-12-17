@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>총 재고</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
@@ -35,7 +35,7 @@
 </style>
 </head>
 <body>
-<h1>재고 리스트 </h1>
+<h1>총 재고</h1>
 	<table>
 		<tr>
 			<th>카테고리 </th>

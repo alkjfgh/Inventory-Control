@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>매장 목록</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
@@ -79,7 +79,7 @@
 	</style>
 </head>
 <body>
-	<h1><a href="master.do">Shop LIst</a> </h1>
+	<h1><a href="master.do">매장 목록</a> </h1>
 	<section class="shop_list_wrap">
 		<table class="shop_list">
 			<thead>

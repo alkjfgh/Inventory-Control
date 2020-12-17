@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<title>Insert title here</title>
+	<title>매장 개설</title>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
@@ -105,7 +105,7 @@
 </head>
 <body>
 	<section class="login-form">
-		<h1>Insert Shop</h1>
+		<h1>매장 개설</h1>
 		<form action="insertShop.do" name=fr  method="post" onsubmit="return fun1()">
 			<div class="int-area">
 				<input type="text" name="shopName" id="shopName" autocomplete="off" required="required" value="">
