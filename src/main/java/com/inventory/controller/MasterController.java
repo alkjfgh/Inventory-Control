@@ -216,7 +216,7 @@ public class MasterController {
 	public String itemMovementView(Model model, HttpServletRequest request) throws IOException {
 		ItemMovementVO itemMovement = new ItemMovementVO(1, Long.parseLong(request.getParameter("categorySeq")),  Long.parseLong(request.getParameter("itemSeq")));
 		List<ItemMovementVO> itemMovementList = itemMovementService.selectView(itemMovement);
-		model.addAttribute(itemMovementList);
+		model.addAttribute("itemMovementList", itemMovementList);
 		return PATH + "totalItem";
 	}
 
