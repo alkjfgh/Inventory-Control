@@ -220,8 +220,12 @@ public class MasterController {
 		String shopCount = request.getParameter("shopCount");
 		String categorySeq = request.getParameter("categorySeq");
 		String itemSeq = request.getParameter("itemSeq");
+		System.out.println(shopCount);
+		System.out.println(categorySeq);
+		System.out.println(itemSeq);
 		ItemMovementVO itemMovement = new ItemMovementVO(shopCount == null ? 1 : Long.parseLong(shopCount), Long.parseLong(categorySeq),  Long.parseLong(itemSeq));
 		List<ItemMovementVO> itemMovementList = itemMovementService.selectView(itemMovement);
+		System.out.println(itemMovementList);
 		model.addAttribute("itemMovementList", itemMovementList);
 		model.addAttribute("itemMovement", itemMovement);
 		return PATH + "itemMovement";

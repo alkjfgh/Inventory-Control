@@ -6,19 +6,38 @@
 <head>
 <meta charset="utf-8">
 <title>총재고 이동현황</title>
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap%27');
+	body{
+        font-family: 'Do Hyeon', sans-serif;
+        background-color: hsl(60, 100%, 98%);
+        margin: 50px;
+        text-align: center;
+    }
+    h1{
+    	margin-top: 50px;
+            text-align: center;
+            font-size: 45px;z
+    }
+     
+    .table{
+    	margin: 30px auto;
+    	text-align: center;
+    	width: 500px;
+    }
+</style>
 </head>
 <body>
 	<h1>총재고 이동현황</h1>
 	<div class="search">
 		<form action="itemMovement.do" method="get">
 			<input type="number" placeholder="shopCount입력" name="shopCount" />
-			<input type="number" name="shopCount" value="${itemMovement.shopCount }" hidden="" />
 			<input type="number" name="categorySeq" value="${itemMovement.categorySeq }" hidden="" />
 			<input type="number" name="itemSeq" value="${itemMovement.itemSeq }" hidden="" />
 			<input type="submit" value="검색" />
 		</form>
 	</div>
-	<table>
+	<table class="table">
 		<tr>
 			<th>상점이름</th>
 			<th>카테고리이름</th>

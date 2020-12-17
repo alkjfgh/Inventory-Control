@@ -23,7 +23,6 @@
 	.canC:hover {text-decoration: none; color:#58C9B9; font-size: 20px; margin-left: 15px;}
 	
     h1{
-    
         text-align: center;
         font-size: 42px;
     }
