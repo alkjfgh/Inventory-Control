@@ -213,11 +213,18 @@ public class MasterController {
 	}
 	
 	@RequestMapping(value = "itemMovement.do", method = RequestMethod.GET)
-	public String itemMovementView(Model model, HttpServletRequest request) throws IOException {
-		ItemMovementVO itemMovement = new ItemMovementVO(1, Long.parseLong(request.getParameter("categorySeq")),  Long.parseLong(request.getParameter("itemSeq")));
+	public String itemMovementView(Model model, HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
+		String url = masterCheck(session, response);
+		if (url != null)
+			return url;
+		String shopCount = request.getParameter("shopCount");
+		String categorySeq = request.getParameter("categorySeq");
+		String itemSeq = request.getParameter("itemSeq");
+		ItemMovementVO itemMovement = new ItemMovementVO(shopCount == null ? 1 : Long.parseLong(shopCount), Long.parseLong(categorySeq),  Long.parseLong(itemSeq));
 		List<ItemMovementVO> itemMovementList = itemMovementService.selectView(itemMovement);
 		model.addAttribute("itemMovementList", itemMovementList);
-		return PATH + "totalItem";
+		model.addAttribute("itemMovement", itemMovement);
+		return PATH + "itemMovement";
 	}
 
 	private String masterCheck(HttpSession session, HttpServletResponse response) throws IOException {

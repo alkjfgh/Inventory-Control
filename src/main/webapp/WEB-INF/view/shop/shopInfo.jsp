@@ -19,18 +19,49 @@
         text-align: center;
         font-size: 42px;
     }
-    ul{
+    /* ul{
         margin: auto;
         padding: auto;
-        width: 650px;
-        height: 31px;
+        width: 900px;
         list-style: none;
         text-align: center;
+        height: 40px;
     }
     li{
         float: left;
-        width: 130px;
-        height: 31px;
+    } */
+    
+    ul {
+    list-style-type: none;
+    margin: auto;
+    padding: auto;
+    overflow: hidden;
+    background-color: rgb(252, 149, 65);
+    position: fixed;
+    bottom: 0;
+    width: 900pz;
+    height: 40px;
+
+    }
+
+    li {
+    float: left;
+    }
+
+    li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+    background-color: rgb(252, 149, 65);
+    }
+
+    .active {
+    background-color: #4CAF50;
     }
     a:link {
         display: block;
@@ -73,6 +104,12 @@
     .check:hover, .check:active {
      background-color: red;
     } */
+    .ul_li{
+        margin: auto;
+        padding: auto;
+        width: 50%;
+        text-align: center;
+    }
 </style>
 </head>
 <body>
@@ -107,19 +144,23 @@
             </tr>
             </thead>
         </table>
+        <div class="ul_li">
         <ul>
             <li><a href="graph.do">그래프</a></li>
             <li><a href="graph.do">그래프</a></li>
-            <li><a href="updateItem.do">상품 목록 수정</a></li>
-            <c:set var="level" value="${user.userLevel }" />
-            <c:if test="${level eq 1}">
-                <li><a href="check.do" class="check">결산</a></li>
-                <li><a href="../user/SignOut.do">로그아웃</a></li>
-            </c:if>
-            <c:if test="${level eq 9}">
-                <li><a href="../master/shopList.do" >뒤로가기</a></li>
-            </c:if>
+            <li>
+                <a href="updateItem.do">상품 목록 수정</a>
+                <c:set var="level" value="${user.userLevel }" />
+                <c:if test="${level eq 1}">
+            <li><a href="check.do" class="check">결산</a></li>
+            <li><a href="../user/SignOut.do">로그아웃</a></li>
+                </c:if>
+                <c:if test="${level eq 9}">
+            <li><a href="../master/shopList.do" >뒤로가기</a></li>
+                </c:if>
+            </li>
         </ul>
+        </div>
 		<br>
 		<table>
 			<tr>

@@ -24,6 +24,85 @@
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap%27');
+	body{
+        font-family: 'Do Hyeon', sans-serif;
+        background-color: hsl(60, 100%, 98%);
+        margin: 50px;
+    }
+	h1{
+		text-align: center;
+	}
+	.searchA {
+		display: inline-block;
+		border-radius: 4px;
+		background-color: #D1B6E1;
+		border: none;
+		color: black;
+		text-align: center;
+		font-size: 24px;
+		padding: 12px;
+		width: 200px;
+		transition: all 0.5s;
+		cursor: pointer;
+		margin: 5px;
+	}
+	.searchA span {
+		cursor: pointer;
+		display: inline-block;
+		position: relative;
+		transition: 0.5s;
+	}
+	.searchA span:after {
+		content: '\00bb';
+		position: absolute;
+		opacity: 0;
+		top: 0;
+		right: -20px;
+		transition: 0.5s;
+	}
+	.searchA:hover span {
+		padding-right: 25px;
+	}
+	.searchA:hover span:after {
+		opacity: 1;
+		right: 0;
+	}
+	.searchB {
+		display: inline-block;
+		border-radius: 4px;
+		background-color: #519D9E;
+		border: none;
+		color: black;
+		text-align: center;
+		font-size: 24px;
+		padding: 12px;
+		width: 200px;
+		transition: all 0.5s;
+		cursor: pointer;
+		margin: 5px;
+	}
+	.searchB span {
+		cursor: pointer;
+		display: inline-block;
+		position: relative;
+		transition: 0.5s;
+	}
+	.searchB span:after {
+		content: '\00bb';
+		position: absolute;
+		opacity: 0;
+		top: 0;
+		right: -20px;
+		transition: 0.5s;
+	}
+	.searchB:hover span {
+		padding-right: 25px;
+	}
+	.searchB:hover span:after {
+		opacity: 1;
+		right: 0;
+	}
 	form{
 		display : inline-block;
 	}
@@ -36,21 +115,27 @@
 		text-align: center;
 	}
 	
+	.searchCondition input:nth-of-type(1) {
+		width: 125px;
+	}
 </style>
 </head>
 <body>
 	<h1>판매 현황</h1>
 	<div id="button">
-		<form action="graph.do" method="post">
-			<select name="searchCondition" id="" onchange="conditionClick(this)">
-				<option value="day" class="conditionDay">하루판매량</option>
-				<option value="week" class="conditionWeek">일주일 판매량</option>
-				<option value="month" class="conditionMonth">한달판매량</option>
-			</select>
-			<input type="number" class="searchKeyword" name="searchKeyword" min="1" max="${shop.shopCount }" required="required" />
-			<input type="submit" value="검색" />
-		</form>
-		<button class="search">기간 검색(일)</button>
+		<button class="searchA"><span>단위검색</span></button>
+		<button class="searchB"><span>기간 검색(일)</span></button>
+		<div class="selectSearch" style="display : none;">
+			<form action="graph.do" method="post" class="searchCondition" >
+				<select name="searchCondition" id="" onchange="conditionClick(this)">
+					<option value="day" class="conditionDay">하루판매량</option>
+					<option value="week" class="conditionWeek">일주일 판매량</option>
+					<option value="month" class="conditionMonth">한달판매량</option>
+				</select>
+				<input type="number" class="searchKeyword" name="searchKeyword" min="1" max="${shop.shopCount }" required="required" onblur="numberCheck(this)" />
+				<input type="submit" value="검색" />
+			</form>
+		</div>
 		<div class="inputSearch" style="display : none;">
 			<form action="graph.do" method="post" class="searchForm">
 				<input type="number" name="start"/> ~ <input type="number" name="end" />
@@ -72,11 +157,6 @@
 	</div>
 	
 	<script>
-		/* function dayChange(e){
-			var val1 = $(".dayStart").val();
-			var result = val1;
-			$(".dayEnd").val(result);
-		} */
 		countMax = parseInt("<c:out value="${shop.shopCount}" />");
 		function conditionClick(e){
 			if(e.value=='day'){
@@ -100,22 +180,33 @@
 				}
 				$('.searchKeyword').attr("max", countMax/30);
 			}
-			console.log(countMax);
-			console.log($('.searchKeyword').attr("max"));
+
+			$('.inputSearch').hide();
+		}
+		function numberCheck(e){
+			var value = parseInt(e.value);
+			if(Number.isNaN(value)){
+				e.value = 1;
+			}
+			var max = parseInt(e.max);
+			var min = parseInt(e.min);
+			if(value > max)
+				e.value = max;
+			if(value < min)
+				e.value = min;
 		}
 		
-		$('.search').click(function() {
+		$('.searchA').click(function() {
+			$('.selectSearch').show();
+			$('.inputSearch').hide();
+			$(".category button").hide();
+		});
+		$('.searchB').click(function() {
 			$('.inputSearch').show();
+			$('.selectSearch').hide();
+			$(".category button").hide();
 		});
-		$('.week').click(function() {
-			$('.inputSearch').hide();
-		});
-		$('.month').click(function() {
-			$('.inputSearch').hide();
-		});
-		$('.day').click(function() {
-			$('.inputSearch').hide();
-		});
+		
 		var ctx = new Array();
 		var labelList = new Array();
 		var dataList = new Array();
