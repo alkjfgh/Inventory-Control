@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Buy</title>
+<title>구매</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style>
 	    @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
@@ -75,7 +75,7 @@
 	</style>
 </head>
 <body>
-	<h1>회원 전용 구매 페이지 </h1>
+	<h1>구매</h1>
 	
 	<button class="item_add">구매목록 추가하기</button>
 	<form action="buyCheck.do" name=fr method="post">
@@ -83,9 +83,9 @@
 		<input type="text" hidden="hidden" name="cntCheck" value="" id="cntCheck" />
 		<table class="insertItem">
 			<tr>
-				<th>shop name</th>
-				<th>category name</th>
-				<th>item name</th>
+				<th>상점명</th>
+				<th>품목</th>
+				<th>물품</th>
 				<th>개수</th>
 				<th>금액(원)</th>
 			</tr>
