@@ -28,13 +28,14 @@
         height: 45px;
         float: left;
     }
-    a:link {
+    a.a_link {
         height: 25px;
         display: block;
         width: 120px;
         font-weight: bold;
         background-color: rgb(252, 149, 65);
         text-align: center;
+        line-height: 25px;
         padding: 10px;
         color: black; text-decoration: none;
     }
