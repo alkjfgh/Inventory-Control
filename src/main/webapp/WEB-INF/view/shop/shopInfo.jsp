@@ -8,59 +8,71 @@
 <title>매장 정보</title>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
- 	a:link {text-decoration: underline; color:black; font-size: 20px; margin-left: 15px;}
-	a:visited {text-decoration: underline; color:black; font-size: 20px; margin-left: 15px;}
-	a:hover {text-decoration: underline; color:#58C9B9; font-size: 20px; margin-left: 15px;}
-	table, th, td {
+    body{
+        font-family: 'Do Hyeon', sans-serif;
+        background-color: hsl(60, 100%, 98%);
+        margin: 50px;
+        padding: auto;
+        font-size: 18px;
+    }
+    h1{
+        text-align: center;
+        font-size: 42px;
+    }
+    ul{
+        margin: auto;
+        padding: auto;
+        width: 650px;
+        height: 31px;
+        list-style: none;
+        text-align: center;
+    }
+    li{
+        float: left;
+        width: 130px;
+        height: 31px;
+    }
+    a:link {
+        display: block;
+        width: 120px;
+        font-weight: bold;
+        background-color: rgb(252, 149, 65);
+        text-align: center;
+        padding: 4px;
+        color: black; text-decoration: none;
+    }
+    a:visited {
+        color: black; text-decoration: none;
+    }
+    a:hover {
+        color: rgb(255, 255, 255); text-decoration: underline;
+    }
+    table, th, td {
 		border: 2px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
 	}
-	table {
+    table {
 		margin-left: auto;
 		margin-right: auto;
 	}
-	body {
-		font-family: 'Do Hyeon', sans-serif;
-		background-color: hsl(60, 100%, 98%);
-	}	
-	h1 { 
-		font-size: 50px;
-		text-align: center; 
-	}
-	.modi { 
-		height: 30px;
-		background: #58C9B9;
-		color: black;
-		font-size: 20px;
-		border: none;
-		border-radius: 25px;
-		cursor: pointer;
-		font-family : 'Do Hyeon', sans-serif;
-	}
-	.modi:hover {
-		color: white;
-	}
-	.requ { 
-		height: 25px;
-		background: hsl(60, 100%, 98%);
-		color: black;
-		font-size: 17px;			
-		cursor: pointer;
-		font-family : 'Do Hyeon', sans-serif;
-}	
-	.requ:hover {
-		background-color: grey;
-	}
-	.requ:focus {
-		background-color: grey;
-		color: white;
-	}
-	.container{
-		margin: 0 auto;
-		width: 800px;
-		text-align: center;
-	}
+    /* .checkbox{
+        margin: auto;
+        padding: 10px;
+        width: 200px;
+        text-align: center;
+    }
+    .check:link, .check:visited{
+        background-color: #f44336;
+        color: white;
+        padding: 14px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .check:hover, .check:active {
+     background-color: red;
+    } */
 </style>
 </head>
 <body>
@@ -68,32 +80,46 @@
 	<br>
 	<div class="container">
 		<table>
+            <thead>
 			<tr>
-				<td>Shop Seq</td>
+				<td>관리 번호</td>
 				<td>${shop.shopSeq }</td>
 			</tr>
 			<tr>
-				<td>Shop Name</td>
+				<td>매장 이름</td>
 				<td>${shop.shopName }</td>
 			</tr>
 			<tr>
-				<td>Shop Phone</td>
+				<td>매장 번호</td>
 				<td>${shop.shopPhone }</td>
 			</tr>
 			<tr>
-				<td>Shop Address</td>
+				<td>매장 주소</td>
 				<td>${shop.shopAddress }</td>
 			</tr>
 			<tr>
-				<td>Shop RegDate</td>
+				<td>매장 생성일</td>
 				<td>${shop.shopRegdate }</td>
 			</tr>
 			<tr>
-				<td>Shop Count</td>
+				<td>결산 관리</td>
 				<td>${shop.shopCount }</td>
-			</tr>
-		</table>
-		<a href="graph.do">그래프</a>&nbsp;&nbsp;&nbsp;<a href="updateItem.do">상품 목록 수정</a>
+            </tr>
+            </thead>
+        </table>
+        <ul>
+            <li><a href="graph.do">그래프</a></li>
+            <li><a href="graph.do">그래프</a></li>
+            <li><a href="updateItem.do">상품 목록 수정</a></li>
+            <c:set var="level" value="${user.userLevel }" />
+            <c:if test="${level eq 1}">
+                <li><a href="check.do" class="check">결산</a></li>
+                <li><a href="../user/SignOut.do">로그아웃</a></li>
+            </c:if>
+            <c:if test="${level eq 9}">
+                <li><a href="../master/shopList.do" >뒤로가기</a></li>
+            </c:if>
+        </ul>
 		<br>
 		<table>
 			<tr>
@@ -127,19 +153,7 @@
 				<td hidden=""></td>
 			</tr>
 			</c:forEach>
-		</table>
-		<c:set var="level" value="${user.userLevel }" />
-		<c:if test="${level eq 1}">
-			<br />
-			<a href="check.do">결산</a>
-			<br />
-			<a href="../user/SignOut.do">로그아웃</a>
-		</c:if>
-		<c:if test="${level eq 9}">
-			<div id="back">
-				<a href="../master/shopList.do" >뒤로가기</a>
-			</div>
-		</c:if>
+        </table>
 	</div>
 </body>
 </html>

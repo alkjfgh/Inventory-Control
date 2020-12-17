@@ -43,10 +43,11 @@
 			<th>물품 이름</th>
 			<th>물품 가격</th>
 			<th>재고</th>
+			<th>상세보기</th>
 		</tr>
 		<c:forEach items="${totalItemList }" var="totalItem">
 		<tr class="showList_${totalItem.category.categorySeq }">
-			<td colspan="5">${totalItem.category.categoryName  }</td>
+			<td colspan="6">${totalItem.category.categoryName  }</td>
 		</tr>
 		<tr class="list_${totalItem.category.categorySeq }">
 			<td class="hideList_${totalItem.category.categorySeq }" rowspan="${totalItem.size }">${totalItem.category.categoryName  }</td>
@@ -55,9 +56,11 @@
 			<td>${item.itemName }</td>
 			<td>${item.itemPrice }</td>
 			<td>${item.remain }</td>
+			<td><a href="itemMovement.do?categorySeq=${totalItem.category.categorySeq }&itemSeq=${item.itemSeq }">재고 이동 상세 보기</a></td>
 		</tr>
 		<tr class="list_${totalItem.category.categorySeq }">
 			</c:forEach>
+			<td hidden=""></td>
 			<td hidden=""></td>
 			<td hidden=""></td>
 			<td hidden=""></td>

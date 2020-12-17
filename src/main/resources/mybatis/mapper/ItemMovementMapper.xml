@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="itemMovementMapper">
+	<resultMap id="BaseResultMap" type="itemMovement">
+		<result column="shop_seq" jdbcType="DECIMAL" property="shopSeq" />
+		<result column="shop_name" jdbcType="VARCHAR"
+			property="shopName" />
+		<result column="shop_count" jdbcType="DECIMAL"
+			property="shopCount" />
+		<result column="category_seq" jdbcType="DECIMAL"
+			property="categorySeq" />
+		<result column="category_name" jdbcType="VARCHAR"
+			property="categoryName" />
+		<result column="item_seq" jdbcType="DECIMAL" property="itemSeq" />
+		<result column="item_name" jdbcType="VARCHAR"
+			property="itemName" />
+		<result column="stock_move" jdbcType="DECIMAL"
+			property="stockMove" />
+	</resultMap>
+	<delete id="delete" parameterType="itemMovement">
+		DELETE FROM itemMovement WHERE
+		shop_seq = #{shopSeq,jdbcType=DECIMAL} AND
+		shop_count =
+		#{shopCount,jdbcType=DECIMAL} AND category_seq =
+		#{categorySeq,jdbcType=DECIMAL} AND item_seq =
+		#{itemSeq,jdbcType=DECIMAL}
+	</delete>
+	<delete id="deleteAll">
+		DELETE FROM itemMovement
+	</delete>
+	<insert id="insert" parameterType="itemMovement">
+		INSERT INTO itemMovement
+		VALUES(#{shopSeq,jdbcType=DECIMAL},
+		#{shopCount,jdbcType=DECIMAL},
+		#{categorySeq,jdbcType=DECIMAL},
+		#{itemSeq,jdbcType=DECIMAL},
+		#{stockMove,jdbcType=DECIMAL})
+	</insert>
+	<update id="update" parameterType="itemMovement">
+		UPDATE itemMovement SET
+		stock_move = #{stockMove,jdbcType=VARCHAR}
+		WHERE shop_seq =
+		#{shopSeq,jdbcType=DECIMAL} AND
+		shop_count =
+		#{shopCount,jdbcType=DECIMAL} AND category_seq =
+		#{categorySeq,jdbcType=DECIMAL} AND item_seq =
+		#{itemSeq,jdbcType=DECIMAL}
+	</update>
+	<select id="select" parameterType="itemMovement"
+		resultMap="BaseResultMap">
+		SELECT * FROM itemMovement WHERE shop_seq =
+		#{shopSeq,jdbcType=DECIMAL} AND
+		shop_count =
+		#{shopCount,jdbcType=DECIMAL} AND category_seq =
+		#{categorySeq,jdbcType=DECIMAL} AND item_seq =
+		#{itemSeq,jdbcType=DECIMAL}
+	</select>
+	<select id="selectList" resultMap="BaseResultMap">
+		SELECT * FROM itemMovement
+	</select>
+	<select id="selectView" parameterType="itemMovement"
+		resultMap="BaseResultMap">
+		SELECT * FROM itemMovementView WHERE shop_count =
+		#{shopCount,jdbcType=DECIMAL} AND category_seq =
+		#{categorySeq,jdbcType=DECIMAL} AND item_seq =
+		#{itemSeq,jdbcType=DECIMAL}
+	</select>
+	<select id="selectCnt" resultType="int">
+		SELECT COUNT(*) FROM
+		itemMovement
+	</select>
+</mapper>

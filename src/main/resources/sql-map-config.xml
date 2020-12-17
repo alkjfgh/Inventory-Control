@@ -12,6 +12,7 @@
     	<typeAlias type="com.inventory.app.domain.StockVO" alias="stock"/>
     	<typeAlias type="com.inventory.app.domain.ItemInfoVO" alias="itemInfo"/>
     	<typeAlias type="com.inventory.app.domain.SoldLogVO" alias="soldLog"/>
+    	<typeAlias type="com.inventory.app.domain.ItemMovementVO" alias="itemMovement"/>
     </typeAliases>
  
  	<!-- Sql Mapper 설정 -->
@@ -23,5 +24,6 @@
         <mapper resource="mybatis/mapper/StockMapper.xml"/>
         <mapper resource="mybatis/mapper/ItemInfoMapper.xml"/>
         <mapper resource="mybatis/mapper/SoldLogMapper.xml"/>
+        <mapper resource="mybatis/mapper/ItemMovementMapper.xml"/>
     </mappers>
 </configuration>

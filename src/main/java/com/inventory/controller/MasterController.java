@@ -19,12 +19,14 @@ import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
 import com.inventory.app.domain.ItemListVO;
+import com.inventory.app.domain.ItemMovementVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
 import com.inventory.app.domain.StockVO;
 import com.inventory.app.domain.UserVO;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
+import com.inventory.app.service.ItemMovementService;
 import com.inventory.app.service.ItemService;
 import com.inventory.app.service.ShopService;
 import com.inventory.app.service.UserService;
@@ -49,6 +51,9 @@ public class MasterController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ItemMovementService itemMovementService;
 
 	@RequestMapping(value = "master.do", method = RequestMethod.GET)
 	public String masterView(HttpSession session, HttpServletResponse response) throws IOException {
@@ -204,6 +209,13 @@ public class MasterController {
 				totalItemList.add(new ItemListVO(category, itemService.selectCntByCategory(category), itemInfoList));
 		}
 		model.addAttribute("totalItemList", totalItemList);
+		return PATH + "totalItem";
+	}
+	
+	@RequestMapping(value = "itemMovement.do", method = RequestMethod.GET)
+	public String itemMovementView(HttpSession session, Model model, HttpServletRequest request) throws IOException {
+		ItemMovementVO itemMovement = new ItemMovementVO(0, 0, 0);
+		List<ItemMovementVO> itemMovementList = itemMovementService.selectView(itemMovement);
 		return PATH + "totalItem";
 	}
 
