@@ -7,6 +7,7 @@ public class SoldLogVO {
 	private long categorySeq;
 	private long itemSeq;
 	private String itemName;
+	private long itemPrice;
 	private long week;
 	private long month;
 	private long start;
@@ -103,6 +104,14 @@ public class SoldLogVO {
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
+	}
+
+	public long getItemPrice() {
+		return itemPrice;
+	}
+
+	public void setItemPrice(long itemPrice) {
+		this.itemPrice = itemPrice;
 	}
 
 	@Override

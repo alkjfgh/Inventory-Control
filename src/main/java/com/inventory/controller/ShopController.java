@@ -299,6 +299,7 @@ public class ShopController {
 					item.setItemSeq(log.getItemSeq());
 					item = itemService.select(item);
 					log.setItemName(item.getItemName());
+					log.setItemPrice(item.getItemPrice());
 				}
 				soldList.add(new SoldCategoryVO(category, soldLogList));
 			}
