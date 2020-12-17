@@ -117,8 +117,8 @@ public class SoldLogVO {
 	@Override
 	public String toString() {
 		return "SoldLogVO [logCount=" + logCount + ", logSold=" + logSold + ", shopSeq=" + shopSeq + ", categorySeq="
-				+ categorySeq + ", itemSeq=" + itemSeq + ", week=" + week + ", month=" + month + ", start=" + start
-				+ ", end=" + end + "]";
+				+ categorySeq + ", itemSeq=" + itemSeq + ", itemName=" + itemName + ", itemPrice=" + itemPrice
+				+ ", week=" + week + ", month=" + month + ", start=" + start + ", end=" + end + "]";
 	}
 
 }
