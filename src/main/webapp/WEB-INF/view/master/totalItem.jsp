@@ -60,10 +60,17 @@
 		</tr>
 		</c:forEach>
 	</table>
+	<span class="indexPage"></span>
 	<div id="back">
 		<a href="master.do" >뒤로가기</a>
 	</div>
 </body>
-<script>
-</script>
+	<script>
+	var pageBtn = Math.ceil(${totalItemCount} / 20);
+	for(var i = 1 ; i<=pageBtn ; i++){
+		$('.indexPage').append("<a href="
+			+"totalItem.do?pageIndex="+i+""
+			+">"+i+"</a>");
+	}
+	</script>
 </html>

@@ -13,12 +13,11 @@
 		font-family: 'Do Hyeon', sans-serif;
 		width: 100%;
 		background-color: hsl(60, 100%, 98%);
+		text-align: center;
 	}
 	.category {
 		margin: auto;
-		padding: 50px;
 		width: 100%;
-		text-align: left;
 	}
 	h1 {
 		margin: 50px;
@@ -26,10 +25,9 @@
         font-size: 42px;
 	}
 	.select {
-		overflow: hidden;
+		text-align: center;
 		border: 1px solid #ccc;
 		background-color: #f1f1f1;
-		display: inline block;
 	}
 	a.add, 
 	a.del
@@ -70,6 +68,9 @@
 	.categoryAdd,
 	.categoryDelete {
 		display: none;
+	}
+	.categoryDelete table{
+		margin: 0 auto;
 	}
 	#back {
 		margin: 0 auto;
@@ -122,13 +123,12 @@
 	}
 	th{
 		font-size: 21px; 
-		text-align: left;
 	}
 	th:nth-child(3){
 		text-align: center;
 	}
 	td:nth-child(1){
-		text-align: left;
+		text-align: center;
 	}
 	td:nth-child(3){
 		text-align: center;
@@ -149,6 +149,9 @@
 		top: 20px;
 		width: 20px;
 		height: 20px;
+	}
+	.indexPage{
+		margin-top: 20px;
 	}
 </style>
 </head>

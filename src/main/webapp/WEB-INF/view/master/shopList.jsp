@@ -76,6 +76,27 @@
 			z-index: -1;
 			transition: 0.8s;
 		}
+		#back, #indexPage{
+			margin : 0 auto;
+			text-align: center;
+			font-size: 20px;
+			
+			
+		}
+		#back{
+			padding-bottom: 20px;
+		}
+		#indexPage{
+			margin-top: 15px;
+			width: 200px;
+		}
+		.indexPage a{
+			font-size: 20px;
+			padding : 7.5px;
+		}
+		.indexPage a:hover{
+			color :#58C9B9;
+		}
 	</style>
 </head>
 <body>
@@ -105,9 +126,7 @@
 			</c:forEach>
 			</tbody>
 		</table>
-			<span class="indexPage">
-				
-			</span>
+			<div id="indexPage"><span class="indexPage"></span></div>
 	</section>
 	<div id="back">
 		<a href="master.do">뒤로가기</a>

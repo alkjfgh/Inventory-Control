@@ -71,8 +71,7 @@ public class MasterController {
 			return url;
 		CategoryVO category = new CategoryVO();
 		category.setStart((pageIndex - 1) * 20);
-		List<CategoryVO> categoryList = categoryService.selectList(category);
-		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryList", categoryService.selectList(category));
 		model.addAttribute("categoryCount", categoryService.selectCnt());
 		return PATH + "updateCategory";
 	}
@@ -179,8 +178,7 @@ public class MasterController {
 			return url;
 		ShopVO shop = new ShopVO();
 		shop.setStart((pageIndex - 1) * 20);
-		List<ShopVO> shopList = shopService.selectList(shop);
-		model.addAttribute("shopList", shopList);
+		model.addAttribute("shopList", shopService.selectList(shop));
 		model.addAttribute("shopCount", shopService.selectCnt() - 1);
 		return PATH + "shopList";
 	}
@@ -193,21 +191,22 @@ public class MasterController {
 			return url;
 		UserVO user = new UserVO();
 		user.setStart((pageIndex - 1) * 20);
-		List<UserVO> userList = userService.selectList(user);
-		model.addAttribute("userList", userList);
+		model.addAttribute("userList", userService.selectList(user));
 		model.addAttribute("userCount", userService.selectCnt() - 1);
 		return PATH + "ownerList";
 	}
 
 	@RequestMapping(value = "totalItem.do", method = RequestMethod.GET)
-	public String totalItemView(Model model, HttpSession session, HttpServletResponse response) throws IOException {
+	public String totalItemView(Model model, HttpSession session, HttpServletResponse response,
+			@RequestParam(defaultValue = "1") int pageIndex) throws IOException {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
 		ItemInfoVO itemInfo = new ItemInfoVO();
 		itemInfo.setShopSeq(2);
-		List<ItemInfoVO> totalItemList = itemInfoService.selectList(itemInfo);
-		model.addAttribute("totalItemList", totalItemList);
+		itemInfo.setStart((pageIndex - 1) * 20);
+		model.addAttribute("totalItemList", itemInfoService.selectList(itemInfo));
+		model.addAttribute("totalItemCount", itemInfoService.selectCount(itemInfo));
 		return PATH + "totalItem";
 	}
 
@@ -223,8 +222,7 @@ public class MasterController {
 		ItemMovementVO itemMovement = new ItemMovementVO(shopCount == null ? 1 : Long.parseLong(shopCount),
 				Long.parseLong(categorySeq), Long.parseLong(itemSeq));
 		itemMovement.setStart((pageIndex - 1) * 20);
-		List<ItemMovementVO> itemMovementList = itemMovementService.selectView(itemMovement);
-		model.addAttribute("itemMovementList", itemMovementList);
+		model.addAttribute("itemMovementList", itemMovementService.selectView(itemMovement));
 		model.addAttribute("itemMovement", itemMovement);
 		model.addAttribute("itemCount", itemMovementService.selectCnt());
 		return PATH + "itemMovement";

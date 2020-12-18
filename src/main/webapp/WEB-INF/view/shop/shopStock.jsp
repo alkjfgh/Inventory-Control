@@ -6,6 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>상품 재고</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+    body{
+        font-family: 'Do Hyeon', sans-serif;
+        background-color: hsl(60, 100%, 98%);
+        font-size: 18px;
+        text-align: center;
+    }
+    table {
+		margin: 0 auto;
+	}
+</style>
 </head>
 <body>
 	<h1>상품 재고</h1>
@@ -31,5 +44,18 @@
 		</tr>
 		</c:forEach>
 	</table>
+	<div id="indexPage"><span class="indexPage"></span></div>
+	
+	<div id="back">
+		<a href="ShopInfo.do">뒤로가기</a>
+	</div>
 </body>
+	<script>
+	var pageBtn = Math.ceil(${itemCount} / 20);
+	for(var i = 1 ; i<=pageBtn ; i++){
+		$('.indexPage').append("<a href="
+			+"shopStock.do?pageIndex="+i+""
+			+">"+i+"</a>");
+	}
+	</script>
 </html>
