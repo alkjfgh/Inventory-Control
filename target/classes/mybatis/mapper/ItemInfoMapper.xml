@@ -14,6 +14,11 @@
 	</resultMap>
 	<select id="selectList" resultMap="BaseResultMap">
 	SELECT * FROM itemInfoView WHERE shop_seq = #{shopSeq} order by category_seq, item_seq
+		<choose>
+			<when test="start != null">
+				LIMIT #{start,jdbcType=DECIMAL}, 20 
+			</when>
+		</choose>
 	</select>
 	<select id="selectCount" resultType="int">
 	SELECT COUNT(*) FROM itemInfoView WHERE shop_seq = #{shopSeq}

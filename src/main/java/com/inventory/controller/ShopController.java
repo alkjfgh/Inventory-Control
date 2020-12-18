@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
@@ -68,7 +69,8 @@ public class ShopController {
 	private ItemMovementService itemMovementService;
 
 	@RequestMapping(value = "ShopInfo.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public String shopInfo(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response)
+	public String shopInfo
+	(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String url = userCheck(session, response);
 		if (url != null)
@@ -92,6 +94,20 @@ public class ShopController {
 		return PATH + "shopInfo";
 	}
 
+	@RequestMapping(value = "shopStock.do", method = RequestMethod.GET)
+	public String shopStockView(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1") int pageIndex)
+			throws IOException {
+		String url = userCheck(session, response);
+		if (url != null)
+			return url;
+		ShopVO shop = (ShopVO) session.getAttribute("shop");
+		ItemInfoVO itemInfo = new ItemInfoVO();
+		itemInfo.setStart((pageIndex - 1) * 20);
+		itemInfo.setShopSeq(shop.getShopSeq());
+		model.addAttribute("itemInfoList", itemInfoService.selectList(itemInfo));
+		return PATH + "shopStock";
+	}
+	
 	@RequestMapping(value = "check.do", method = RequestMethod.GET)
 	public String checkView(HttpSession session, HttpServletResponse response) throws IOException {
 		String url = userCheck(session, response);

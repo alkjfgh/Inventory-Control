@@ -12,6 +12,7 @@ public class ItemInfoVO {
 	private long necessity;
 	private long sold;
 	private long autoSup;
+	private int start;
 
 	public long getShopSeq() {
 		return shopSeq;
@@ -99,6 +100,14 @@ public class ItemInfoVO {
 
 	public void setAutoSup(long autoSup) {
 		this.autoSup = autoSup;
+	}
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
 	}
 
 	@Override

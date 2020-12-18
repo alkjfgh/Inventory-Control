@@ -92,7 +92,7 @@
         <ul>
             <li><a href="graph.do" class="a_link">그래프</a></li>
             <li><a href="updateItem.do" class="a_link">상품 목록 수정</a></li>
-            <li><a href="shopStock.do" class="a_link">상품 재고</a></li>
+            <li><a href="shopStock.do?pageIndex=1" class="a_link">상품 재고</a></li>
             <c:set var="level" value="${user.userLevel }" />
             <c:if test="${level eq 1}">
             <li><a href="check.do" class="a_link">결산</a></li>
