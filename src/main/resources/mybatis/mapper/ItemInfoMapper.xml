@@ -18,7 +18,7 @@
 	<select id="selectCount" resultType="int">
 	SELECT COUNT(*) FROM itemInfoView WHERE shop_seq = #{shopSeq}
 	</select>
-	<select id="selectList" resultMap="BaseResultMap">
+	<select id="selectBuyList" resultMap="BaseResultMap">
 	SELECT * FROM itemInfoView WHERE shop_seq = #{shopSeq} AND remain != 0
 	</select>
 </mapper>

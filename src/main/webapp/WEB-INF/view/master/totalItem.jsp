@@ -46,26 +46,13 @@
 			<th>상세보기</th>
 		</tr>
 		<c:forEach items="${totalItemList }" var="totalItem">
-		<tr class="showList_${totalItem.category.categorySeq }">
-			<td colspan="6">${totalItem.category.categoryName  }</td>
-		</tr>
-		<tr class="list_${totalItem.category.categorySeq }">
-			<td class="hideList_${totalItem.category.categorySeq }" rowspan="${totalItem.size }">${totalItem.category.categoryName  }</td>
-			<c:forEach items="${totalItem.itemList }" var="item">
-			<td>${item.itemSeq }</td>
-			<td>${item.itemName }</td>
-			<td>${item.itemPrice }</td>
-			<td>${item.remain }</td>
-			<td><a href="itemMovement.do?categorySeq=${totalItem.category.categorySeq }&itemSeq=${item.itemSeq }&pageIndex=1">재고 이동 상세 보기</a></td>
-		</tr>
-		<tr class="list_${totalItem.category.categorySeq }">
-			</c:forEach>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
-			<td hidden=""></td>
+		<tr>
+			<td>${totalItem.categoryName  }</td>
+			<td>${totalItem.itemSeq }</td>
+			<td>${totalItem.itemName }</td>
+			<td>${totalItem.itemPrice }</td>
+			<td>${totalItem.remain }</td>
+			<td><a href="itemMovement.do?categorySeq=${totalItem.categorySeq }&itemSeq=${totalItem.itemSeq }&pageIndex=1">재고 이동 상세 보기</a></td>
 		</tr>
 		</c:forEach>
 	</table>
@@ -74,19 +61,5 @@
 	</div>
 </body>
 <script>
-	var duration = 300;
-	$("tr[class^='list_']").hide(0);
-	$(document).ready(function(){
-		$("tr[class^='showList_']").click(function(){
-			var thisIndex = $(this).attr("class").split('_')[1];
-			$(this).hide(0);
-			$(".list_" + thisIndex).show(duration);
-		});
-		$("td[class^='hideList_']").click(function(){
-			var thisIndex = $(this).attr("class").split('_')[1];
-			$(".list_" + thisIndex).hide(0);
-			$(".showList_" + thisIndex).show(duration);
-		});
-	});
 </script>
 </html>

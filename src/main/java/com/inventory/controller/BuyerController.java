@@ -23,7 +23,6 @@ import com.inventory.app.domain.ShopInfoVO;
 import com.inventory.app.domain.ShopVO;
 import com.inventory.app.domain.SoldLogVO;
 import com.inventory.app.domain.StockVO;
-import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemService;
 import com.inventory.app.service.ShopService;
@@ -39,8 +38,8 @@ public class BuyerController {
 	@Autowired
 	private ShopService shopService;
 
-	@Autowired
-	private CategoryService categoryService;
+//	@Autowired
+//	private CategoryService categoryService;
 
 	@Autowired
 	private ItemService itemService;

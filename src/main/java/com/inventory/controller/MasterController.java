@@ -19,11 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
-import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemMovementVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
-import com.inventory.app.domain.StockVO;
 import com.inventory.app.domain.UserVO;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
@@ -52,7 +50,7 @@ public class MasterController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ItemMovementService itemMovementService;
 
@@ -62,12 +60,12 @@ public class MasterController {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
-		return PATH + "master";	
+		return PATH + "master";
 	}
 
 	@RequestMapping(value = "updateCategory.do", method = RequestMethod.GET)
-	public String updateCategoryView(Model model, HttpSession session, HttpServletResponse response, @RequestParam(defaultValue = "1") int pageIndex)
-			throws IOException {
+	public String updateCategoryView(Model model, HttpSession session, HttpServletResponse response,
+			@RequestParam(defaultValue = "1") int pageIndex) throws IOException {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
@@ -188,7 +186,8 @@ public class MasterController {
 	}
 
 	@RequestMapping(value = "ownerList.do", method = RequestMethod.GET)
-	public String ownerListView(Model model, HttpSession session, HttpServletResponse response, @RequestParam(defaultValue = "1") int pageIndex) throws IOException {
+	public String ownerListView(Model model, HttpSession session, HttpServletResponse response,
+			@RequestParam(defaultValue = "1") int pageIndex) throws IOException {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
@@ -205,30 +204,24 @@ public class MasterController {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
-		StockVO vo = new StockVO();
-		vo.setShopSeq(2l);
-		Iterator<CategoryVO> categoryList = categoryService.selectList(null).iterator();
-		List<ItemListVO> totalItemList = new ArrayList<ItemListVO>();
-		while (categoryList.hasNext()) {
-			CategoryVO category = categoryList.next();
-			long categorySeq = category.getCategorySeq();
-			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(2l, categorySeq);
-			if (itemInfoList.size() > 0)
-				totalItemList.add(new ItemListVO(category, itemService.selectCntByCategory(category), itemInfoList));
-		}
+		ItemInfoVO itemInfo = new ItemInfoVO();
+		itemInfo.setShopSeq(2);
+		List<ItemInfoVO> totalItemList = itemInfoService.selectList(itemInfo);
 		model.addAttribute("totalItemList", totalItemList);
 		return PATH + "totalItem";
 	}
-	
+
 	@RequestMapping(value = "itemMovement.do", method = RequestMethod.GET)
-	public String itemMovementView(Model model, HttpServletRequest request, HttpSession session, HttpServletResponse response, @RequestParam(defaultValue = "1") int pageIndex) throws IOException {
+	public String itemMovementView(Model model, HttpServletRequest request, HttpSession session,
+			HttpServletResponse response, @RequestParam(defaultValue = "1") int pageIndex) throws IOException {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
 		String shopCount = request.getParameter("shopCount");
 		String categorySeq = request.getParameter("categorySeq");
 		String itemSeq = request.getParameter("itemSeq");
-		ItemMovementVO itemMovement = new ItemMovementVO(shopCount == null ? 1 : Long.parseLong(shopCount), Long.parseLong(categorySeq),  Long.parseLong(itemSeq));
+		ItemMovementVO itemMovement = new ItemMovementVO(shopCount == null ? 1 : Long.parseLong(shopCount),
+				Long.parseLong(categorySeq), Long.parseLong(itemSeq));
 		itemMovement.setStart((pageIndex - 1) * 20);
 		List<ItemMovementVO> itemMovementList = itemMovementService.selectView(itemMovement);
 		model.addAttribute("itemMovementList", itemMovementList);
