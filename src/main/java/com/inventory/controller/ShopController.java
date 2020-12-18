@@ -105,6 +105,7 @@ public class ShopController {
 		itemInfo.setStart((pageIndex - 1) * 20);
 		itemInfo.setShopSeq(shop.getShopSeq());
 		model.addAttribute("itemInfoList", itemInfoService.selectList(itemInfo));
+		model.addAttribute("itemCount", itemInfoService.selectCount(itemInfo));
 		return PATH + "shopStock";
 	}
 	
