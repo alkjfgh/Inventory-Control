@@ -42,7 +42,7 @@ public class ItemMovementDAO {
 	}
 
 	public int selectCnt() {
-		return sessionTemplate.selectOne("itemMovementMapper.selectOne");
+		return sessionTemplate.selectOne("itemMovementMapper.selectCnt");
 	}
 
 }

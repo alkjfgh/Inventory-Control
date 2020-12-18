@@ -105,38 +105,6 @@ public class ShopController {
 		return PATH + "check";
 	}
 
-	private List<ItemListVO> createCategoryList(UserVO user, ShopVO shop, int state) {
-		long shopSeq = shop.getShopSeq();
-		Iterator<CategoryVO> categoryIt = categoryService.selectList(null).iterator();
-		List<ItemListVO> categoryList = new ArrayList<ItemListVO>();
-		long shopCount = shop.getShopCount();
-		if (state == 1 && shopCount == 7) {
-			shop.setShopSeq(0l);
-			shopService.update(shop);
-		}
-		while (categoryIt.hasNext()) {
-			CategoryVO category = categoryIt.next();
-			long categorySeq = category.getCategorySeq();
-			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(shopSeq, categorySeq);
-			for (ItemInfoVO itemInfo : itemInfoList) {
-				long total = itemInfo.getTotal();
-				if (state == 1 && shopCount == 7) {
-					double sold = itemInfo.getSold();
-					double targetSold = total * shopCount;
-					double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
-					long autoSup = (long) Math.floor(total * percent) + 1;
-					itemInfo.setAutoSup(autoSup);
-				} else {
-					itemInfo.setAutoSup(total);
-				}
-			}
-			if (itemInfoList.size() > 0)
-				categoryList.add(
-						new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
-		}
-		return categoryList;
-	}
-
 	@RequestMapping(value = "check.do", method = RequestMethod.POST)
 	public String check(HttpSession session, HttpServletRequest request) {
 		@SuppressWarnings("unchecked")
@@ -372,6 +340,37 @@ public class ShopController {
 		vo.setShopSeq(user.getShopSeq());
 		shopService.insert(vo);
 		return "redirect:" + PATH + "ShopInfo.do";
+	}
+
+	private List<ItemListVO> createCategoryList(UserVO user, ShopVO shop, int state) {
+		long shopSeq = shop.getShopSeq();
+		Iterator<CategoryVO> categoryIt = categoryService.selectList(null).iterator();
+		List<ItemListVO> categoryList = new ArrayList<ItemListVO>();
+		long shopCount = shop.getShopCount();
+		if (state == 1 && shopCount == 7) {
+			shop.setShopSeq(0l);
+			shopService.update(shop);
+		}
+		while (categoryIt.hasNext()) {
+			CategoryVO category = categoryIt.next();
+			long categorySeq = category.getCategorySeq();
+			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(shopSeq, categorySeq);
+			for (ItemInfoVO itemInfo : itemInfoList) {
+				long total = itemInfo.getTotal();
+				if (state == 1 && shopCount == 7) {
+					double sold = itemInfo.getSold();
+					double targetSold = total * shopCount;
+					double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
+					long autoSup = (long) Math.floor(total * percent) + 1;
+					itemInfo.setAutoSup(autoSup);
+				} else {
+					itemInfo.setAutoSup(total);
+				}
+			}
+			if (itemInfoList.size() > 0)
+				categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
+		}
+		return categoryList;
 	}
 
 	public void alert(String msg, HttpServletResponse response) throws IOException {

@@ -190,6 +190,7 @@
 					<!-- 마지막 삭제 버튼 -->
 					<input class="delete_button" type="submit" value="카테고리 삭제" /><br />
 				</form>
+				<span class="indexPage"></span>
 			</div>
 		</div>
 	</section>
@@ -210,5 +211,12 @@
     $('button').click(function () {
         $("input[name=cnt]").attr("value", cnt);
         $('.insertCategory').append('카테고리 이름 <input type="text" name="categoryName_' + cnt++ + '" /><br />') });
+    
+    var pageBtn = Math.ceil( ${categoryCount} / 20);
+	for(var i = 1 ; i<=pageBtn ; i++){
+		$('.indexPage').append("<a href="
+			+"updateCategory.do?pageIndex="+i+""
+			+">"+i+"</a>");
+	}
 </script>
 </html>

@@ -71,7 +71,7 @@
 		</choose>
 	</select>
 	<select id="selectCnt" resultType="int">
-		SELECT COUNT(*) FROM itemMovement WHERE shop_count =
+		SELECT COUNT(*) FROM itemMovementView WHERE shop_count =
 		#{shopCount,jdbcType=DECIMAL} AND category_seq =
 		#{categorySeq,jdbcType=DECIMAL} AND item_seq =
 		#{itemSeq,jdbcType=DECIMAL}
