@@ -32,6 +32,10 @@
 	th, td{
 		padding: 5px;
 	}
+	a{font-weight: bold;}
+    a:link { color: rgb(0, 0, 0); text-decoration: none;}
+    a:visited { color: black; text-decoration: none;}
+    a:hover { color: rgb(255, 145, 0); text-decoration: none;}
 </style>
 </head>
 <body>
