@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
-import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemMovementVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
@@ -64,7 +63,7 @@ public class ShopController {
 
 	@Autowired
 	private SoldLogService soldLogService;
-	
+
 	@Autowired
 	private ItemMovementService itemMovementService;
 
@@ -86,8 +85,9 @@ public class ShopController {
 		ShopVO shop = new ShopVO();
 		shop.setShopSeq(user.getShopSeq());
 		shop = shopService.select(shop);
-
-		session.setAttribute("categoryList", createCategoryList(user, shop, 0));
+		ItemInfoVO itemInfo = new ItemInfoVO();
+		itemInfo.setShopSeq(shop.getShopSeq());
+		model.addAttribute("itemInfoList", itemInfoService.selectList(itemInfo));
 		session.setAttribute("shop", shop);
 		return PATH + "shopInfo";
 	}
@@ -97,62 +97,71 @@ public class ShopController {
 		String url = userCheck(session, response);
 		if (url != null)
 			return url;
-		UserVO user = (UserVO) session.getAttribute("user");
-		ShopVO shop = new ShopVO();
-		shop.setShopSeq(user.getShopSeq());
-		shop = shopService.select(shop);
-		session.setAttribute("categoryList", createCategoryList(user, shop, 1));
+		ShopVO shop = (ShopVO) session.getAttribute("shop");
+		ItemInfoVO itemInfo = new ItemInfoVO();
+		itemInfo.setShopSeq(shop.getShopSeq());
+		List<ItemInfoVO> itemInfoList = itemInfoService.selectList(itemInfo);
+		long shopCount = shop.getShopCount();
+		if (shopCount == 7) {
+			shop.setShopCount(1);
+			shopService.update(shop);
+		}
+		for (ItemInfoVO vo : itemInfoList) {
+			long total = vo.getTotal();
+			if (shopCount == 7) {
+				double sold = vo.getSold();
+				double targetSold = total * shopCount;
+				double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
+				total = (long) Math.floor(total * percent) + 1;
+			}
+			vo.setAutoSup(total);
+		}
+		session.setAttribute("itemInfoList", itemInfoList);
 		return PATH + "check";
 	}
 
 	@RequestMapping(value = "check.do", method = RequestMethod.POST)
 	public String check(HttpSession session, HttpServletRequest request) {
 		@SuppressWarnings("unchecked")
-		Iterator<ItemListVO> itemListIt = ((List<ItemListVO>) session.getAttribute("categoryList")).iterator();
-		while (itemListIt.hasNext()) {
-			Iterator<ItemInfoVO> itemInfoIt = itemListIt.next().getItemList().iterator();
-			while (itemInfoIt.hasNext()) {
-				ItemInfoVO itemInfo = itemInfoIt.next();
-				long shopSeq = itemInfo.getShopSeq();
-				long categorySeq = itemInfo.getCategorySeq();
-				long itemSeq = itemInfo.getItemSeq();
-				long remain = itemInfo.getRemain();
-				long sold = itemInfo.getSold();
-				long autoSup = Long.parseLong(request.getParameter(categorySeq + "_" + itemSeq + "_autoSup"));
-				if (autoSup < remain)
-					autoSup = remain;
-				StockVO shopStock = new StockVO();
-				shopStock.setShopSeq(shopSeq);
-				shopStock.setCategorySeq(categorySeq);
-				shopStock.setItemSeq(itemSeq);
-				shopStock.setTotal(autoSup);
-				shopStock.setRemain(autoSup);
-				shopStock.setSold(sold);
-
-				StockVO masterStock = new StockVO();
-				masterStock.setShopSeq(2);
-				masterStock.setCategorySeq(categorySeq);
-				masterStock.setItemSeq(itemSeq);
-				masterStock = stockService.select(masterStock);
-				masterStock.setRemain(masterStock.getRemain() - (autoSup - remain));
-				masterStock.setSold((autoSup - remain));
-
-				ShopVO shop = new ShopVO();
-				shop.setShopSeq(shopSeq);
-				shop = shopService.select(shop);
-				SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), (autoSup - remain), shopSeq, categorySeq, itemSeq);
-				
-				ItemMovementVO itemMovement = new ItemMovementVO(shop.getShopCount(), categorySeq, itemSeq);
-				itemMovement.setShopSeq(shopSeq);
-				itemMovement.setStockMove((autoSup - remain));
-				
-				stockService.update(shopStock);
-				stockService.update(masterStock);
-				soldLogService.insert(soldLog);
-				itemMovementService.insert(itemMovement);
-			}
-		}
+		Iterator<ItemInfoVO> itemInfoIt = ((List<ItemInfoVO>) session.getAttribute("itemInfoList")).iterator();
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
+		long shopSeq = shop.getShopSeq();
+		while (itemInfoIt.hasNext()) {
+			ItemInfoVO itemInfo = itemInfoIt.next();
+			long categorySeq = itemInfo.getCategorySeq();
+			long itemSeq = itemInfo.getItemSeq();
+			long remain = itemInfo.getRemain();
+			long sold = itemInfo.getSold();
+			long autoSup = Long.parseLong(request.getParameter(categorySeq + "_" + itemSeq + "_autoSup"));
+			if (autoSup < remain)
+				autoSup = remain;
+			StockVO shopStock = new StockVO();
+			shopStock.setShopSeq(shopSeq);
+			shopStock.setCategorySeq(categorySeq);
+			shopStock.setItemSeq(itemSeq);
+			shopStock.setTotal(autoSup);
+			shopStock.setRemain(autoSup);
+			shopStock.setSold(sold);
+
+			StockVO masterStock = new StockVO();
+			masterStock.setShopSeq(2);
+			masterStock.setCategorySeq(categorySeq);
+			masterStock.setItemSeq(itemSeq);
+			masterStock = stockService.select(masterStock);
+			masterStock.setRemain(masterStock.getRemain() - (autoSup - remain));
+			masterStock.setSold((autoSup - remain));
+			
+			SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), (autoSup - remain), shopSeq, categorySeq, itemSeq);
+
+			ItemMovementVO itemMovement = new ItemMovementVO(shop.getShopCount(), categorySeq, itemSeq);
+			itemMovement.setShopSeq(shopSeq);
+			itemMovement.setStockMove((autoSup - remain));
+
+			stockService.update(shopStock);
+			stockService.update(masterStock);
+			soldLogService.insert(soldLog);
+			itemMovementService.insert(itemMovement);
+		}
 		shop.setShopCount(shop.getShopCount() + 1);
 		shopService.update(shop);
 		return "redirect:" + PATH + "ShopInfo.do";
@@ -261,7 +270,7 @@ public class ShopController {
 			soldLog.setCategorySeq(category.getCategorySeq());
 			List<SoldLogVO> soldLogList = soldLogService.selectPeriod(soldLog);
 			if (soldLogList.size() > 0) {
-				for(SoldLogVO log : soldLogList) {
+				for (SoldLogVO log : soldLogList) {
 					ItemVO item = new ItemVO();
 					item.setCategorySeq(log.getCategorySeq());
 					item.setItemSeq(log.getItemSeq());
@@ -282,7 +291,7 @@ public class ShopController {
 		SoldLogVO soldLog = new SoldLogVO(0, 0, shop.getShopSeq(), 0, 0);
 		String searchCondition = request.getParameter("searchCondition");
 		System.out.println(searchCondition);
-		if(searchCondition != null) {
+		if (searchCondition != null) {
 			long searchKeyWord = Long.parseLong(request.getParameter("searchKeyword"));
 			if (searchCondition.equals("day")) {
 				soldLog.setStart(searchKeyWord);
@@ -309,7 +318,7 @@ public class ShopController {
 			soldLog.setCategorySeq(category.getCategorySeq());
 			List<SoldLogVO> soldLogList = soldLogService.selectPeriod(soldLog);
 			if (soldLogList.size() > 0) {
-				for(SoldLogVO log : soldLogList) {
+				for (SoldLogVO log : soldLogList) {
 					ItemVO item = new ItemVO();
 					item.setCategorySeq(log.getCategorySeq());
 					item.setItemSeq(log.getItemSeq());
@@ -340,37 +349,6 @@ public class ShopController {
 		vo.setShopSeq(user.getShopSeq());
 		shopService.insert(vo);
 		return "redirect:" + PATH + "ShopInfo.do";
-	}
-
-	private List<ItemListVO> createCategoryList(UserVO user, ShopVO shop, int state) {
-		long shopSeq = shop.getShopSeq();
-		Iterator<CategoryVO> categoryIt = categoryService.selectList(null).iterator();
-		List<ItemListVO> categoryList = new ArrayList<ItemListVO>();
-		long shopCount = shop.getShopCount();
-		if (state == 1 && shopCount == 7) {
-			shop.setShopSeq(0l);
-			shopService.update(shop);
-		}
-		while (categoryIt.hasNext()) {
-			CategoryVO category = categoryIt.next();
-			long categorySeq = category.getCategorySeq();
-			List<ItemInfoVO> itemInfoList = itemInfoService.selectList(shopSeq, categorySeq);
-			for (ItemInfoVO itemInfo : itemInfoList) {
-				long total = itemInfo.getTotal();
-				if (state == 1 && shopCount == 7) {
-					double sold = itemInfo.getSold();
-					double targetSold = total * shopCount;
-					double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
-					long autoSup = (long) Math.floor(total * percent) + 1;
-					itemInfo.setAutoSup(autoSup);
-				} else {
-					itemInfo.setAutoSup(total);
-				}
-			}
-			if (itemInfoList.size() > 0)
-				categoryList.add(new ItemListVO(category, itemInfoService.categoryCount(shopSeq, categorySeq), itemInfoList));
-		}
-		return categoryList;
 	}
 
 	public void alert(String msg, HttpServletResponse response) throws IOException {

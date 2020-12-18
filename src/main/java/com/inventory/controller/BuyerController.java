@@ -1,4 +1,4 @@
-	package com.inventory.controller;
+package com.inventory.controller;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.inventory.app.domain.BuyCheckVO;
 import com.inventory.app.domain.BuyItemVO;
-import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
-import com.inventory.app.domain.ItemListVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopInfoVO;
 import com.inventory.app.domain.ShopVO;
@@ -52,7 +50,7 @@ public class BuyerController {
 
 	@Autowired
 	private ItemInfoService itemInfoService;
-	
+
 	@Autowired
 	private SoldLogService soldLogService;
 
@@ -61,31 +59,12 @@ public class BuyerController {
 		List<ShopInfoVO> shopInfoList = new ArrayList<ShopInfoVO>();
 		Iterator<ShopVO> shopIt = shopService.selectList(null).iterator();
 		while (shopIt.hasNext()) {
-			List<ItemListVO> categoryList = new ArrayList<ItemListVO>();
 			ShopVO shop = shopIt.next();
 			if (shop.getShopSeq() == 2)
 				shop = shopIt.next();
-			long shopSeq = shop.getShopSeq();
-			int categorySize = categoryService.selectCnt();
-			for (int i = 1; i <= categorySize; i++) {
-				List<ItemInfoVO> itemInfoList = itemInfoService.selectList(shopSeq, i);
-				int itemInfoListSize = itemInfoList.size();
-				for (int j = 0; j < itemInfoListSize; j++) {
-					if (itemInfoList.get(j).getRemain() == 0) {
-						itemInfoList.remove(j);
-						j--;
-						itemInfoListSize--;
-					}
-				}
-				if (itemInfoListSize > 0) {
-					CategoryVO category = new CategoryVO();
-					category.setCategorySeq(i);
-					category = categoryService.select(category);
-					categoryList.add(new ItemListVO(category, itemInfoListSize, itemInfoList));
-				}
-			}
-			if (categoryList.size() > 0)
-				shopInfoList.add(new ShopInfoVO(shop, categoryList.size(), categoryList));
+			ItemInfoVO itemInfo = new ItemInfoVO();
+			itemInfo.setShopSeq(shop.getShopSeq());
+			shopInfoList.add(new ShopInfoVO(shop, itemInfoService.selectBuyList(itemInfo)));
 		}
 
 		model.addAttribute("shopInfoList", shopInfoList);

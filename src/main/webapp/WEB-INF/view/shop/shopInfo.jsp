@@ -112,26 +112,15 @@
 				<th>상품 현재개수</th>
 				<th>상품 주문할갯수</th>
 			</tr>
-			<c:forEach items="${categoryList }" var="categoryItem">
+			<c:forEach items="${itemInfoList }" var="itemInfo">
 			<tr>
-				<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
-				<c:forEach items="${categoryItem.itemList }" var="item">
-				<td>${item.itemSeq }</td>
-				<td>${item.itemName }</td>
-				<td>${item.itemPrice }</td>
-				<td>${item.total }</td>
-				<td>${item.remain }</td>
-				<td>${item.necessity }</td>
-			</tr>
-			<tr>
-			</c:forEach>
-				<td hidden=""></td>
-				<td hidden=""></td>
-				<td hidden=""></td>
-				<td hidden=""></td>
-				<td hidden=""></td>
-				<td hidden=""></td>
-				<td hidden=""></td>
+				<td>${itemInfo.categoryName  }</td>
+				<td>${itemInfo.itemSeq }</td>
+				<td>${itemInfo.itemName }</td>
+				<td>${itemInfo.itemPrice }</td>
+				<td>${itemInfo.total }</td>
+				<td>${itemInfo.remain }</td>
+				<td>${itemInfo.necessity }</td>
 			</tr>
 			</c:forEach>
         </table>

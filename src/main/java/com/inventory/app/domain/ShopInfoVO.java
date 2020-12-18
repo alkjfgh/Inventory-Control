@@ -4,39 +4,37 @@ import java.util.List;
 
 public class ShopInfoVO {
 	private ShopVO shop;
-	private int size;
-	private List<ItemListVO> categoryList;
+	private List<ItemInfoVO> itemInfoList;
+
 	public ShopInfoVO() {
 		super();
 	}
-	public ShopInfoVO(ShopVO shop, int size, List<ItemListVO> categoryList) {
+
+	public ShopInfoVO(ShopVO shop, List<ItemInfoVO> itemInfoList) {
 		super();
 		this.shop = shop;
-		this.size = size;
-		this.categoryList = categoryList;
+		this.itemInfoList = itemInfoList;
 	}
+
 	public ShopVO getShop() {
 		return shop;
 	}
+
 	public void setShop(ShopVO shop) {
 		this.shop = shop;
 	}
-	public int getSize() {
-		return size;
+
+	public List<ItemInfoVO> getItemInfoList() {
+		return itemInfoList;
 	}
-	public void setSize(int size) {
-		this.size = size;
-	}
-	public List<ItemListVO> getCategoryList() {
-		return categoryList;
-	}
-	public void setCategoryList(List<ItemListVO> categoryList) {
-		this.categoryList = categoryList;
+
+	public void setItemInfoList(List<ItemInfoVO> itemInfoList) {
+		this.itemInfoList = itemInfoList;
 	}
 
 	@Override
 	public String toString() {
-		return "ShopInfoVO [shop=" + shop + ", size=" + size + ", categoryList=" + categoryList + "]";
+		return "ShopInfoVO [shop=" + shop + ", itemInfoList=" + itemInfoList + "]";
 	}
 
 }

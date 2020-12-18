@@ -103,9 +103,9 @@ public class ItemInfoVO {
 
 	@Override
 	public String toString() {
-		return "ItemInfoVO [shopSeq=" + shopSeq + ", categorySeq=" + categorySeq + ", categoryName=" + categoryName
-				+ ", itemSeq=" + itemSeq + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", total=" + total
-				+ ", remain=" + remain + ", necessity=" + necessity + ", sold=" + sold + ", autoSup=" + autoSup + "]";
+		return "ItemInfoVO [categorySeq=" + categorySeq + ", categoryName=" + categoryName + ", itemSeq=" + itemSeq
+				+ ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", total=" + total + ", remain=" + remain
+				+ ", necessity=" + necessity + ", sold=" + sold + ", autoSup=" + autoSup + "]";
 	}
 
 }

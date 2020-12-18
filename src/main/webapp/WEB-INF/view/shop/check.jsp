@@ -118,27 +118,16 @@
                     <th>상품 남은갯수</th>
                     <th>자동적으로 변화할 총 개수</th>
                 </tr>
-                <c:forEach items="${categoryList }" var="categoryItem">
-                    <tr>
-                    <td rowspan="${categoryItem.size }">${categoryItem.category.categoryName }</td>
-                    <c:forEach items="${categoryItem.itemList }" var="item">
-                        <td>${item.itemSeq }</td>
-                        <td>${item.itemName }</td>
-                        <td>${item.itemPrice }</td>
-                        <td>${item.total }</td>
-                        <td>${item.remain }</td>
-                        <td><input class="requ" type="number" name="${categoryItem.category.categorySeq }_${item.itemSeq }_autoSup" value="${item.autoSup }"/></td>
-                    </tr>
-                    <tr>
-                    </c:forEach>
-                        <td hidden=""></td>
-                        <td hidden=""></td>
-                        <td hidden=""></td>
-                        <td hidden=""></td>
-                        <td hidden=""></td>
-                        <td hidden=""></td>
-                        <td hidden=""></td>
-                    </tr>
+                <c:forEach items="${itemInfoList }" var="itemInfo">
+                <tr>
+                	<td>${itemInfo.categoryName }</td>
+                    <td>${itemInfo.itemSeq }</td>
+                    <td>${itemInfo.itemName }</td>
+                    <td>${itemInfo.itemPrice }</td>
+                    <td>${itemInfo.total }</td>
+                    <td>${itemInfo.remain }</td>
+                    <td><input class="requ" type="number" name="${itemInfo.categorySeq }_${itemInfo.itemSeq }_autoSup" value="${itemInfo.autoSup }"/></td>
+                </tr>
                 </c:forEach>
             </table>
           </div>

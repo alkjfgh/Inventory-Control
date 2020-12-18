@@ -1,8 +1,6 @@
 package com.inventory.app.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +13,16 @@ public class ItemInfoDAO {
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;
 
-	public List<ItemInfoVO> selectList(long shopSeq, long categorySeq) {
-		Map<String, Long> map = new HashMap<String, Long>();
-		map.put("shopSeq", shopSeq);
-		map.put("categorySeq", categorySeq);
-		return sessionTemplate.selectList("itemInfoMapper.selectList", map);
+	public List<ItemInfoVO> selectList(ItemInfoVO vo) {
+		return sessionTemplate.selectList("itemInfoMapper.selectList", vo);
 	}
 
-	public int categoryCount(long shopSeq, long categorySeq) {
-		Map<String, Long> map = new HashMap<String, Long>();
-		map.put("shopSeq", shopSeq);
-		map.put("categorySeq", categorySeq);
-		return sessionTemplate.selectOne("itemInfoMapper.categoryCount", map);
+	public int selectCount(ItemInfoVO vo) {
+		return sessionTemplate.selectOne("itemInfoMapper.selectCount", vo);
+	}
+
+	public List<ItemInfoVO> selectBuyList(ItemInfoVO vo) {
+		return sessionTemplate.selectList("itemInfoMapper.selectBuyList", vo);
 	}
 
 }

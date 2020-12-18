@@ -15,13 +15,18 @@ public class ItemInfoServiceImpl implements ItemInfoService {
 	private ItemInfoDAO dao;
 
 	@Override
-	public List<ItemInfoVO> selectList(long shopSeq, long categorySeq) {
-		return dao.selectList(shopSeq, categorySeq);
+	public List<ItemInfoVO> selectList(ItemInfoVO vo) {
+		return dao.selectList(vo);
 	}
 
 	@Override
-	public int categoryCount(long shopSeq, long categorySeq) {
-		return dao.categoryCount(shopSeq, categorySeq);
+	public int selectCount(ItemInfoVO vo) {
+		return dao.selectCount(vo);
+	}
+
+	@Override
+	public List<ItemInfoVO> selectBuyList(ItemInfoVO vo) {
+		return dao.selectBuyList(vo);
 	}
 
 }
