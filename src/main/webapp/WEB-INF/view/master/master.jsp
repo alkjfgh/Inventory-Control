@@ -109,7 +109,7 @@
     <h1>관리자 페이지</h1>
     <ul class="menu">
         <li>
-            <a href="shopList.do">매장리스트
+            <a href="shopList.do?pageIndex=1">매장리스트
                 <span></span>
                 <span></span>
                 <span></span>
@@ -117,7 +117,7 @@
             </a>
         </li>
         <li>
-            <a href="ownerList.do">회원목록(점주)
+            <a href="ownerList.do?pageIndex=1">회원목록(점주)
                 <span></span>
                 <span></span>
                 <span></span>

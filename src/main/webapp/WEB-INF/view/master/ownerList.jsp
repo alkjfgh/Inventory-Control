@@ -147,6 +147,7 @@
 			</tbody>
 		</table>
 	</section>
+	<span class="indexPage"></span>
 	<div id="back">
 		<a href="master.do">뒤로가기</a>
 	</div>
@@ -154,5 +155,12 @@
 		<a href="#top" class="gotopbtn">▲</a>
 	</div>
 </body>
-
+	<script>
+	var pageBtn = Math.ceil(${userCount} / 20);
+	for(var i = 1 ; i<=pageBtn ; i++){
+		$('.indexPage').append("<a href="
+			+"ownerList.do?pageIndex="+i+""
+			+">"+i+"</a>");
+	}
+	</script>
 </html>

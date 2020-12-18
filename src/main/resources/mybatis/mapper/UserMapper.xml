@@ -62,8 +62,16 @@
 		select * from usertb where user_id =
 		#{userId,jdbcType=VARCHAR}
 	</select>
-	<select id="selectList" resultMap="BaseResultMap">
-		select * from usertb order by shop_seq
+	<select id="selectList" parameterType="user" resultMap="BaseResultMap">
+		select * from usertb
+		<choose>
+			<when test="start != null">
+				 WHERE user_name != 'master' order by shop_seq LIMIT #{start,jdbcType=DECIMAL}, 20 
+			</when>
+			<otherwise>
+				order by shop_seq
+			</otherwise>
+		</choose>
 	</select>
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM usertb

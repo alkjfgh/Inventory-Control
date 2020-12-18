@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
@@ -65,13 +66,16 @@ public class MasterController {
 	}
 
 	@RequestMapping(value = "updateCategory.do", method = RequestMethod.GET)
-	public String updateCategoryView(Model model, HttpSession session, HttpServletResponse response)
+	public String updateCategoryView(Model model, HttpSession session, HttpServletResponse response, @RequestParam(defaultValue = "1") int pageIndex)
 			throws IOException {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
-		List<CategoryVO> categoryList = categoryService.selectList(null);
+		CategoryVO category = new CategoryVO();
+		category.setStart((pageIndex - 1) * 20);
+		List<CategoryVO> categoryList = categoryService.selectList(category);
 		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryCount", categoryService.selectCnt());
 		return PATH + "updateCategory";
 	}
 
@@ -99,7 +103,6 @@ public class MasterController {
 
 	@RequestMapping(value = "deleteCategory.do", method = RequestMethod.POST)
 	public String deleteCategory(HttpServletRequest request) {
-//		나중에 매장에 아이템이 남아았는지 하나하나 검사해야함
 		int category_size = categoryService.selectCnt();
 		for (int i = 1; i <= category_size; i++) {
 			int categorySeq = 0;
@@ -172,23 +175,28 @@ public class MasterController {
 
 	@RequestMapping(value = "shopList.do", method = RequestMethod.GET)
 	public String shopListView(HttpServletRequest request, Model model, HttpSession session,
-			HttpServletResponse response) throws IOException {
+			HttpServletResponse response, @RequestParam(defaultValue = "1") int pageIndex) throws IOException {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
-		List<ShopVO> shopList = shopService.selectList(null);
-		shopList.remove(1);
+		ShopVO shop = new ShopVO();
+		shop.setStart((pageIndex - 1) * 20);
+		List<ShopVO> shopList = shopService.selectList(shop);
 		model.addAttribute("shopList", shopList);
+		model.addAttribute("shopCount", shopService.selectCnt() - 1);
 		return PATH + "shopList";
 	}
 
 	@RequestMapping(value = "ownerList.do", method = RequestMethod.GET)
-	public String ownerListView(Model model, HttpSession session, HttpServletResponse response) throws IOException {
+	public String ownerListView(Model model, HttpSession session, HttpServletResponse response, @RequestParam(defaultValue = "1") int pageIndex) throws IOException {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
-		List<UserVO> userList = userService.selectList(null);
+		UserVO user = new UserVO();
+		user.setStart((pageIndex - 1) * 20);
+		List<UserVO> userList = userService.selectList(user);
 		model.addAttribute("userList", userList);
+		model.addAttribute("userCount", userService.selectCnt() - 1);
 		return PATH + "ownerList";
 	}
 
@@ -213,21 +221,19 @@ public class MasterController {
 	}
 	
 	@RequestMapping(value = "itemMovement.do", method = RequestMethod.GET)
-	public String itemMovementView(Model model, HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
+	public String itemMovementView(Model model, HttpServletRequest request, HttpSession session, HttpServletResponse response, @RequestParam(defaultValue = "1") int pageIndex) throws IOException {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
 		String shopCount = request.getParameter("shopCount");
 		String categorySeq = request.getParameter("categorySeq");
 		String itemSeq = request.getParameter("itemSeq");
-		System.out.println(shopCount);
-		System.out.println(categorySeq);
-		System.out.println(itemSeq);
 		ItemMovementVO itemMovement = new ItemMovementVO(shopCount == null ? 1 : Long.parseLong(shopCount), Long.parseLong(categorySeq),  Long.parseLong(itemSeq));
+		itemMovement.setStart((pageIndex - 1) * 20);
 		List<ItemMovementVO> itemMovementList = itemMovementService.selectView(itemMovement);
-		System.out.println(itemMovementList);
 		model.addAttribute("itemMovementList", itemMovementList);
 		model.addAttribute("itemMovement", itemMovement);
+		model.addAttribute("itemCount", itemMovementService.selectCnt());
 		return PATH + "itemMovement";
 	}
 

@@ -9,6 +9,7 @@ public class ItemMovementVO {
 	private long itemSeq;
 	private String itemName;
 	private long stockMove;
+	private int start;
 
 	public ItemMovementVO() {
 		super();
@@ -83,6 +84,14 @@ public class ItemMovementVO {
 
 	public void setStockMove(long stockMove) {
 		this.stockMove = stockMove;
+	}
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
 	}
 
 	@Override

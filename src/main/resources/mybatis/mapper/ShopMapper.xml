@@ -41,12 +41,19 @@
 		where shop_seq =
 		#{shopSeq,jdbcType=DECIMAL}
 	</update>
-	<select id="select" parameterType="shop"
-		resultMap="BaseResultMap">
+	<select id="select" parameterType="shop" resultMap="BaseResultMap">
 		SELECT * FROM shop WHERE shop_seq = #{shopSeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
-		select * from shop order by shop_seq
+		select * from shop
+		<choose>
+			<when test="start != null">
+				 WHERE shop_name != 'master' order by shop_seq LIMIT #{start,jdbcType=DECIMAL}, 20 
+			</when>
+			<otherwise>
+				order by shop_seq
+			</otherwise>
+		</choose>
 	</select>
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM shop

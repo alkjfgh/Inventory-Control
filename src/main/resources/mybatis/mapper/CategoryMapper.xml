@@ -22,6 +22,11 @@
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
 	SELECT * FROM categorytb ORDER BY category_seq
+		<choose>
+			<when test="start != null">
+				LIMIT #{start,jdbcType=DECIMAL}, 20 
+			</when>
+		</choose>
 	</select>
 	<select id="selectCnt" resultType="int">
 	SELECT COUNT(*) FROM categorytb

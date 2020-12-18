@@ -9,6 +9,7 @@ public class ShopVO {
 	private String shopName;
 	private Date shopRegdate;
 	private long shopCount;
+	private int start;
 
 	public ShopVO() {
 		super();
@@ -68,6 +69,14 @@ public class ShopVO {
 
 	public void setShopCount(long shopCount) {
 		this.shopCount = shopCount;
+	}
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
 	}
 
 	@Override

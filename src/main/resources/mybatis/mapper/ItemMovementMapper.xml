@@ -64,9 +64,16 @@
 		#{shopCount,jdbcType=DECIMAL} AND category_seq =
 		#{categorySeq,jdbcType=DECIMAL} AND item_seq =
 		#{itemSeq,jdbcType=DECIMAL}
+		<choose>
+			<when test="start != null">
+				order by shop_seq LIMIT #{start,jdbcType=DECIMAL}, 20 
+			</when>
+		</choose>
 	</select>
 	<select id="selectCnt" resultType="int">
-		SELECT COUNT(*) FROM
-		itemMovement
+		SELECT COUNT(*) FROM itemMovement WHERE shop_count =
+		#{shopCount,jdbcType=DECIMAL} AND category_seq =
+		#{categorySeq,jdbcType=DECIMAL} AND item_seq =
+		#{itemSeq,jdbcType=DECIMAL}
 	</select>
 </mapper>

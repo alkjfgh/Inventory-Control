@@ -3,6 +3,7 @@ package com.inventory.app.domain;
 public class CategoryVO {
 	private long categorySeq;
 	private String categoryName;
+	private int start;
 
 	public CategoryVO() {
 		super();
@@ -56,6 +57,15 @@ public class CategoryVO {
 		if (categorySeq != other.categorySeq)
 			return false;
 		return true;
+	}
+
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
 	}
 
 	@Override

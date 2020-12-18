@@ -102,7 +102,7 @@
             </c:if>
         </ul>
 		<br>
-		<table>
+		<table id="stockList">
 			<tr>
 				<th>카테고리</th>
 				<th>상품 번호</th>
@@ -139,6 +139,65 @@
 	<script>
 		var li_length =  $("li").length;
 		$("ul").css({width : li_length * 140 + "px"});
+		
+		/* var categoryList = new Array();
+		<c:forEach items="${categoryList }" var="categoryItem">
+			var itemList = new Array();
+			<c:forEach items="${categoryItem.itemList }" var="item">
+				itemList.push({
+					itemSeq:${item.itemSeq },
+					itemName:"${item.itemName }",
+					itemPrice:${item.itemPrice },
+					total:${item.total },
+					remain:${item.remain },
+					necessity:${item.necessity },
+				});
+			</c:forEach>
+			categoryList.push({
+				category : { 
+					categorySeq : ${categoryItem.category.categorySeq},
+					categoryName : "${categoryItem.category.categoryName}"
+				},
+				itemList : itemList,
+				size : ${categoryItem.size }
+			});
+		</c:forEach>
+
+		var size = 0;
+		var cnt = 1;
+		for(var i=0;i<categoryList.length;i++){
+			var itemList = categoryList[i].itemList;
+			var k = 0;
+			var html = '';
+			if(size == 6){
+				size = 0;
+			}
+			if(size + ${categoryItem.size } > 6){
+				k = (size + ${categoryItem.size }) - 6;
+			} else{
+				k = ${categoryItem.size };
+				html += '<td rowspan="' + k + '">${categoryItem.category.categoryName  }</td>';
+			}
+			size += k;
+			for(var j=0;j<itemList.length;j++){
+				html += '<td>${item.itemSeq }</td>'
+					+ '<td>${item.itemName }</td>'
+					+ '<td>${item.itemPrice }</td>'
+					+ '<td>${item.total }</td>'
+					+ '<td>${item.remain }</td>'
+					+ '<td>${item.necessity }</td>'
+					+ '</tr><tr>';
+			}
+			html += '<td hidden="">'
+				+ '<td hidden="">'
+				+ '<td hidden="">'
+				+ '<td hidden="">'
+				+ '<td hidden="">'
+				+ '<td hidden="">'
+				+ '<td hidden="">'
+				+ '</tr>';
+			$(".stockList_" + cnt).append(html);
+		} */
 	</script>
 </body>
 </html>

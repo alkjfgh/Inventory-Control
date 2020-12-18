@@ -12,6 +12,7 @@ public class UserVO {
 	private String userName;
 	private String userAddress;
 	private Short userLevel;
+	private int start;
 
 	public UserVO() {
 		super();
@@ -100,6 +101,14 @@ public class UserVO {
 
 	public void setUserLevel(Short userLevel) {
 		this.userLevel = userLevel;
+	}
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
 	}
 
 	@Override

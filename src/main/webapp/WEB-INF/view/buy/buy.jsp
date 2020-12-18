@@ -72,6 +72,71 @@
 	    #totalPrice {
 	        font-size: 24px;
 	    }
+		/*  */
+		input[type=number] {
+		width: 100%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		box-sizing: border-box;
+		border: 3px solid #ccc;
+		-webkit-transition: 0.5s;
+		transition: 0.5s;
+		outline: none;
+		}
+
+		input[type=number]:focus {
+		border: 3px solid #555;
+		}
+		.shop_select{
+			padding: 10px;
+			font-family: 'Do Hyeon', sans-serif;
+			font-size: 14px;
+		}
+		.category_select{
+			padding: 10px;
+			font-family: 'Do Hyeon', sans-serif;
+			font-size: 14px;
+		}
+		.item_select{
+			padding: 10px;
+			font-family: 'Do Hyeon', sans-serif;
+			font-size: 14px;
+		}
+		.btnDel{
+			font-family: 'Do Hyeon', sans-serif;
+			font-size: 16px;
+			background-color: rgb(0, 201, 157);
+			border: none;
+			color: white;
+			padding: 15px 32px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			margin: 4px 2px;
+			cursor: pointer;	
+			border-radius: 18px;
+		}
+		.buy_btn{
+			font-family: 'Do Hyeon', sans-serif;
+			font-size: 16px;
+			border-radius: 18px;
+			background-color: rgb(70, 110, 243);
+			border: none;
+			color: white;
+			padding: 15px 32px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			margin: 4px 2px;
+			cursor: pointer;
+		}
+		#back{
+			margin: 30px;
+			font-size: 18px;
+		}
+		a:link { color: rgb(0, 0, 0); text-decoration: none;}
+		a:visited { color: black; text-decoration: none;}
+		a:hover { color: rgb(255, 166, 0); text-decoration: underline;}
 	</style>
 </head>
 <body>
@@ -92,7 +157,7 @@
 		</table>
 		<div class="last_buy">
 			<span id="totalPrice">총 금액 : </span>
-			<input type="submit" value="구매">
+			<input type="submit" class="buy_btn" value="구매">
 		</div>
 	</form>
 	<div id="back">
@@ -104,10 +169,10 @@
 	var cntCheck = 0;
 	$('button').click(function() {
 		cntCheck++;
-		var html = '<tr><td><select id="shop_' + cnt + '" name="shop_' + cnt +'" onchange="shopChange(this)" required="required"><option value="">상점을 선택해주세요</option><c:forEach items="${shopInfoList }" var="shopInfo"><option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option></c:forEach></select></td><td><select id="category_' + cnt + '" name="category_' + cnt + '" onchange="categoryChange(this)" required="required"><option value="">카테고리를 선택해주세요</option></select></td><td><select id="item_'+ cnt +'" name="item_'+ cnt + '" required="required" onchange="itemChange(this)"><option value="">아이템을 선택해주세요</option></select></td><td><input type="number" name="total_'+ cnt + '" required="required" min = "1" max = "0" onblur="numberCheck(this);"/>'
+		var html = '<tr><td><select class="shop_select" id="shop_' + cnt + '" name="shop_' + cnt +'" onchange="shopChange(this)" required="required"><option value="">상점을 선택해주세요</option><c:forEach items="${shopInfoList }" var="shopInfo"><option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option></c:forEach></select></td><td><select  class="category_select" id="category_' + cnt + '" name="category_' + cnt + '" onchange="categoryChange(this)" required="required"><option value="">카테고리를 선택해주세요</option></select></td><td><select class="item_select" id="item_'+ cnt +'" name="item_'+ cnt + '" required="required" onchange="itemChange(this)"><option value="">아이템을 선택해주세요</option></select></td><td><input type="number" name="total_'+ cnt + '" required="required" min = "1" max = "0" onblur="numberCheck(this);"/>'
 		html += '<td><span name = "alertMoney_'+ cnt + '" ></span>';
 		html += '<span name = "price_'+ cnt++ + '"  hidden="hidden" ></span></td>';
-		html += '<td><button type="button" class="btnDel">Del</button>';
+		html += '<td><button type="button" class="btnDel">취소</button>';
 		html += '</td></tr>';
 		$("input[name=cnt]").attr("value", cnt);
 		$("input[name=cntCheck]").attr("value", cntCheck);

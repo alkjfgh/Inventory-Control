@@ -6,8 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>물품 추가 및 삭제</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap%27');
 	

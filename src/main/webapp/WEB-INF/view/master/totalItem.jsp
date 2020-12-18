@@ -56,7 +56,7 @@
 			<td>${item.itemName }</td>
 			<td>${item.itemPrice }</td>
 			<td>${item.remain }</td>
-			<td><a href="itemMovement.do?categorySeq=${totalItem.category.categorySeq }&itemSeq=${item.itemSeq }">재고 이동 상세 보기</a></td>
+			<td><a href="itemMovement.do?categorySeq=${totalItem.category.categorySeq }&itemSeq=${item.itemSeq }&pageIndex=1">재고 이동 상세 보기</a></td>
 		</tr>
 		<tr class="list_${totalItem.category.categorySeq }">
 			</c:forEach>

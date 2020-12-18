@@ -82,6 +82,25 @@
 	.show-more{
 		text-align: center;
 	}
+	.extended-price{
+		margin: auto;
+		padding: 10px;
+        width: 500px;
+
+	}
+	#back{
+        margin: 0 auto;
+        padding: 10px;
+        width: 500px;
+        font-size: 18px;
+        text-align: right;
+    }
+	
+    a{font-weight: bold;}
+    a:link { color: rgb(0, 0, 0); text-decoration: none;}
+    a:visited { color: black; text-decoration: none;}
+    a:hover { color: rgb(255, 145, 0); text-decoration: underline;}
+
 </style>
 </head>
 <body>
