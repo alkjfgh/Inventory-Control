@@ -192,11 +192,13 @@ public class ShopController {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		int categorySize = categoryService.selectCnt();
 		List<CategoryItemVO> categoryItemList = new ArrayList<CategoryItemVO>();
+		List<CategoryItemVO> categoryItemList2 = new ArrayList<CategoryItemVO>();
 		for (int i = 1; i <= categorySize; i++) {
 			CategoryVO category = new CategoryVO();
 			category.setCategorySeq(i);
 			category = categoryService.select(category);
 			List<ItemVO> itemList = itemService.selectListByCategory(category);
+			List<ItemVO> itemList2 = itemService.selectListByCategory(category);
 			int size = itemList.size();
 			for (int j = 0; j < size; j++) {
 				StockVO stock = new StockVO();
@@ -210,12 +212,34 @@ public class ShopController {
 					j--;
 				}
 			}
+			size = itemList2.size();
+			System.out.println("===================");
+			System.out.println(itemList2);
+			for (int j = 0; j < size; j++) {
+				StockVO stock = new StockVO();
+				stock.setShopSeq(shop.getShopSeq());
+				stock.setCategorySeq(category.getCategorySeq());
+				stock.setItemSeq(itemList2.get(j).getItemSeq());
+				stock = stockService.select(stock);
+				if (stock == null) {
+					itemList2.remove(j);
+					size--;
+					j--;
+				}
+			}
+			System.out.println(itemList2);
+			System.out.println("===================");
 			size = itemList.size();
 			if (size != 0) {
 				categoryItemList.add(new CategoryItemVO(category, size, itemList));
 			}
+			size = itemList2.size();
+			if (size != 0) {
+				categoryItemList2.add(new CategoryItemVO(category, size, itemList2));
+			}
 		}
 		session.setAttribute("categoryItemList", categoryItemList);
+		session.setAttribute("categoryItemList2", categoryItemList2);
 		return PATH + "updateItem";
 	}
 
@@ -307,7 +331,6 @@ public class ShopController {
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		SoldLogVO soldLog = new SoldLogVO(0, 0, shop.getShopSeq(), 0, 0);
 		String searchCondition = request.getParameter("searchCondition");
-		System.out.println(searchCondition);
 		if (searchCondition != null) {
 			long searchKeyWord = Long.parseLong(request.getParameter("searchKeyword"));
 			if (searchCondition.equals("day")) {

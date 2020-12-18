@@ -179,7 +179,7 @@
 						<th>상품 가격</th>
 						<th>체크</th>
 					</tr>
-					<c:forEach items="${categoryList }" var="categoryItem">
+					<c:forEach items="${categoryItemList2 }" var="categoryItem">
 					<tr>
 						<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName }</td>
 					<c:forEach items="${categoryItem.itemList }" var="item">
