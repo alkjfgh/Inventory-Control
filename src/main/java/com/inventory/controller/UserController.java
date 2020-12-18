@@ -88,16 +88,25 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "SignUp.do", method = RequestMethod.POST)
-	public String signUp(UserVO vo, HttpSession session) {
-		vo.setUserLevel((short) 1);
-		try {
-			service.insert(vo);
-			session.setAttribute("user", vo);
-			return "redirect:/shop/insertShop.do";
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return "redirect:home.do";
-		}
+	public String signUp(HttpServletRequest request,HttpSession session) {
+		UserVO user = new UserVO();
+		user.setUserId(request.getParameter("userId"));
+		user.setUserEmail(request.getParameter("userEmail"));
+		user.setUserPhone(request.getParameter("userPhone"));
+		user.setUserPassword(request.getParameter("userPassword"));
+		user.setUserName(request.getParameter("userName"));
+		user.setUserName(request.getParameter("userAddress"));
+		user.setUserLevel((short) 1);
+		System.out.println(user);
+		return "redirect:../home.do";
+//		try {
+//			service.insert(user);
+//			session.setAttribute("user", user);
+//			return "redirect:/shop/insertShop.do";
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//			return "redirect:../home.do";
+//		}
 	}
 
 	@RequestMapping(value = "SignOut.do", method = RequestMethod.GET)

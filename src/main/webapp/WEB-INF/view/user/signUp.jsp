@@ -86,7 +86,7 @@
 <body>
 	<h1>회원 가입</h1>
     <form action="SignUp.do" name=fr method="post" onsubmit="return fun2()" > 
-        <div class="singup"></div>
+        <div class="singup">
 		<table>
 			<tr>
 				<th colspan="2">Sign Up</th>

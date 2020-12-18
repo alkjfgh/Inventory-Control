@@ -182,7 +182,7 @@
 			</div>
 		</form>
 		<div class="caption">
-			<a href="">뒤로가기</a>
+			<a href="../home.do">뒤로가기</a>
 		</div>
 	</section>
 	<script>
