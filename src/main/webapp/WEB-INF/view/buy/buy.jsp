@@ -187,34 +187,53 @@
 		var categoryName = new Array();
 		var categorySeq = new Array();
 		var itemInfoList = new Array();
-		<c:forEach items="${shopInfo.categoryList }" var="categoryItem">
-			categoryName.push("${categoryItem.category.categoryName}");
-			categorySeq.push("${categoryItem.category.categorySeq}");
-			var itemName = new Array();
-			var itemSeq = new Array();
-			var itemRemain = new Array();
-			var itemPrice = new Array();
-			<c:forEach items="${categoryItem.itemList }" var="item">
-				itemName.push("${item.itemName}");
-				itemSeq.push("${item.itemSeq}");
-				itemRemain.push("${item.remain}");
-				itemPrice.push("${item.itemPrice}");
-			</c:forEach>
-			itemInfoList.push({
-				categorySeq : ${categoryItem.category.categorySeq},
-				nameList: itemName,
-				seqList: itemSeq,
-				remainList: itemRemain,
-				priceList : itemPrice
-			});
+		
+		var cn = "";
+		var cs = 0;
+		var itemName = new Array();
+		var itemSeq = new Array();
+		var itemRemain = new Array();
+		var itemPrice = new Array();
+		<c:forEach items="${shopInfo.itemInfoList }" var="itemInfo">
+			if(cs != ${itemInfo.categorySeq}){
+				cn = "${itemInfo.categoryName}";
+				cs = ${itemInfo.categorySeq};	
+				categoryName.push(cn);
+				categorySeq.push(cs);
+				if(cs != 1){
+					itemInfoList.push({
+						categorySeq : cs-1,
+						nameList: itemName,
+						seqList: itemSeq,
+						remainList: itemRemain,
+						priceList : itemPrice
+					});
+					itemName = new Array();
+					itemSeq = new Array();
+					itemRemain = new Array();
+					itemPrice = new Array();
+				}
+			}
+			itemName.push("${itemInfo.itemName}");
+			itemSeq.push("${itemInfo.itemSeq}");
+			itemRemain.push("${itemInfo.remain}");
+			itemPrice.push("${itemInfo.itemPrice}");
 		</c:forEach>
-		shopList.push({ 
+		itemInfoList.push({
+			categorySeq : cs,
+			nameList: itemName,
+			seqList: itemSeq,
+			remainList: itemRemain,
+			priceList : itemPrice
+		});
+		shopList.push({
 			shopSeq : ${shopInfo.shop.shopSeq},
 			cateName: categoryName,
 			cateSeq: categorySeq,
 			itemList : itemInfoList
 		});
 	</c:forEach>
+	console.log(shopList);
 	function shopChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
 		var id = btn.id.split('_')[1];

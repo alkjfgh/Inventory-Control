@@ -63,7 +63,8 @@ public class BuyerController {
 				shop = shopIt.next();
 			ItemInfoVO itemInfo = new ItemInfoVO();
 			itemInfo.setShopSeq(shop.getShopSeq());
-			shopInfoList.add(new ShopInfoVO(shop, itemInfoService.selectBuyList(itemInfo)));
+			if(itemInfoService.selectBuyCount(itemInfo) > 0)
+				shopInfoList.add(new ShopInfoVO(shop, itemInfoService.selectBuyList(itemInfo)));
 		}
 
 		model.addAttribute("shopInfoList", shopInfoList);

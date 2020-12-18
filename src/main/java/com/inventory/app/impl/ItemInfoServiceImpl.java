@@ -29,4 +29,9 @@ public class ItemInfoServiceImpl implements ItemInfoService {
 		return dao.selectBuyList(vo);
 	}
 
+	@Override
+	public int selectBuyCount(ItemInfoVO vo) {
+		return dao.selectBuyCount(vo);
+	}
+
 }

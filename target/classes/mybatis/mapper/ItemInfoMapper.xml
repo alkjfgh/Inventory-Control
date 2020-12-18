@@ -13,12 +13,15 @@
 		<result column="sold" jdbcType="DECIMAL" property="sold"/>
 	</resultMap>
 	<select id="selectList" resultMap="BaseResultMap">
-	SELECT * FROM itemInfoView WHERE shop_seq = #{shopSeq}
+	SELECT * FROM itemInfoView WHERE shop_seq = #{shopSeq} order by category_seq, item_seq
 	</select>
 	<select id="selectCount" resultType="int">
 	SELECT COUNT(*) FROM itemInfoView WHERE shop_seq = #{shopSeq}
 	</select>
 	<select id="selectBuyList" resultMap="BaseResultMap">
-	SELECT * FROM itemInfoView WHERE shop_seq = #{shopSeq} AND remain != 0
+	SELECT * FROM itemInfoView WHERE shop_seq = #{shopSeq} AND remain != 0 order by category_seq, item_seq
+	</select>
+	<select id="selectBuyCount" resultType="int">
+	SELECT COUNT(*) FROM itemInfoView WHERE shop_seq = #{shopSeq} AND remain != 0
 	</select>
 </mapper>
