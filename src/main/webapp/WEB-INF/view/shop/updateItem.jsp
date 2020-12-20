@@ -179,22 +179,13 @@
 						<th>상품 가격</th>
 						<th>체크</th>
 					</tr>
-					<c:forEach items="${categoryItemList2 }" var="categoryItem">
+					<c:forEach items="${itemInfoList }" var="itemInfo">
 					<tr>
-						<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName }</td>
-					<c:forEach items="${categoryItem.itemList }" var="item">
-						<td>${item.itemSeq }</td>
-						<td>${item.itemName }</td>
-						<td>${item.itemPrice }</td>
-						<td><input type="checkbox" name="${categoryItem.category.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
-					</tr>
-					</c:forEach>
-					<tr>
-						<td hidden=""></td>
-						<td hidden=""></td>
-						<td hidden=""></td>
-						<td hidden=""></td>
-						<td hidden=""></td>
+						<td >${itemInfo.categoryName }</td>
+						<td>${itemInfo.itemSeq }</td>
+						<td>${itemInfo.itemName }</td>
+						<td>${itemInfo.itemPrice }</td>
+						<td><input type="checkbox" name="${itemInfo.categorySeq  }_itemSeq_${itemInfo.itemSeq }" /></td>
 					</tr>
 					</c:forEach>
 				</table>
