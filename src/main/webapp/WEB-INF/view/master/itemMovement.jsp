@@ -56,10 +56,9 @@
 		</c:forEach>
 	</table>
 	<span class="indexPage"></span>
-	
 </body>
 <script>
-	var pageBtn = Math.ceil( ${itemCount} / 20); 
+	var pageBtn = Math.ceil( ${itemCount} / 20);
 	var shopCount = ${itemMovement.shopCount};
 	var categorySeq = ${itemMovement.categorySeq};
 	var itemSeq = ${itemMovement.itemSeq};

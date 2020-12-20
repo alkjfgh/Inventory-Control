@@ -3,6 +3,8 @@
 <mapper namespace="itemMapper">
 	<resultMap id="BaseResultMap" type="item">
 		<id column="item_seq" jdbcType="DECIMAL" property="itemSeq" />
+		<result column="category_name" jdbcType="VARCHAR"
+			property="categoryName" />
 		<result column="category_seq" jdbcType="DECIMAL"
 			property="categorySeq" />
 		<result column="item_name" jdbcType="VARCHAR"
@@ -65,12 +67,21 @@
 	</update>
 	<select id="select" parameterType="item"
 		resultMap="BaseResultMap">
-		select * from item where item_seq =
-		#{itemSeq,jdbcType=DECIMAL} and category_seq =
-		#{categorySeq,jdbcType=DECIMAL}
+		select * from item where
+		<choose>
+			<when test="itemSeq != null">
+			item_seq = #{itemSeq,jdbcType=DECIMAL} 
+			</when>
+			<otherwise>
+			item_name = #{itemName,jdbcType=VARCHAR} AND
+			item_price = #{itemPrice,jdbcType=DECIMAL} AND
+			item_maker = #{itemMaker,jdbcType=VARCHAR}
+			</otherwise>
+		</choose>
+		AND category_seq = #{categorySeq,jdbcType=DECIMAL}
 	</select>
 	<select id="selectList" resultMap="BaseResultMap">
-		select * from item
+		select * from itemView
 	</select>
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM item

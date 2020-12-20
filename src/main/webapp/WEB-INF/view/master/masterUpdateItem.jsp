@@ -281,42 +281,35 @@
 		<form action="masterDeleteItem.do" method="post">
 			<table>
 				<thead>
-				<tr>
-					<th>카테고리</th>
-					<th>물품 번호</th>
-					<th>물품 이름</th>
-					<th>물품 가격</th>
-					<th>물품 제조사</th>
-					<th>체크</th>
-				</tr>
+					<tr>
+						<th>카테고리</th>
+						<th>물품 번호</th>
+						<th>물품 이름</th>
+						<th>물품 가격</th>
+						<th>물품 제조사</th>
+						<th>체크</th>
+					</tr>
 				</thead>
 				<tbody>
-				<c:forEach items="${categoryItemList }" var="categoryItem">
-				<tr>
-					<td rowspan="${categoryItem.size }">${categoryItem.category.categoryName  }</td>
-					<c:forEach items="${categoryItem.itemList }" var="item">
-					<td>${item.itemSeq }</td>
-					<td>${item.itemName }</td>
-					<td>${item.itemPrice }</td>
-					<th>${item.itemMaker }</th>
-					<td><input type="checkbox" name="${categoryItem.category.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
-				</tr>
+					<c:forEach items="${itemList }" var="item">
+					<tr>
+						<td>${item.categoryName  }</td>
+						<td>${item.itemSeq }</td>
+						<td>${item.itemName }</td>
+						<td>${item.itemPrice }</td>
+						<td>${item.itemMaker }</td>
+						<td><input type="checkbox" name="${item.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
+					</tr>
 					</c:forEach>
-				<tr>
-					<td hidden=""></td>
-					<td hidden=""></td>
-					<td hidden=""></td> 
-					<td hidden=""></td>
-					<td hidden=""></td>
-				</tr>
-				</tbody>
-			</c:forEach>			
+				</tbody>		
 			</table>
+			<div class="btn">
+				<span class="addbtn"></span>
+			</div>
 			<div class="delete-submit-con"> 
 				<input class="delete-submit" type="submit" value="삭제하기" />
 			</div>
 		</form>
-		
 	</div>
 	<div id="back">
 		<a href="master.do" >뒤로가기</a>
@@ -342,13 +335,25 @@
 			+'</select></td>'
 			+'<td><input type="text" name="itemName_'+ cnt +'" placeholder="물품이름"/></td>'
 			+'<td><input type="number" name="itemPrice_'+ cnt +'" placeholder="물품가격"/></td>'
-			+'<td><input type="text" name="itemMaker_'+ cnt++ +'" placeholder="제조사"/></td>';
+			+'<td><input type="text" name="itemMaker_'+ cnt +'" placeholder="제조사"/></td>';
 		html += '<button type="button" class="btnDel">Del</button></tr>';
 		$('#iteminsert').append(html);
-		$("input[name=cnt]").attr("value", cnt);
+		$("input[name=cnt]").attr("value", cnt++);
 		$(".btnDel").on("click", function() {
 		    $(this).parent().remove();
 		 });
+	});
+	var pageIndex = 1;
+	var lineCnt = 12;
+	$('tbody tr').hide();
+	$('tbody tr').slice(pageIndex * lineCnt - lineCnt + 1, pageIndex * lineCnt + 1).show(0);
+	var pageBtn = Math.ceil($('tbody tr').length / lineCnt);
+	for(var i = 1 ; i<=pageBtn ; i++){
+		$('.addbtn').append('<button type="button" class="page" id="' + i + '">'+i+'</button>');
+	}
+	$("button.page").click(function(){
+		pageIndex = parseInt($(this).attr("id"));
+		$('tbody tr').slice(pageIndex * lineCnt - lineCnt + 1, pageIndex * lineCnt + 1).show(0); 
 	});
 </script>
 </html>

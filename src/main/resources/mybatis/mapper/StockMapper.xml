@@ -14,7 +14,7 @@
 		DELETE FROM stock WHERE
 		shop_seq = #{shopSeq,jdbcType=DECIMAL} and
 		category_seq = #{categorySeq,jdbcType=DECIMAL} and
-		ITEM_SEQ = #{itemSeq,jdbcType=DECIMAL}
+		item_seq = #{itemSeq,jdbcType=DECIMAL}
 	</delete>
 	<delete id="deleteShop" parameterType="stock">
 		DELETE FROM stock WHERE

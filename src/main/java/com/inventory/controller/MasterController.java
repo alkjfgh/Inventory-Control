@@ -1,8 +1,6 @@
 package com.inventory.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,18 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
 import com.inventory.app.domain.ItemMovementVO;
 import com.inventory.app.domain.ItemVO;
 import com.inventory.app.domain.ShopVO;
+import com.inventory.app.domain.StockVO;
 import com.inventory.app.domain.UserVO;
 import com.inventory.app.service.CategoryService;
 import com.inventory.app.service.ItemInfoService;
 import com.inventory.app.service.ItemMovementService;
 import com.inventory.app.service.ItemService;
 import com.inventory.app.service.ShopService;
+import com.inventory.app.service.StockService;
 import com.inventory.app.service.UserService;
 
 @Controller
@@ -53,10 +52,12 @@ public class MasterController {
 
 	@Autowired
 	private ItemMovementService itemMovementService;
+	
+	@Autowired
+	private StockService stockService;
 
 	@RequestMapping(value = "master.do", method = RequestMethod.GET)
 	public String masterView(HttpSession session, HttpServletResponse response) throws IOException {
-		System.out.println("masterView");
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
@@ -83,18 +84,9 @@ public class MasterController {
 		if (url != null)
 			return url;
 		List<CategoryVO> categoryList = categoryService.selectList(null);
+		List<ItemVO> itemList = itemService.selectList(null);
 		model.addAttribute("categoryList", categoryList);
-		Iterator<CategoryVO> categoryIt = categoryList.iterator();
-		List<CategoryItemVO> categoryItemList = new ArrayList<CategoryItemVO>();
-		while (categoryIt.hasNext()) {
-			CategoryVO category = categoryIt.next();
-			List<ItemVO> itemInfoList = itemService.selectListByCategory(category);
-			int cnt = itemService.selectCntByCategory(category);
-			if (cnt > 0)
-				categoryItemList.add(new CategoryItemVO(category, cnt, itemInfoList));
-		}
-		model.addAttribute("categoryItemList", categoryItemList);
-
+		model.addAttribute("itemList", itemList);
 		return PATH + "masterUpdateItem";
 	}
 
@@ -136,6 +128,8 @@ public class MasterController {
 		int cnt = Integer.parseInt(request.getParameter("cnt"));
 		for (int i = 1; i <= cnt; i++) {
 			ItemVO item = new ItemVO();
+			if(request.getParameter("categorySeq_" + i) == null)
+				continue;
 			long categorySeq = Long.parseLong(request.getParameter("categorySeq_" + i));
 			String itemName = request.getParameter("itemName_" + i);
 			long itemPrice = Long.parseLong(request.getParameter("itemPrice_" + i));
@@ -145,6 +139,13 @@ public class MasterController {
 			item.setItemPrice(itemPrice);
 			item.setItemMaker(itemMaker);
 			itemService.insert(item);
+			item = itemService.select(item);
+			StockVO stock = new StockVO();
+			stock.setShopSeq(1);
+			stock.setCategorySeq(categorySeq);
+			stock.setItemSeq(item.getItemSeq());
+			stock.setRemain(10000);
+			stockService.insert(stock);
 		}
 		return "redirect:" + PATH + "master.do";
 	}
@@ -164,6 +165,11 @@ public class MasterController {
 					item.setCategorySeq((long) i);
 					item.setItemSeq((long) j);
 					itemService.delete(item);
+					StockVO stock = new StockVO();
+					stock.setShopSeq(1);
+					stock.setCategorySeq(i);
+					stock.setItemSeq(j);
+					stockService.delete(stock);
 				}
 			}
 		}
@@ -203,7 +209,7 @@ public class MasterController {
 		if (url != null)
 			return url;
 		ItemInfoVO itemInfo = new ItemInfoVO();
-		itemInfo.setShopSeq(2);
+		itemInfo.setShopSeq(1);
 		itemInfo.setStart((pageIndex - 1) * 20);
 		model.addAttribute("totalItemList", itemInfoService.selectList(itemInfo));
 		model.addAttribute("totalItemCount", itemInfoService.selectCount(itemInfo));

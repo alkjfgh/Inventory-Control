@@ -34,7 +34,6 @@ public class UserController {
 				if (cookie.getName().equals("user")) {
 					user = new UserVO();
 					user.setUserId(cookie.getValue());
-					System.out.println(user);
 					user = service.select(user);
 					session.setAttribute("user", user);
 					break;
@@ -89,7 +88,6 @@ public class UserController {
 	@RequestMapping(value = "SignUp.do", method = RequestMethod.POST)
 	public String signUp(UserVO user, HttpServletRequest request,HttpSession session) {
 		user.setUserLevel((short) 1);
-		System.out.println(user);
 		try {
 			service.insert(user);
 			session.setAttribute("user", user);
@@ -107,6 +105,14 @@ public class UserController {
 		cookie.setMaxAge(0);
 		cookie.setPath("/");
 		response.addCookie(cookie);
+		return "redirect:/home.do";
+	}
+	
+	@RequestMapping(value = "cancelInsertUser.do", method = RequestMethod.GET)
+	public String cancelInsertUser(HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		service.delete(user);
+		session.invalidate();
 		return "redirect:/home.do";
 	}
 

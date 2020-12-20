@@ -8,13 +8,11 @@
 	<title>매장 개설</title>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-
 		* {
 			margin: 0;
 			padding: 0;
 			box-sizing: border-box;
 		}
-
 		body {
 			font-family: 'Do Hyeon', sans-serif;
 			display: flex;
@@ -24,29 +22,24 @@
 			background-color: hsl(60, 100%, 98%);
 			background-size: cover;
 		}
-
 		.login-form {
 			position: relative;
 			z-index: 2;
 		}
-
 		.login-form h1 {
 			font-size: 42px;
 			color: black;
 			text-align: center;
 			margin-bottom: 60px;
 		}
-
 		.int-area {
 			width: 400px;
 			position: relative;
 			margin-top: 20px;
 		}
-
 		.int-area:first-child {
 			margin-top: 0;
 		}
-
 		.int-area input {
 			width: 100%;
 			padding: 20px 10px 10px;
@@ -65,7 +58,6 @@
 			font-size: 18px;
 			color: black;
 			transition: all .5s ease;
-
 		}
 		
 		.int-area input:focus+label,
@@ -74,11 +66,9 @@
 			font-size: 13px;
 			color: #166cea;
 		}
-
 		.btn-area {
 			margin-top: 30px;
 		}
-
 		.btn-area input {
 			width: 100%;
 			height: 50px;
@@ -90,12 +80,10 @@
 			cursor: pointer;
 			;
 		}
-
 		.caption {
 			margin-top: 20px;
 			text-align: center;
 		}
-
 		.caption a {
 			font-size: 18px;
 			color: black;
@@ -125,7 +113,7 @@
 			</div>
 		</form>
 		<div class="caption">
-			<a href="">Back</a>
+			<a href="../user/cancelInsertUser.do">취소</a>
 		</div>
 	</section>
 </body>
@@ -133,12 +121,12 @@
 	var phoneRegExp = /^\d{2,3}-\d{3,4}-\d{4}$/;
 	function fun1(){
 		if(obj.shopPhone.value == '') {
-		    alert('핸드폰번호를 입력해주세요');
+		    alert('전화번호를 입력해주세요');
 		    obj.userPhone.focus();
 		    return false;
 		}
 		if(phoneRegExp.test(obj.shopPhone.value)==false) {
-		    alert('핸드폰번호를 알맞게 입력해주세요.');
+		    alert('전화번호를 알맞게 입력해주세요.');
 		    obj.userPhone.focus();
 		    return false;
 		}

@@ -72,8 +72,9 @@ public class UserServiceImpl implements UserService {
 	private UserVO findUser(UserVO vo) {
 		List<UserVO> userList = dao.selectList(null);
 		for (UserVO user : userList) {
-			if (security.recorvery(user.getUserId()).equals(vo.getUserId()))
+			if (security.recorvery(user.getUserId()).equals(vo.getUserId())) {
 				return user;
+			}
 		}
 		return null;
 	}

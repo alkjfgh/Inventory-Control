@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class ItemVO {
+	private String categoryName;
 	private Long itemSeq;
 	private Long categorySeq;
 	private String itemName;
@@ -98,6 +99,14 @@ public class ItemVO {
 		this.itemImg = itemImg;
 	}
 
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -170,9 +179,9 @@ public class ItemVO {
 
 	@Override
 	public String toString() {
-		return "ItemVO [itemSeq=" + itemSeq + ", categorySeq=" + categorySeq + ", itemName=" + itemName + ", itemPrice="
-				+ itemPrice + ", itemRegdate=" + itemRegdate + ", itemFwdate=" + itemFwdate + ", itemDesc=" + itemDesc
-				+ ", itemMaker=" + itemMaker + ", itemImg=" + Arrays.toString(itemImg) + "]";
+		return "ItemVO [categoryName=" + categoryName + ", itemSeq=" + itemSeq + ", categorySeq=" + categorySeq
+				+ ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", itemRegdate=" + itemRegdate
+				+ ", itemMaker=" + itemMaker + "]";
 	}
 
 }
