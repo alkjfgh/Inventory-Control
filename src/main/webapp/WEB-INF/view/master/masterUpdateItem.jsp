@@ -265,12 +265,17 @@
 		<form action="masterInsertItem.do" method="post" class="masterInsertItem">
 			<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
 			<table id="iteminsert">
-				<tr>
-					<th>카테고리</th>
-					<th>물품명</th>
-					<th>물품가격</th>
-					<th>제조사</th>
-				</tr>
+				<thead>
+					<tr>
+						<th>카테고리</th>
+						<th>물품명</th>
+						<th>물품가격</th>
+						<th>제조사</th>
+						<th>삭제</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
 			</table>
 			<div class="insert-submit-con">
 				<input class="insert-submit" type="submit" value="적용" /><br />
@@ -316,44 +321,46 @@
 	</div>
 </body>
 <script>
-	$('.add').click(function() {
-		$('.itemAdd').show();
-		$('.itemDelete').hide();
-	});
-	$('.del').click(function() {
-		$('.itemAdd').hide();
-		$('.itemDelete').show();
-	});
-	var cnt = 1;
-	$('.insertadd').click(function(){
-		var html = '<tr class="itemInput"><td>'
-			+'<select class="form-control" id="category" name="categorySeq_'+ cnt +'" required="required">'
-			+'<option>카테고리를 선택해주세요</option>'
-			+'<c:forEach items="${categoryList}" var="categoryItem">'
-			+'<option value="${categoryItem.categorySeq }">${categoryItem.categoryName  }</option>'
-			+'</c:forEach>'
-			+'</select></td>'
-			+'<td><input type="text" name="itemName_'+ cnt +'" placeholder="물품이름"/></td>'
-			+'<td><input type="number" name="itemPrice_'+ cnt +'" placeholder="물품가격"/></td>'
-			+'<td><input type="text" name="itemMaker_'+ cnt +'" placeholder="제조사"/></td>';
-		html += '<button type="button" class="btnDel">Del</button></tr>';
-		$('#iteminsert').append(html);
-		$("input[name=cnt]").attr("value", cnt++);
-		$(".btnDel").on("click", function() {
-		    $(this).parent().remove();
-		 });
-	});
 	var pageIndex = 1;
 	var lineCnt = 12;
 	$('tbody tr').hide();
-	$('tbody tr').slice(pageIndex * lineCnt - lineCnt + 1, pageIndex * lineCnt + 1).show(0);
+	$('tbody tr').slice(pageIndex * lineCnt - lineCnt, pageIndex * lineCnt).show(0);
 	var pageBtn = Math.ceil($('tbody tr').length / lineCnt);
 	for(var i = 1 ; i<=pageBtn ; i++){
 		$('.addbtn').append('<button type="button" class="page" id="' + i + '">'+i+'</button>');
 	}
-	$("button.page").click(function(){
-		pageIndex = parseInt($(this).attr("id"));
-		$('tbody tr').slice(pageIndex * lineCnt - lineCnt + 1, pageIndex * lineCnt + 1).show(0); 
+	$(document).ready(function() {
+		$("button.page").click(function() {
+			pageIndex = parseInt($(this).attr("id"));
+			$('tbody tr').slice(pageIndex * lineCnt - lineCnt, pageIndex * lineCnt).show(0); 
+		});
+		$('.add').click(function() {
+			$('.itemAdd').show();
+			$('.itemDelete').hide();
+		});
+		$('.del').click(function() {
+			$('.itemAdd').hide();
+			$('.itemDelete').show();
+		});
+		var cnt = 1;
+		$('.insertadd').click(function() {
+			var html = '<tr class="itemInput"><td>'
+				+'<select class="form-control" id="category" name="categorySeq_'+ cnt +'" required="required">'
+				+'<option>카테고리를 선택해주세요</option>'
+				+'<c:forEach items="${categoryList}" var="categoryItem">'
+				+'<option value="${categoryItem.categorySeq }">${categoryItem.categoryName  }</option>'
+				+'</c:forEach>'
+				+'</select></td>'
+				+'<td><input type="text" name="itemName_'+ cnt +'" placeholder="물품이름"/></td>'
+				+'<td><input type="number" name="itemPrice_'+ cnt +'" placeholder="물품가격"/></td>'
+				+'<td><input type="text" name="itemMaker_'+ cnt +'" placeholder="제조사"/></td>';
+			html += '<td><button type="button" class="btnDel">Del</button></td></tr>';
+			$('#iteminsert tbody').append(html);
+			$("input[name=cnt]").attr("value", cnt++);
+			$('tbody').on("click", ".btnDel", function() {
+			    $(this).parent().parent().remove();
+			});
+		});
 	});
 </script>
 </html>
