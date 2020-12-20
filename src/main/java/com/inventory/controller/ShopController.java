@@ -213,8 +213,6 @@ public class ShopController {
 				}
 			}
 			size = itemList2.size();
-			System.out.println("===================");
-			System.out.println(itemList2);
 			for (int j = 0; j < size; j++) {
 				StockVO stock = new StockVO();
 				stock.setShopSeq(shop.getShopSeq());
@@ -227,8 +225,6 @@ public class ShopController {
 					j--;
 				}
 			}
-			System.out.println(itemList2);
-			System.out.println("===================");
 			size = itemList.size();
 			if (size != 0) {
 				categoryItemList.add(new CategoryItemVO(category, size, itemList));
