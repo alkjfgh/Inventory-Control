@@ -12,4 +12,6 @@ public interface ItemInfoService {
 	public List<ItemInfoVO> selectBuyList(ItemInfoVO vo);
 
 	public int selectBuyCount(ItemInfoVO vo);
+
+	public List<ItemInfoVO> shopItemList(ItemInfoVO vo);
 }

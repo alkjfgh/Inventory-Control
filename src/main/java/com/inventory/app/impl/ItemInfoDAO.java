@@ -29,4 +29,8 @@ public class ItemInfoDAO {
 		return sessionTemplate.selectOne("itemInfoMapper.selectBuyCount", vo);
 	}
 
+	public List<ItemInfoVO> shopItemList(ItemInfoVO vo) {
+		return sessionTemplate.selectList("itemInfoMapper.shopItemList", vo);
+	}
+
 }

@@ -156,7 +156,6 @@
 	</div>
 	<div id="main">
 		<div class="add">
-			이곳은 추가하는곳
 			<button class="insertadd">아이템 목록 추가</button>
 			<form action="insertItem.do" method="post">
 				<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
@@ -169,7 +168,6 @@
 			</form>
 		</div>
 		<div class="delete">
-			이곳은 삭제하는 곳
 			<form action="deleteItem.do" method="post">
 				<table>
 					<tr>
@@ -179,13 +177,13 @@
 						<th>상품 가격</th>
 						<th>체크</th>
 					</tr>
-					<c:forEach items="${itemInfoList }" var="itemInfo">
+					<c:forEach items="${deleteList }" var="item">
 					<tr>
-						<td >${itemInfo.categoryName }</td>
-						<td>${itemInfo.itemSeq }</td>
-						<td>${itemInfo.itemName }</td>
-						<td>${itemInfo.itemPrice }</td>
-						<td><input type="checkbox" name="${itemInfo.categorySeq  }_itemSeq_${itemInfo.itemSeq }" /></td>
+						<td>${item.categoryName }</td>
+						<td>${item.itemSeq }</td>
+						<td>${item.itemName }</td>
+						<td>${item.itemPrice }</td>
+						<td><input type="checkbox" name="${item.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
 					</tr>
 					</c:forEach>
 				</table>
@@ -208,7 +206,7 @@
 	});
 	var cnt =  1;
 	$('.insertadd').click(function() {
-		var html = '<div><label for="'+ cnt +'">카테고리선택</label> <select class="form-control"id="'+ cnt +'" name="category_'+ cnt +'" onchange="categoryChange(this)"required="required"><option>카테고리를 선택해주세요</option><c:forEach items="${categoryItemList }" var="categoryItem"><option value="${categoryItem.category.categorySeq }">${categoryItem.category.categoryName  }</option></c:forEach></select> <label for="item_'+ cnt +'">상품</label> <select class="form-control"id="item_'+ cnt +'" name="item_'+ cnt + '" required="required"><option id = "item_'+ cnt +'">선택해주세요.</option></select> <input type="number" name="total_'+ cnt + '" required="required" />';
+		var html = '<div><label for="'+ cnt +'">카테고리선택</label> <select class="form-control"id="'+ cnt +'" name="category_'+ cnt +'" onchange="categoryChange(this)"required="required"><option>카테고리를 선택해주세요</option><c:forEach items="${categoryList }" var="category"><option value="${category.categorySeq }">${category.categoryName  }</option></c:forEach></select> <label for="item_'+ cnt +'">상품</label> <select class="form-control"id="item_'+ cnt +'" name="item_'+ cnt + '" required="required"><option id = "item_'+ cnt +'">선택해주세요.</option></select> <input type="number" name="total_'+ cnt + '" required="required" />';
 		html += '<button type="button" class="btnDel">Del</button> </br></div>';
 		$("input[name=cnt]").attr("value", cnt);
 		cnt++;
@@ -218,19 +216,32 @@
 		});
 	});
 	var arr = new Array();
-	<c:forEach items="${categoryItemList }" var="categoryItem">
-		var itemName = new Array();
-		var itemSeq = new Array();
-		<c:forEach items="${categoryItem.itemList }" var="item">
+	var cs = ${addList[0].categorySeq };
+	var itemName = new Array();
+	var itemSeq = new Array();
+	<c:forEach items="${addList }" var="item">
+		if(${item.categorySeq} != 0){
+			if(cs != ${item.categorySeq}){
+				arr.push({
+					categorySeq : cs,
+					nameList : itemName,
+					seqList : itemSeq
+				});
+				itemName = new Array();
+				itemSeq = new Array();
+				cs = ${item.categorySeq};
+			}
 			itemName.push("${item.itemName }");
 			itemSeq.push("${item.itemSeq }");
-		</c:forEach>
+		}
+	</c:forEach>
+	if(cs != 0){
 		arr.push({
-			categorySeq : ${categoryItem.category.categorySeq},
+			categorySeq : cs,
 			nameList : itemName,
 			seqList : itemSeq
 		});
-	</c:forEach>
+	}
 	function categoryChange(e) {
 		var d = window.event,
         btn = d.target || d.srcElement;

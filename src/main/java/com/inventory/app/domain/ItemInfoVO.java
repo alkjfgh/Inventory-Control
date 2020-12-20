@@ -111,6 +111,31 @@ public class ItemInfoVO {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (categorySeq ^ (categorySeq >>> 32));
+		result = prime * result + (int) (itemSeq ^ (itemSeq >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ItemInfoVO other = (ItemInfoVO) obj;
+		if (categorySeq != other.categorySeq)
+			return false;
+		if (itemSeq != other.itemSeq)
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "ItemInfoVO [categorySeq=" + categorySeq + ", categoryName=" + categoryName + ", itemSeq=" + itemSeq
 				+ ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", total=" + total + ", remain=" + remain

@@ -100,6 +100,33 @@
         border: 0;
         right : 5px;
     }
+    .btn{
+    	text-align: center;
+    	margin: 15px auto;
+    }
+    .addbtn button{
+		width: 50px;
+		height: 45px;
+		font-family: 'Roboto', sans-serif;
+		font-size: 18px;
+		text-transform: uppercase;
+		letter-spacing: 2.5px;
+		font-weight: 500;
+		color: #000;
+		background-color: #fff;
+		border: none;
+		border-radius: 45px;
+		box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s ease 0s;
+		cursor: pointer;
+		outline: none;
+    }
+	.addbtn button:hover{
+		background-color: #2EE59D;
+		box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+		color: #fff;
+		transform: translateY(-7px);
+	}
 </style>
 </head>
 <body>
@@ -107,61 +134,62 @@
 	<section>
         <div id="top"></div>
     </section>
-	<form action="check.do" method="post">
-        <div class="tab">
-            <table>
-	           	<thead>
-	                <tr>
-	                    <th>카테고리</th>
-	                    <th>상품 번호</th>
-	                    <th>상품 이름</th>
-	                    <th>상품 가격</th>
-	                    <th>상품 총개수</th>
-	                    <th>상품 남은갯수</th>
-	                    <th>자동적으로 변화할 총 개수</th>
-	                </tr>
-				</thead>
-				<tbody class="tbody">
-	                <c:forEach items="${itemInfoList }" var="itemInfo">
-	                <tr>
-	                	<td>${itemInfo.categoryName }</td>
-	                    <td>${itemInfo.itemSeq }</td>
-	                    <td>${itemInfo.itemName }</td>
-	                    <td>${itemInfo.itemPrice }</td>
-	                    <td>${itemInfo.total }</td>
-	                    <td>${itemInfo.remain }</td>
-	                    <td><input class="requ" type="number" name="${itemInfo.categorySeq }_${itemInfo.itemSeq }_autoSup" value="${itemInfo.autoSup }"/></td>
-	                </tr>
-	                </c:forEach>
-				</tbody>
-            </table>
-		</div>
-       
-  			<br/>
-		<div class="app_warp">
-			<input class="app" type="submit" value="적용">
-			<a href="ShopInfo.do" class="canC">취소</a>
-		</div>
-	</form>
-	<div class="btn">
-       	<span class="addbtn"></span>
-   	</div>
+    <div class="main">
+		<form action="check.do" method="post">
+		       <div class="tab">
+		           <table>
+		           	<thead>
+		                <tr>
+		                    <th>카테고리</th>
+		                    <th>상품 번호</th>
+		                    <th>상품 이름</th>
+		                    <th>상품 가격</th>
+		                    <th>상품 총개수</th>
+		                    <th>상품 남은갯수</th>
+		                    <th>자동적으로 변화할 총 개수</th>
+		                </tr>
+					</thead>
+					<tbody class="tbody">
+		                <c:forEach items="${itemInfoList }" var="itemInfo">
+		                <tr>
+		                	<td>${itemInfo.categoryName }</td>
+		                    <td>${itemInfo.itemSeq }</td>
+		                    <td>${itemInfo.itemName }</td>
+		                    <td>${itemInfo.itemPrice }</td>
+		                    <td>${itemInfo.total }</td>
+		                    <td>${itemInfo.remain }</td>
+		                    <td><input class="requ" type="number" name="${itemInfo.categorySeq }_${itemInfo.itemSeq }_autoSup" value="${itemInfo.autoSup }"/></td>
+		                </tr>
+		                </c:forEach>
+					</tbody>
+		           </table>
+			</div>
+			<div class="btn">
+				<span class="addbtn"></span>
+			</div>
+			<div class="app_warp">
+				<input class="app" type="submit" value="적용">
+				<a href="ShopInfo.do" class="canC">취소</a>
+			</div>
+		</form>
+	</div>
     <div id="buttom">
     	<a href="#top" class="gotopbtn">▲</a>
     </div>
 </body>
 	<script>
 	var pageIndex = 1;
+	var lineCnt = 12;
 	$('tbody tr').hide();
-	$('tbody tr').slice(pageIndex * 4-4 , pageIndex *4).show(0);
-	var pageBtn = Math.ceil($('tbody tr').length / 4);
+	$('tbody tr').slice(pageIndex * lineCnt-lineCnt , pageIndex *lineCnt).show(0);
+	var pageBtn = Math.ceil($('tbody tr').length / lineCnt);
 	for(var i = 1 ; i<=pageBtn ; i++){
-		$('.addbtn').append('<button class="'+i+'">'+i+'</button>');
+		$('.addbtn').append('<button type="button" class="'+i+'">'+i+'</button>');
 	}
 	$("button").click(function(){
 		pageIndex = parseInt($(this).attr("class"));
 		$('tbody tr').hide();
-		$('tbody tr').slice(pageIndex * 4-4 , pageIndex *4).show(0); 
+		$('tbody tr').slice(pageIndex * lineCnt-lineCnt , pageIndex *lineCnt).show(0); 
 	});
 	</script>
 </html>

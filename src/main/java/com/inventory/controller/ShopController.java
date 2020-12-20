@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.inventory.app.domain.CategoryItemVO;
 import com.inventory.app.domain.CategoryVO;
 import com.inventory.app.domain.ItemInfoVO;
 import com.inventory.app.domain.ItemMovementVO;
@@ -185,57 +184,42 @@ public class ShopController {
 	}
 
 	@RequestMapping(value = "updateItem.do", method = RequestMethod.GET)
-	public String updateItemView(HttpSession session, HttpServletResponse response) throws IOException {
+	public String updateItemView(HttpSession session, HttpServletResponse response, Model model) throws IOException {
 		String url = userCheck(session, response);
 		if (url != null)
 			return url;
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
-		int categorySize = categoryService.selectCnt();
-		List<CategoryItemVO> categoryItemList = new ArrayList<CategoryItemVO>();
-		List<CategoryItemVO> categoryItemList2 = new ArrayList<CategoryItemVO>();
-		for (int i = 1; i <= categorySize; i++) {
-			CategoryVO category = new CategoryVO();
-			category.setCategorySeq(i);
-			category = categoryService.select(category);
-			List<ItemVO> itemList = itemService.selectListByCategory(category);
-			List<ItemVO> itemList2 = itemService.selectListByCategory(category);
-			int size = itemList.size();
-			for (int j = 0; j < size; j++) {
-				StockVO stock = new StockVO();
-				stock.setShopSeq(shop.getShopSeq());
-				stock.setCategorySeq(category.getCategorySeq());
-				stock.setItemSeq(itemList.get(j).getItemSeq());
-				stock = stockService.select(stock);
-				if (stock != null) {
-					itemList.remove(j);
-					size--;
-					j--;
+		ItemInfoVO itemInfo = new ItemInfoVO();
+		itemInfo.setShopSeq(shop.getShopSeq());
+		List<ItemInfoVO> addList = new ArrayList<ItemInfoVO>();
+		List<ItemInfoVO> deleteList = itemInfoService.shopItemList(itemInfo);
+		List<CategoryVO> categoryList = new ArrayList<CategoryVO>();
+		Iterator<CategoryVO> categorIt = categoryService.selectList(null).iterator();
+		while(categorIt.hasNext()) {
+			CategoryVO category = categorIt.next();
+			Iterator<ItemVO> itemIt = itemService.selectListByCategory(category).iterator();
+			while(itemIt.hasNext()) {
+				ItemVO item = itemIt.next();
+				itemInfo = new ItemInfoVO();
+				itemInfo.setCategorySeq(category.getCategorySeq());
+				itemInfo.setItemSeq(item.getItemSeq());
+				if(!deleteList.contains(itemInfo)) {
+					itemInfo.setCategoryName(category.getCategoryName());
+					itemInfo.setItemName(item.getItemName());
+					addList.add(itemInfo);
+					if(!categoryList.contains(category))
+						categoryList.add(category);
 				}
-			}
-			size = itemList2.size();
-			for (int j = 0; j < size; j++) {
-				StockVO stock = new StockVO();
-				stock.setShopSeq(shop.getShopSeq());
-				stock.setCategorySeq(category.getCategorySeq());
-				stock.setItemSeq(itemList2.get(j).getItemSeq());
-				stock = stockService.select(stock);
-				if (stock == null) {
-					itemList2.remove(j);
-					size--;
-					j--;
-				}
-			}
-			size = itemList.size();
-			if (size != 0) {
-				categoryItemList.add(new CategoryItemVO(category, size, itemList));
-			}
-			size = itemList2.size();
-			if (size != 0) {
-				categoryItemList2.add(new CategoryItemVO(category, size, itemList2));
 			}
 		}
-		session.setAttribute("categoryItemList", categoryItemList);
-		session.setAttribute("categoryItemList2", categoryItemList2);
+		if(addList.isEmpty()) {
+			itemInfo = new ItemInfoVO();
+			itemInfo.setCategorySeq(0);
+			addList.add(itemInfo);
+		}
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("addList", addList);
+		model.addAttribute("deleteList",deleteList);
 		return PATH + "updateItem";
 	}
 

@@ -66,7 +66,9 @@ public class BuyerController {
 			if(itemInfoService.selectBuyCount(itemInfo) > 0)
 				shopInfoList.add(new ShopInfoVO(shop, itemInfoService.selectBuyList(itemInfo)));
 		}
-
+		
+		if(shopInfoList.isEmpty())
+			return "redirect:/home.do";
 		model.addAttribute("shopInfoList", shopInfoList);
 		return PATH + "buy";
 	}

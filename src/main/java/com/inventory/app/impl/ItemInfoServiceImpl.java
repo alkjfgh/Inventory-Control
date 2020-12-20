@@ -34,4 +34,9 @@ public class ItemInfoServiceImpl implements ItemInfoService {
 		return dao.selectBuyCount(vo);
 	}
 
+	@Override
+	public List<ItemInfoVO> shopItemList(ItemInfoVO vo) {
+		return dao.shopItemList(vo);
+	}
+
 }

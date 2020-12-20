@@ -95,7 +95,7 @@
             <li><a href="shopStock.do?pageIndex=1" class="a_link">상품 재고</a></li>
             <c:set var="level" value="${user.userLevel }" />
             <c:if test="${level eq 1}">
-            <li><a href="check.do?pageIndex=1" class="a_link">결산</a></li>
+            <li><a href="check.do" class="a_link">결산</a></li>
             <li><a href="../user/SignOut.do" class="a_link">로그아웃</a></li>
             </c:if>
             <c:if test="${level eq 9}">

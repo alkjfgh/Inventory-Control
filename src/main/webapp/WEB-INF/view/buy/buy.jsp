@@ -188,31 +188,29 @@
 		var categorySeq = new Array();
 		var itemInfoList = new Array();
 		
-		var cn = "";
-		var cs = 0;
+		var cn = "${shopInfo[0].categoryName}";
+		var cs = ${shopInfo[0].categorySeq};
 		var itemName = new Array();
 		var itemSeq = new Array();
 		var itemRemain = new Array();
 		var itemPrice = new Array();
 		<c:forEach items="${shopInfo.itemInfoList }" var="itemInfo">
 			if(cs != ${itemInfo.categorySeq}){
+				itemInfoList.push({
+					categorySeq : cs,
+					nameList: itemName,
+					seqList: itemSeq,
+					remainList: itemRemain,
+					priceList : itemPrice
+				});
+				itemName = new Array();
+				itemSeq = new Array();
+				itemRemain = new Array();
+				itemPrice = new Array();
 				cn = "${itemInfo.categoryName}";
 				cs = ${itemInfo.categorySeq};	
 				categoryName.push(cn);
 				categorySeq.push(cs);
-				if(cs != 1){
-					itemInfoList.push({
-						categorySeq : cs-1,
-						nameList: itemName,
-						seqList: itemSeq,
-						remainList: itemRemain,
-						priceList : itemPrice
-					});
-					itemName = new Array();
-					itemSeq = new Array();
-					itemRemain = new Array();
-					itemPrice = new Array();
-				}
 			}
 			itemName.push("${itemInfo.itemName}");
 			itemSeq.push("${itemInfo.itemSeq}");
