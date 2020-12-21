@@ -170,6 +170,8 @@
 				<button class="insertadd">카테고리 목록 생성하기</button>
 				<form action="insertCategory.do" method="post" class="insertCategory">
 					<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
+					<div class="input-container">
+					</div>
 					<input class="insertCategory_new" type="submit" value="적용" /><br />
 				</form>
 			</div>
@@ -213,8 +215,8 @@
     var cnt = 1;
     $('button').click(function () {
         $("input[name=cnt]").attr("value", cnt);
-        $('.insertCategory').append('카테고리 이름 <input type="text" name="categoryName_' + cnt++ + '" /><br />') });
-    
+        $('.input-container').append('카테고리 이름 <input type="text" name="categoryName_' + cnt++ + '" /><br />')
+    });
     var pageBtn = Math.ceil( ${categoryCount} / 20);
 	for(var i = 1 ; i<=pageBtn ; i++){
 		$('.indexPage').append("<a href="
