@@ -92,12 +92,23 @@
 	}
 	option, select{
 		font-family: 'Do Hyeon', sans-serif;
-		
 	}
 	.btnDel{
-		background: gary;
-		border-radius: 50%;
-		font-weight: bold;
+		background-color: white;
+		border: 1px solid #ff1818;
+		color: #ff1818;
+		padding: 12px 22px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
+		-webkit-transition-duration: 0.4s; 
+		transition-duration: 0.4s;
+	}
+	.btnDel:hover {
+		box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 	}
 	.delete table{
 		font-size : 1.2em;
@@ -151,6 +162,14 @@
 		border: 1px solid black;
 		border-collapse: collapse;
 	}
+	.addTable{
+		margin: 0 auto;
+	}
+	.addTable th{
+		height: 40px;
+		font-size: 20px;
+		width: 100px;
+	}
 </style>
 <body>
 	<h1>아이템 추가 및 삭제</h1>
@@ -163,6 +182,14 @@
 			<button class="insertadd">아이템 목록 추가</button>
 			<form action="insertItem.do" method="post">
 				<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
+				<table class="addTable">
+					<tr>
+						<th>카테고리</th>
+						<th>물품</th>
+						<th>수량</th>
+						<th>삭제</th>
+					</tr>
+				</table>
 				<div class="insertItem"></div>
 					<input class="submit" type="submit" value="적용" />
 				<br />
@@ -207,11 +234,11 @@
 	});
 	var cnt =  1;
 	$('.insertadd').click(function() {
-		var html = '<div><label for="'+ cnt +'">카테고리선택</label> <select class="form-control"id="'+ cnt +'" name="category_'+ cnt +'" onchange="categoryChange(this)"required="required"><option>카테고리를 선택해주세요</option><c:forEach items="${categoryList }" var="category"><option value="${category.categorySeq }">${category.categoryName  }</option></c:forEach></select> <label for="item_'+ cnt +'">상품</label> <select class="form-control"id="item_'+ cnt +'" name="item_'+ cnt + '" required="required"><option id = "item_'+ cnt +'">선택해주세요.</option></select> <input type="number" name="total_'+ cnt + '" required="required" />';
-		html += '<button type="button" class="btnDel">Del</button> </br></div>';
+		var html = '<tr><td><select class="form-control"id="'+ cnt +'" name="category_'+ cnt +'" onchange="categoryChange(this)"required="required"><option>카테고리를 선택해주세요</option><c:forEach items="${categoryList }" var="category"><option value="${category.categorySeq }">${category.categoryName  }</option></c:forEach></select></td><td><select class="form-control"id="item_'+ cnt +'" name="item_'+ cnt + '" required="required"><option id = "item_'+ cnt +'">선택해주세요.</option></select></td><td><input type="number" name="total_'+ cnt + '" required="required" />';
+		html += '</td><td><button type="button" class="btnDel">Del</button></td></tr>';
 		$("input[name=cnt]").attr("value", cnt);
 		cnt++;
-		$('.insertItem').append(html);
+		$('.addTable').append(html);
 		$('.insertItem').on("click", ".btnDel", function() {
 		    $(this).parent().remove();
 		});

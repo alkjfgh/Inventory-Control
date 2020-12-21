@@ -166,6 +166,9 @@
 			<input type="reset" class="button" name="reset" value="다시 입력"/>
 		</div>
 	</form>
+	<div>
+		<a href="../home.do">뒤로가기</a>
+	</div>
 </body>
 <script>
 	var phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/;

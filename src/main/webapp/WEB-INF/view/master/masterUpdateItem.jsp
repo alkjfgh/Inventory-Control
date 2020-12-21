@@ -30,6 +30,18 @@
         text-align: center;
     }
 	/* 추가 */
+	select{
+		width: 210px;
+		padding: .6em .4em; 
+		font-family: inherit; 
+		font-size : 18px;
+		background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;  
+		border: 1px solid #999;
+		border-radius: 0px;
+		-webkit-appearance: none;
+		-moz-appearance: none; 
+		appearance: none; 
+	}
 	.add {
 		display: inline-block;
 		border-radius: 4px;
