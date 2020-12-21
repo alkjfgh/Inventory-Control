@@ -63,11 +63,11 @@ public class BuyerController {
 				shop = shopIt.next();
 			ItemInfoVO itemInfo = new ItemInfoVO();
 			itemInfo.setShopSeq(shop.getShopSeq());
-			if(itemInfoService.selectBuyCount(itemInfo) > 0)
+			if (itemInfoService.selectBuyCount(itemInfo) > 0)
 				shopInfoList.add(new ShopInfoVO(shop, itemInfoService.selectBuyList(itemInfo)));
 		}
-		
-		if(shopInfoList.isEmpty())
+
+		if (shopInfoList.isEmpty())
 			return "redirect:/home.do";
 		model.addAttribute("shopInfoList", shopInfoList);
 		return PATH + "buy";
@@ -90,12 +90,10 @@ public class BuyerController {
 				long categorySeq = Long.parseLong(request.getParameter("category_" + i));
 				long itemSeq = Long.parseLong(request.getParameter("item_" + i));
 				long buyCnt = Long.parseLong(request.getParameter("total_" + i));
-				if (shop.getShopSeq() != null && shopSeq != shop.getShopSeq()) {
-					if (itemList.size() > 0) {
-						buyList.add(new BuyCheckVO(shop, itemList));
-						itemList = new ArrayList<BuyItemVO>();
-						duplicateCheck.clear();
-					}
+				if (shop.getShopSeq() != null && shopSeq != shop.getShopSeq() && itemList.size() > 0) {
+					buyList.add(new BuyCheckVO(shop, itemList));
+					itemList = new ArrayList<BuyItemVO>();
+					duplicateCheck.clear();
 				}
 				shop.setShopSeq(shopSeq);
 				shop = shopService.select(shop);

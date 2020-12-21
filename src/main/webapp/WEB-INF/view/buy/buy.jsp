@@ -169,7 +169,7 @@
 	var cntCheck = 0;
 	$('button').click(function() {
 		cntCheck++;
-		var html = '<tr><td><select class="shop_select" id="shop_' + cnt + '" name="shop_' + cnt +'" onchange="shopChange(this)" required="required"><option value="">상점을 선택해주세요</option><c:forEach items="${shopInfoList }" var="shopInfo"><option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option></c:forEach></select></td><td><select  class="category_select" id="category_' + cnt + '" name="category_' + cnt + '" onchange="categoryChange(this)" required="required"><option value="">카테고리를 선택해주세요</option></select></td><td><select class="item_select" id="item_'+ cnt +'" name="item_'+ cnt + '" required="required" onchange="itemChange(this)"><option value="">아이템을 선택해주세요</option></select></td><td><input type="number" name="total_'+ cnt + '" required="required" min = "1" max = "0" onblur="numberCheck(this);"/>'
+		var html = '<tr><td><select class="shop_select" id="shop_' + cnt + '" name="shop_' + cnt +'" onchange="shopChange(this)" required="required"><option value="">상점을 선택해주세요</option><c:forEach items="${shopInfoList }" var="shopInfo"><option value="${shopInfo.shop.shopSeq }">${shopInfo.shop.shopName }</option></c:forEach></select></td><td><select  class="category_select" id="category_' + cnt + '" name="category_' + cnt + '" onchange="categoryChange(this)" required="required"><option value="">카테고리를 선택해 주세요</option></select></td><td><select class="item_select" id="item_'+ cnt +'" name="item_'+ cnt + '" required="required" onchange="itemChange(this)"><option value="">아이템을 선택해 주세요</option></select></td><td><input type="number" name="total_'+ cnt + '" required="required" min = "1" max = "0" onblur="numberCheck(this);"/>'
 		html += '<td><span name = "alertMoney_'+ cnt + '" ></span>';
 		html += '<span name = "price_'+ cnt++ + '"  hidden="hidden" ></span></td>';
 		html += '<td><button type="button" class="btnDel">취소</button>';
@@ -187,9 +187,8 @@
 		var categoryName = new Array();
 		var categorySeq = new Array();
 		var itemInfoList = new Array();
-		
-		var cn = "${shopInfo[0].categoryName}";
-		var cs = ${shopInfo[0].categorySeq};
+		var cn = "${shopInfo.itemInfoList[0].categoryName}";
+		var cs = ${shopInfo.itemInfoList[0].categorySeq};
 		var itemName = new Array();
 		var itemSeq = new Array();
 		var itemRemain = new Array();

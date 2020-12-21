@@ -45,5 +45,5 @@
 	</tr>
 </table>
 </body>
-<a href="../home.do" >HOME</a>
+<a href="redirect:/home.do" >HOME</a>
 </html>

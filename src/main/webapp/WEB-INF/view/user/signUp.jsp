@@ -129,12 +129,12 @@
 			</tr>
 			<tr>
 				<td>비밀번호</td>
-				<td><input type="password" name="userPassword" onkeyup="fun4()"></td>
+				<td><input type="password" name="userPassword" onkeyup="fun4()" oncopy="return false" oncut="return false" onpaste="return false"></td>
 			</tr>
 			<tr>
 				<td>비밀번호 확인</td>
 				<td>
-					<input type="password" name="userPassword1" onkeyup="fun4()">
+					<input type="password" name="userPassword1" onkeyup="fun4()" oncopy="return false" oncut="return false" onpaste="return false">
 					<span id="alert_pwd"><span style="color: #777">패스워드를 한번 더 입력해주세요</span></span>
 				</td>
 			</tr>

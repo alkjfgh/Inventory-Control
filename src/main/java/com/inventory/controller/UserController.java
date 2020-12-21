@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.inventory.app.domain.ShopVO;
 import com.inventory.app.domain.UserVO;
+import com.inventory.app.service.ShopService;
 import com.inventory.app.service.UserService;
 
 @Controller
@@ -23,7 +25,10 @@ public class UserController {
 	private final static String PATH = "/user/";
 
 	@Autowired
-	private UserService service;
+	private UserService userService;
+	
+	@Autowired
+	private ShopService shopService;
 
 	@RequestMapping(value = "SignIn.do", method = RequestMethod.GET)
 	public String signInView(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
@@ -34,8 +39,12 @@ public class UserController {
 				if (cookie.getName().equals("user")) {
 					user = new UserVO();
 					user.setUserId(cookie.getValue());
-					user = service.select(user);
+					user = userService.select(user);
 					session.setAttribute("user", user);
+					ShopVO shop = new ShopVO();
+					shop.setShopSeq(user.getShopSeq());
+					shop = shopService.select(shop);
+					session.setAttribute("shop", shop);
 					break;
 				}
 			}
@@ -53,7 +62,7 @@ public class UserController {
 	@RequestMapping(value = "SignIn.do", method = RequestMethod.POST)
 	public String signIn(UserVO vo, HttpServletResponse response, HttpSession session, HttpServletRequest request)
 			throws IOException {
-		UserVO get = service.select(vo);
+		UserVO get = userService.select(vo);
 		if (get != null && get.getUserPassword().equals(vo.getUserPassword())) {
 			if (request.getParameter("keepLogin") != null && request.getParameter("keepLogin").equals("on")) {
 				Cookie cookie = new Cookie("user", get.getUserId());
@@ -63,6 +72,10 @@ public class UserController {
 				response.addCookie(cookie);
 			}
 			session.setAttribute("user", get);
+			ShopVO shop = new ShopVO();
+			shop.setShopSeq(get.getShopSeq());
+			shop = shopService.select(shop);
+			session.setAttribute("shop", shop);
 			if (get.getUserLevel() == 9)
 				return "redirect:/master/master.do";
 			return "redirect:/shop/ShopInfo.do";
@@ -89,7 +102,7 @@ public class UserController {
 	public String signUp(UserVO user, HttpServletRequest request,HttpSession session) {
 		user.setUserLevel((short) 1);
 		try {
-			service.insert(user);
+			userService.insert(user);
 			session.setAttribute("user", user);
 			return "redirect:/shop/insertShop.do";
 		} catch (Exception e) {
@@ -111,7 +124,7 @@ public class UserController {
 	@RequestMapping(value = "cancelInsertUser.do", method = RequestMethod.GET)
 	public String cancelInsertUser(HttpSession session) {
 		UserVO user = (UserVO) session.getAttribute("user");
-		service.delete(user);
+		userService.delete(user);
 		session.invalidate();
 		return "redirect:/home.do";
 	}

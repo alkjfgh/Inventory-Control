@@ -72,6 +72,7 @@ public class ShopController {
 	(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String url = userCheck(session, response);
+		ShopVO shop = new ShopVO();
 		if (url != null)
 			return url;
 		long shopSeq = -1;
@@ -80,11 +81,10 @@ public class ShopController {
 		UserVO user = new UserVO();
 		if (shopSeq != -1) {
 			user.setShopSeq(shopSeq);
+			shop.setShopSeq(user.getShopSeq());
 		} else {
-			user = (UserVO) session.getAttribute("user");
+			shop = (ShopVO) session.getAttribute("shop");
 		}
-		ShopVO shop = new ShopVO();
-		shop.setShopSeq(user.getShopSeq());
 		shop = shopService.select(shop);
 		ItemInfoVO itemInfo = new ItemInfoVO();
 		itemInfo.setShopSeq(shop.getShopSeq());
@@ -180,6 +180,7 @@ public class ShopController {
 		}
 		shop.setShopCount(shop.getShopCount() + 1);
 		shopService.update(shop);
+		session.removeAttribute("itemInfoList");
 		return "redirect:" + PATH + "ShopInfo.do";
 	}
 
@@ -329,7 +330,6 @@ public class ShopController {
 			soldLog.setStart(start);
 			soldLog.setEnd(end);
 		}
-//		검색어를 입력 하지 않은 경우는 js로 검열
 
 		Iterator<CategoryVO> categoryIt = soldLogService.selectCategoryPeriod(soldLog).iterator();
 		List<SoldCategoryVO> soldList = new ArrayList<SoldCategoryVO>();
