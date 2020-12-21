@@ -17,7 +17,8 @@
 	}
 	.category {
 		margin: auto;
-		width: 100%;
+		width: 800px;
+		text-align: center;
 	}
 	h1 {
 		margin: 50px;
@@ -151,7 +152,32 @@
 		height: 20px;
 	}
 	.indexPage{
-		margin-top: 20px;
+		margin: 20px;
+	}
+	.indexPage_box{
+		margin: 20px;
+		width: 800px;
+		text-align: center;
+	}
+	.indexPage a{
+		text-decoration: none;
+	}
+	a:link { color: black; text-decoration: none;}
+	a:visited { color: black; text-decoration: none;}
+ 	a:hover { color: rgb(248, 135, 29); text-decoration: none;}
+	input[type=text] {
+		width: 150px;
+		padding: 12px 20px;
+		margin: 8px 0;
+		box-sizing: border-box;
+		border: 3px solid #ccc;
+		-webkit-transition: 0.5s;
+		transition: 0.5s;
+		outline: none;
+	}
+
+	input[type=text]:focus {
+	 	border: 3px solid #555;
 	}
 </style>
 </head>
@@ -195,7 +221,9 @@
 					<!-- 마지막 삭제 버튼 -->
 					<input class="delete_button" type="submit" value="카테고리 삭제" /><br />
 				</form>
+				<div class="indexPage_box">
 				<span class="indexPage"></span>
+				</div>
 			</div>
 		</div>
 	</section>

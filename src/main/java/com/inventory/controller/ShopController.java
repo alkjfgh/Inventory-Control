@@ -118,13 +118,9 @@ public class ShopController {
 		itemInfo.setShopSeq(shop.getShopSeq());
 		List<ItemInfoVO> itemInfoList = itemInfoService.selectList(itemInfo);
 		long shopCount = shop.getShopCount();
-		if (shopCount == 7) {
-			shop.setShopCount(1);
-			shopService.update(shop);
-		}
 		for (ItemInfoVO vo : itemInfoList) {
 			long total = vo.getTotal();
-			if (shopCount == 7) {
+			if (shopCount % 7 == 0) {
 				double sold = vo.getSold();
 				double targetSold = total * shopCount;
 				double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
@@ -142,6 +138,7 @@ public class ShopController {
 		Iterator<ItemInfoVO> itemInfoIt = ((List<ItemInfoVO>) session.getAttribute("itemInfoList")).iterator();
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
 		long shopSeq = shop.getShopSeq();
+		long shopCount = shop.getShopCount();
 		while (itemInfoIt.hasNext()) {
 			ItemInfoVO itemInfo = itemInfoIt.next();
 			long categorySeq = itemInfo.getCategorySeq();
@@ -149,15 +146,16 @@ public class ShopController {
 			long remain = itemInfo.getRemain();
 			long sold = itemInfo.getSold();
 			long autoSup = Long.parseLong(request.getParameter(categorySeq + "_" + itemSeq + "_autoSup"));
-			if (autoSup < remain)
-				autoSup = remain;
 			StockVO shopStock = new StockVO();
 			shopStock.setShopSeq(shopSeq);
 			shopStock.setCategorySeq(categorySeq);
 			shopStock.setItemSeq(itemSeq);
 			shopStock.setTotal(autoSup);
 			shopStock.setRemain(autoSup);
-			shopStock.setSold(sold);
+			if (shopCount % 7 == 0)
+				shopStock.setSold(0);
+			else 
+				shopStock.setSold(sold);
 
 			StockVO masterStock = new StockVO();
 			masterStock.setShopSeq(1);
@@ -165,7 +163,6 @@ public class ShopController {
 			masterStock.setItemSeq(itemSeq);
 			masterStock = stockService.select(masterStock);
 			masterStock.setRemain(masterStock.getRemain() - (autoSup - remain));
-			masterStock.setSold((autoSup - remain));
 			
 			SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), (autoSup - remain), shopSeq, categorySeq, itemSeq);
 

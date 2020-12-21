@@ -108,6 +108,16 @@
             font-size: 26px;
 			border: 0;
         }
+		.indexPage_box{
+			margin: 20px;
+			width: 100%;
+			text-align: center;
+		}
+		#back{
+			margin: 20px;
+			width: 100%;
+			text-align: center;
+		}
 	</style>
 </head>
 
@@ -147,7 +157,10 @@
 			</tbody>
 		</table>
 	</section>
+
+	<div class="indexPage_box">
 	<span class="indexPage"></span>
+	</div>
 	<div id="back">
 		<a href="master.do">뒤로가기</a>
 	</div>
