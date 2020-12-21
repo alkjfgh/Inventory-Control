@@ -189,6 +189,8 @@
 		var itemInfoList = new Array();
 		var cn = "${shopInfo.itemInfoList[0].categoryName}";
 		var cs = ${shopInfo.itemInfoList[0].categorySeq};
+		categoryName.push(cn);
+		categorySeq.push(cs);
 		var itemName = new Array();
 		var itemSeq = new Array();
 		var itemRemain = new Array();
