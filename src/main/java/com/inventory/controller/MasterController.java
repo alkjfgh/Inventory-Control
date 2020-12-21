@@ -222,10 +222,10 @@ public class MasterController {
 		String url = masterCheck(session, response);
 		if (url != null)
 			return url;
-		String shopCount = request.getParameter("shopCount");
+		long shopCount = request.getParameter("shopCount") == null ? 1 : Long.parseLong(request.getParameter("shopCount"));
 		String categorySeq = request.getParameter("categorySeq");
 		String itemSeq = request.getParameter("itemSeq");
-		ItemMovementVO itemMovement = new ItemMovementVO(shopCount == null ? 1 : Long.parseLong(shopCount),
+		ItemMovementVO itemMovement = new ItemMovementVO(shopCount,
 				Long.parseLong(categorySeq), Long.parseLong(itemSeq));
 		itemMovement.setStart((pageIndex - 1) * 20);
 		model.addAttribute("itemMovementList", itemMovementService.selectView(itemMovement));
