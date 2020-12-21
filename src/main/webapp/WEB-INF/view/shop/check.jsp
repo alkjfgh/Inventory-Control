@@ -34,6 +34,9 @@
 	thead{
 		text-align: center; 
 	}
+	thead th:last-of-type{
+		width: 100px;
+	}
 	
 	tbody{
 		text-align: center;
@@ -127,6 +130,79 @@
 		color: #fff;
 		transform: translateY(-7px);
 	}
+	.quantity {
+		position: relative;
+	}
+	
+	input[type=number]::-webkit-inner-spin-button,
+	input[type=number]::-webkit-outer-spin-button
+	{
+	  -webkit-appearance: none;
+	  margin: 0;
+	}
+	
+	input[type=number]
+	{
+	  -moz-appearance: textfield;
+	}
+	
+	.quantity input {
+	  font-family: 'Do Hyeon', sans-serif;
+	  font-size : 15px;
+	  text-align : center;
+	  width: 130px;
+	  height: 20px;
+	  line-height: 1.65;
+	  float: left;
+	  display: block;
+	  padding-right: 50px;
+	  margin: 0;
+	  padding-left: 20px;
+	  border: 1px solid #eee;
+	  background: #E1F6FA;
+	}
+	
+	.quantity input:focus {
+	  outline: 0;
+	}
+	
+	.quantity-nav {
+	  float: left;
+	  position: relative;
+	  height: 21px;
+	}
+	
+	.quantity-button {
+	  position: relative;
+	  cursor: pointer;
+	  border-left: 1px solid #eee;
+	  width: 20px;
+	  text-align: center;
+	  color: #333;
+	  font-size: 13px;
+	  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+	  line-height: 0.9;
+	  -webkit-transform: translateX(-100%);
+	  transform: translateX(-100%);
+	  -webkit-user-select: none;
+	  -moz-user-select: none;
+	  -ms-user-select: none;
+	  -o-user-select: none;
+	  user-select: none;
+	}
+	
+	.quantity-button.quantity-up {
+	  position: absolute;
+	  height: 50%;
+	  top: 0;
+	  border-bottom: 1px solid #eee;
+	}
+	
+	.quantity-button.quantity-down {
+	  position: absolute;
+	  bottom: -1px;
+	  height: 50%;
+	}
 </style>
 </head>
 <body>
@@ -158,7 +234,7 @@
 		                    <td>${itemInfo.itemPrice }</td>
 		                    <td>${itemInfo.total }</td>
 		                    <td>${itemInfo.remain }</td>
-		                    <td><input class="requ" type="number" name="${itemInfo.categorySeq }_${itemInfo.itemSeq }_autoSup" value="${itemInfo.autoSup }"/></td>
+		                    <td class="quantity"><input min="1" class="requ" type="number" name="${itemInfo.categorySeq }_${itemInfo.itemSeq }_autoSup" value="${itemInfo.autoSup }"/></td>
 		                </tr>
 		                </c:forEach>
 					</tbody>
@@ -191,5 +267,37 @@
 		$('tbody tr').hide();
 		$('tbody tr').slice(pageIndex * lineCnt-lineCnt , pageIndex *lineCnt).show(0); 
 	});
+	jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+	    jQuery('.quantity').each(function() {
+	      var spinner = jQuery(this),
+	        input = spinner.find('input[type="number"]'),
+	        btnUp = spinner.find('.quantity-up'),
+	        btnDown = spinner.find('.quantity-down'),
+	        min = input.attr('min'),
+	        max = input.attr('max');
+
+	      btnUp.click(function() {
+	        var oldValue = parseFloat(input.val());
+	        if (oldValue >= max) {
+	          var newVal = oldValue;
+	        } else {
+	          var newVal = oldValue + 1;
+	        }
+	        spinner.find("input").val(newVal);
+	        spinner.find("input").trigger("change");
+	      });
+
+	      btnDown.click(function() {
+	        var oldValue = parseFloat(input.val());
+	        if (oldValue <= min) {
+	          var newVal = oldValue;
+	        } else {
+	          var newVal = oldValue - 1;
+	        }
+	        spinner.find("input").val(newVal);
+	        spinner.find("input").trigger("change");
+	      });
+
+	    });
 	</script>
 </html>

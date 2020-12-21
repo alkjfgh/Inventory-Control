@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>카테고리 추가 및 삭제</title>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
@@ -116,17 +117,26 @@
 		background: #D1B6E1;
 		border-radius: 25px;
 	}
-	form{
-		margin: 20px;
-	}
 	table{
+		margin: 40px;
 		padding: 10px;
-		width: 450px;
+		width: 400px;
 	}
 	th{
-		font-size: 21px; 
+		font-size: 21px;
+		text-align: center;
 	}
-	.delete-button{
+	th:nth-child(3){
+		text-align: center;
+	}
+	td:nth-child(1){
+		text-align: center;
+	}
+	td:nth-child(3){
+		text-align: center;
+	}
+	.delete_button{
+		margin-left: 30px;
 		border: 1px solid #519D9E;
 		background: none;
 		padding: 8px 18px;
@@ -137,8 +147,6 @@
 		border-radius: 25px;
 	}
 	.checkbox{
-		left: 20px;
-		top: 20px;
 		width: 20px;
 		height: 20px;
 	}
@@ -146,32 +154,41 @@
 		margin-top: 20px;
 	}
 	.input-container{
-		margin-bottom: 20px;
+		margin: 0 auto;
+	}
+	.input-container, .input-container th, .input-container td{
+		border: 1px solid black;
+		border-collapse: collapse;
 	}
 	.input-container button{
 		border-style : none;
 		border-radius: 50%;
 	}
+	.input-container input{
+		width: 150px;
+		height: 30px;
+		background: lavender;
+		border: none;
+		font-size: 10pt;
+		color: dimgray;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+	}
+	.input-container input:focus{
+		outline: 2px solid lightsteelblue;
+	}
+	
 	.input-container div{
 		padding-bottom: 10px;
 	}
-	a{font-weight: bold;}
-    a:link { color: rgb(0, 0, 0); text-decoration: none;}
-    a:visited { color: black; text-decoration: none;}
-    a:hover { color: rgb(255, 145, 0); text-decoration: none;}
-    table, th, td{
-    	border: 1px solid black;
-    	border-collapse: collapse;
-    }
-    .delete-button-container{
-    	margin: 0 auto;
-    }
-    th:nth-of-type(1), th:nth-of-type(3){
-    	width: 150px;
-    }
-    th:nth-of-type(2){
-    	width: 100px;
-    }
+	.btnDel{
+		border : 1px solid #f8585b;
+		border-radius: 5px;
+		background: white;
+		height: 20px;
+		color: #f8585b;
+	}
 </style>
 </head>
 <body>
@@ -189,8 +206,12 @@
 				<button class="insertadd">카테고리 목록 생성하기</button>
 				<form action="insertCategory.do" method="post" class="insertCategory">
 					<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
-					<div class="input-container">
-					</div>
+					<table class="input-container">
+						<tr>
+							<th>카테고리 명</th>
+							<th>삭제</th>
+						</tr>
+					</table>
 					<input class="insertCategory_new" type="submit" value="적용" /><br />
 				</form>
 			</div>
@@ -211,9 +232,8 @@
 						</tr>
 						</c:forEach>
 					</table>
-					<div class="delete-button-container">
-						<input class="delete-button" type="submit" value="카테고리 삭제" />
-					</div>
+					<!-- 마지막 삭제 버튼 -->
+					<input class="delete_button" type="submit" value="카테고리 삭제" /><br />
 				</form>
 				<span class="indexPage"></span>
 			</div>
@@ -235,8 +255,8 @@
     var cnt = 1;
     
     $('button').click(function () {
-    	var html = '<div>카테고리 이름 <input type="text" name="categoryName_' + cnt++ + '" />'
-    	html += '<button type="button" class="btnDel">Del</button></br></div>';
+    	var html = '<tr><td><input type="text" name="categoryName_' + cnt++ + '" /></td>'
+    	html += '<td><button type="button" class="btnDel">Del</button></td></tr>';
         $("input[name=cnt]").attr("value", cnt);
         $('.input-container').append(html);
         $('.input-container').on("click", ".btnDel", function() {
