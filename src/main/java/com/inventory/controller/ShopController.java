@@ -160,7 +160,7 @@ public class ShopController {
 			shopStock.setSold(sold);
 
 			StockVO masterStock = new StockVO();
-			masterStock.setShopSeq(2);
+			masterStock.setShopSeq(1);
 			masterStock.setCategorySeq(categorySeq);
 			masterStock.setItemSeq(itemSeq);
 			masterStock = stockService.select(masterStock);

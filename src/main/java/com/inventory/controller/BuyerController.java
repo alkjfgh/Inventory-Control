@@ -59,7 +59,7 @@ public class BuyerController {
 		Iterator<ShopVO> shopIt = shopService.selectList(null).iterator();
 		while (shopIt.hasNext()) {
 			ShopVO shop = shopIt.next();
-			if (shop.getShopSeq() == 2)
+			if (shop.getShopSeq() == 1)
 				shop = shopIt.next();
 			ItemInfoVO itemInfo = new ItemInfoVO();
 			itemInfo.setShopSeq(shop.getShopSeq());
