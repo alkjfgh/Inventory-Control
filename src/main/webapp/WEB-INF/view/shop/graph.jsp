@@ -114,10 +114,13 @@
 		margin: 0 auto;
 		text-align: center;
 	}
-	
 	.searchCondition input:nth-of-type(1) {
 		width: 125px;
 	}
+	a{font-weight: bold;}
+    a:link { color: rgb(0, 0, 0); text-decoration: none;}
+    a:visited { color: black; text-decoration: none;}
+    a:hover { color: rgb(255, 145, 0); text-decoration: none;}
 </style>
 </head>
 <body>
@@ -140,13 +143,11 @@
 		</div>
 		<div class="inputSearch" style="display : none;">
 			<form action="graph.do" method="post" class="searchForm">
-				<input type="number" name="start"/> ~ <input type="number" name="end" />
+				<input min="1" id="start" type="number" name="start"/> ~ <input id="end" type="number" name="end" max="${shop.shopCount}" />
 				<input type="submit" value="검색" />
 			</form>
 		</div>
-		
 	</div>
-	
 	<div class="container">
 		<c:forEach items="${soldList }" var="soldCategory">
 			<canvas id="${soldCategory.category.categoryName }"></canvas>
@@ -157,7 +158,6 @@
 	<div class="back">
 		<a href="ShopInfo.do">뒤로가기</a>
 	</div>
-	
 	<script>
 		countMax = parseInt("<c:out value="${shop.shopCount}" />");
 		function conditionClick(e){

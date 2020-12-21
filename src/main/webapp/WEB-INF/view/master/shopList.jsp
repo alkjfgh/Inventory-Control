@@ -97,6 +97,10 @@
 		.indexPage a:hover{
 			color :#58C9B9;
 		}
+		table, tr, td, th{
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
 	</style>
 </head>
 <body>

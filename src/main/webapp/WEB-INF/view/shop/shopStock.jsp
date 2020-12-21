@@ -18,6 +18,14 @@
     table {
 		margin: 0 auto;
 	}
+	table, tr, th, td{
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	a{font-weight: bold;}
+    a:link { color: rgb(0, 0, 0); text-decoration: none;}
+    a:visited { color: black; text-decoration: none;}
+    a:hover { color: rgb(255, 145, 0); text-decoration: none;}
 </style>
 </head>
 <body>

@@ -146,7 +146,11 @@
 	}
 	.add, .delete {
   	  display: none;
-	} 
+	}
+	table, tr, th, td{
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
 </style>
 <body>
 	<h1>아이템 추가 및 삭제</h1>
