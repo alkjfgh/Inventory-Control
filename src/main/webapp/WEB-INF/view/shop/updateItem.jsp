@@ -138,7 +138,7 @@
 		border-radius: 25px;
 	}
 	.back{
-		margin-left: 50px;
+		margin-top: 20px;
 	}
 	.back a{
 		text-decoration: none;
@@ -161,9 +161,6 @@
 				<input type="text" hidden="hidden" name="cnt" value="" id="cnt" />
 				<div class="insertItem"></div>
 					<input class="submit" type="submit" value="적용" />
-					<span class="back">
-					<a href="ShopInfo.do">뒤로가기</a>
-				</span>
 				<br />
 			</form>
 		</div>
@@ -187,11 +184,11 @@
 					</tr>
 					</c:forEach>
 				</table>
-				<input type="submit" class="submit" value="삭제적용" />
-				<span class="back">
-					<a href="ShopInfo.do">뒤로가기</a>
-				</span>
+				<input type="submit" class="submit" value="적용" />
 			</form>
+		</div>
+		<div class="back">
+			<a href="ShopInfo.do">뒤로가기</a>
 		</div>
 	</div>
 </body>

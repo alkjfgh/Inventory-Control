@@ -17,8 +17,7 @@
 	}
 	.category {
 		margin: auto;
-		width: 800px;
-		text-align: center;
+		width: 100%;
 	}
 	h1 {
 		margin: 50px;
@@ -152,32 +151,17 @@
 		height: 20px;
 	}
 	.indexPage{
-		margin: 20px;
+		margin-top: 20px;
 	}
-	.indexPage_box{
-		margin: 20px;
-		width: 800px;
-		text-align: center;
+	.input-container{
+		margin-bottom: 20px;
 	}
-	.indexPage a{
-		text-decoration: none;
+	.input-container button{
+		border-style : none;
+		border-radius: 50%;
 	}
-	a:link { color: black; text-decoration: none;}
-	a:visited { color: black; text-decoration: none;}
- 	a:hover { color: rgb(248, 135, 29); text-decoration: none;}
-	input[type=text] {
-		width: 150px;
-		padding: 12px 20px;
-		margin: 8px 0;
-		box-sizing: border-box;
-		border: 3px solid #ccc;
-		-webkit-transition: 0.5s;
-		transition: 0.5s;
-		outline: none;
-	}
-
-	input[type=text]:focus {
-	 	border: 3px solid #555;
+	.input-container div{
+		padding-bottom: 10px;
 	}
 </style>
 </head>
@@ -221,9 +205,7 @@
 					<!-- 마지막 삭제 버튼 -->
 					<input class="delete_button" type="submit" value="카테고리 삭제" /><br />
 				</form>
-				<div class="indexPage_box">
 				<span class="indexPage"></span>
-				</div>
 			</div>
 		</div>
 	</section>
@@ -241,9 +223,16 @@
         $('.categoryDelete').show();
     });
     var cnt = 1;
+    
     $('button').click(function () {
+    	var html = '<div>카테고리 이름 <input type="text" name="categoryName_' + cnt++ + '" />'
+    	html += '<button type="button" class="btnDel">Del</button></br></div>';
         $("input[name=cnt]").attr("value", cnt);
-        $('.input-container').append('카테고리 이름 <input type="text" name="categoryName_' + cnt++ + '" /><br />')
+        $('.input-container').append(html);
+        $('.input-container').on("click", ".btnDel", function() {
+		    $(this).parent().remove();
+		});
+        
     });
     var pageBtn = Math.ceil( ${categoryCount} / 20);
 	for(var i = 1 ; i<=pageBtn ; i++){

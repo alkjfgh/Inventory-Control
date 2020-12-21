@@ -60,6 +60,10 @@
 	background-color: #555555;
 	color: hsl(60, 100%, 98%);
 	}
+	a{font-weight: bold;}
+    a:link { color: rgb(0, 0, 0); text-decoration: none;}
+    a:visited { color: black; text-decoration: none;}
+    a:hover { color: rgb(255, 145, 0); text-decoration: none;}
 </style>
 </head>
 <body>
@@ -92,6 +96,9 @@
 		</c:forEach>
 	</table>
 	<span class="indexPage"></span>
+	<div>
+		<a href="totalItem.do">뒤로가기</a>
+	</div>
 </body>
 <script>
 	var pageBtn = Math.ceil( ${itemCount} / 20);

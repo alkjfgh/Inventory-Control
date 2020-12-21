@@ -330,8 +330,9 @@
 		$('.addbtn').append('<button type="button" class="page" id="' + i + '">'+i+'</button>');
 	}
 	$(document).ready(function() {
-		$("button.page").click(function() {
+		$(".page").click(function() {
 			pageIndex = parseInt($(this).attr("id"));
+			$('tbody tr').hide();
 			$('tbody tr').slice(pageIndex * lineCnt - lineCnt, pageIndex * lineCnt).show(0); 
 		});
 		$('.add').click(function() {
