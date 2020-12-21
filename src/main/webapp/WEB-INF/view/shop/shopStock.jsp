@@ -15,13 +15,32 @@
         font-size: 18px;
         text-align: center;
     }
-    table {
+    #stockList {
 		margin: 0 auto;
 	}
-	table, tr, th, td{
-		border: 1px solid black;
-		border-collapse: collapse;
-	}
+  	#stockList {
+      border-collapse: collapse;
+      border-top: 3px solid #168;
+    }  
+    #stockList th {
+      color: #168;
+      background: #f0f6f9;
+      text-align: center;
+    }
+    #stockList th, #stockList td {
+      padding: 10px 22px;
+      border: 1px solid #ddd;
+    }
+    #stockList th:first-child, #stockList td:first-child {
+      border-left: 0;
+    }
+    #stockList th:last-child, #stockList td:last-child {
+      border-right: 0;
+    }
+    #stockList tr td:first-child{
+      text-align: center;
+    }
+    #stockList caption{caption-side: bottom; display: none;}
 	a{font-weight: bold;}
     a:link { color: rgb(0, 0, 0); text-decoration: none;}
     a:visited { color: black; text-decoration: none;}

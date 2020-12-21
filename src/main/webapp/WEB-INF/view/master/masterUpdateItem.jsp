@@ -135,7 +135,6 @@
 	/* 목록추가하기 */
 	.insertadd {
 		display: inline-block;
-		padding: 5px;
 		font-size: 15px;
 		cursor: pointer;
 		text-align: center;
@@ -174,13 +173,15 @@
 		width: 201px;
 	}
 	#iteminsert th:nth-of-type(2){
-		width: 190px;
+		width: 180px;
 	}	
 	#iteminsert th:nth-of-type(3){
-		width: 189px;
+		width: 179px;
 	}	
 	#iteminsert th:nth-of-type(4){
-		width: 189px;
+		width: 179px;
+	}#iteminsert th:nth-of-type(5){
+		width: 40px;
 	}	
 	.insert-submit-con{
 		margin: 0 auto;
@@ -201,7 +202,7 @@
        	transition: 0.7s all;
     }	
 	.itemInput input{
-		width: 160px;
+		width: 138px;
 		height: 40px;
 		margin: 0;
 		border: none;
@@ -249,6 +250,44 @@
 	}	
 	body::-webkit-scrollbar {
 	    display: none; /* Chrome, Safari, Opera*/
+	}
+	.btn{
+		text-align: center;
+		margin-top: 10px;
+	}
+	.addbtn button{
+		width: 50px;
+		height: 45px;
+		font-family: 'Roboto', sans-serif;
+		font-size: 18px;
+		text-transform: uppercase;
+		letter-spacing: 2.5px;
+		font-weight: 500;
+		color: #000;
+		background-color: #fff;
+		border: none;
+		border-radius: 45px;
+		box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s ease 0s;
+		cursor: pointer;
+		outline: none;
+    }
+	.addbtn button:hover{
+		background-color: #2EE59D;
+		box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+		color: #fff;
+		transform: translateY(-7px);
+	}
+	.btnDel{
+		border : 1px solid #f8585b;
+		border-radius: 5px;
+		background: white;
+		height: 20px;
+		color: #f8585b;
+	}
+	.checkbox{
+		width: 20px;
+		height: 20px;
 	}
 	</style>
 </head>
@@ -303,13 +342,13 @@
 						<td>${item.itemName }</td>
 						<td>${item.itemPrice }</td>
 						<td>${item.itemMaker }</td>
-						<td><input type="checkbox" name="${item.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
+						<td><input class="checkbox" type="checkbox" name="${item.categorySeq  }_itemSeq_${item.itemSeq }" /></td>
 					</tr>
 					</c:forEach>
 				</tbody>		
 			</table>
 			<div class="btn">
-				<span class="addbtn"></span>
+				<div class="addbtn"></div>
 			</div>
 			<div class="delete-submit-con"> 
 				<input class="delete-submit" type="submit" value="삭제하기" />

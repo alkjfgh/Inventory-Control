@@ -116,25 +116,17 @@
 		background: #D1B6E1;
 		border-radius: 25px;
 	}
+	form{
+		margin: 20px;
+	}
 	table{
-		margin: 40px;
 		padding: 10px;
-		width: 400px;
+		width: 450px;
 	}
 	th{
 		font-size: 21px; 
 	}
-	th:nth-child(3){
-		text-align: center;
-	}
-	td:nth-child(1){
-		text-align: center;
-	}
-	td:nth-child(3){
-		text-align: center;
-	}
-	.delete_button{
-		margin-left: 30px;
+	.delete-button{
 		border: 1px solid #519D9E;
 		background: none;
 		padding: 8px 18px;
@@ -167,6 +159,19 @@
     a:link { color: rgb(0, 0, 0); text-decoration: none;}
     a:visited { color: black; text-decoration: none;}
     a:hover { color: rgb(255, 145, 0); text-decoration: none;}
+    table, th, td{
+    	border: 1px solid black;
+    	border-collapse: collapse;
+    }
+    .delete-button-container{
+    	margin: 0 auto;
+    }
+    th:nth-of-type(1), th:nth-of-type(3){
+    	width: 150px;
+    }
+    th:nth-of-type(2){
+    	width: 100px;
+    }
 </style>
 </head>
 <body>
@@ -206,8 +211,9 @@
 						</tr>
 						</c:forEach>
 					</table>
-					<!-- 마지막 삭제 버튼 -->
-					<input class="delete_button" type="submit" value="카테고리 삭제" /><br />
+					<div class="delete-button-container">
+						<input class="delete-button" type="submit" value="카테고리 삭제" />
+					</div>
 				</form>
 				<span class="indexPage"></span>
 			</div>

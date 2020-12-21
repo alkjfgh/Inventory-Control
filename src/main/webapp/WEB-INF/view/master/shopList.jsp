@@ -101,6 +101,9 @@
 			border: 1px solid black;
 			border-collapse: collapse;
 		}
+		th, td{
+			height: 40px;
+		}
 	</style>
 </head>
 <body>
