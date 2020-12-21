@@ -44,6 +44,6 @@
 		</td>
 	</tr>
 </table>
-<a href="redirect:/home.do" >HOME</a>
+<a href="../home.do" >HOME</a>
 </body>
 </html>

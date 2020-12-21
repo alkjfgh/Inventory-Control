@@ -141,6 +141,7 @@ public class BuyerController {
 					stock.setRemain(remain - buyCnt);
 					stockService.update(stock);
 					SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), buyCnt, shopSeq, categorySeq, itemSeq);
+					System.out.println(soldLog);
 					soldLogService.insert(soldLog);
 				}
 			}

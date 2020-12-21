@@ -122,7 +122,7 @@ public class ShopController {
 			long total = vo.getTotal();
 			if (shopCount % 7 == 0) {
 				double sold = vo.getSold();
-				double targetSold = total * shopCount;
+				double targetSold = total * 7;
 				double percent = Math.floor(sold * 100.0 / targetSold) / 100 + 0.05;
 				total = (long) Math.floor(total * percent) + 1;
 			}
@@ -163,8 +163,6 @@ public class ShopController {
 			masterStock.setItemSeq(itemSeq);
 			masterStock = stockService.select(masterStock);
 			masterStock.setRemain(masterStock.getRemain() - (autoSup - remain));
-			
-			SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), (autoSup - remain), shopSeq, categorySeq, itemSeq);
 
 			ItemMovementVO itemMovement = new ItemMovementVO(shop.getShopCount(), categorySeq, itemSeq);
 			itemMovement.setShopSeq(shopSeq);
@@ -172,7 +170,6 @@ public class ShopController {
 
 			stockService.update(shopStock);
 			stockService.update(masterStock);
-			soldLogService.insert(soldLog);
 			itemMovementService.insert(itemMovement);
 		}
 		shop.setShopCount(shop.getShopCount() + 1);
@@ -279,7 +276,7 @@ public class ShopController {
 		if (url != null)
 			return url;
 		ShopVO shop = (ShopVO) session.getAttribute("shop");
-		SoldLogVO soldLog = new SoldLogVO(0, 0, shop.getShopSeq(), 0, 0);
+		SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), 0, shop.getShopSeq(), 0, 0);
 		soldLog.setStart(shop.getShopCount());
 		soldLog.setEnd(shop.getShopCount());
 		Iterator<CategoryVO> categoryIt = soldLogService.selectCategoryPeriod(soldLog).iterator();
