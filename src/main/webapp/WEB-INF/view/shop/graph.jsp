@@ -142,8 +142,8 @@
 			</form>
 		</div>
 		<div class="inputSearch" style="display : none;">
-			<form action="graph.do" method="post" class="searchForm">
-				<input min="1" id="start" type="number" name="start"/> ~ <input id="end" type="number" name="end" max="${shop.shopCount}" />
+			<form action="graph.do" method="post" class="searchForm" onsubmit="return numberCheckA()">
+				<input min="1" max="${shop.shopCount}" id="start" type="number" name="start" required="required" onblur="startCheck(this)"/> ~ <input id="end" type="number" name="end" min="1" max="${shop.shopCount}" required="required" onblur="endCheck(this)" />
 				<input type="submit" value="검색" />
 			</form>
 		</div>
@@ -159,6 +159,7 @@
 		<a href="ShopInfo.do">뒤로가기</a>
 	</div>
 	<script>
+		
 		countMax = parseInt("<c:out value="${shop.shopCount}" />");
 		function conditionClick(e){
 			if(e.value=='day'){
@@ -182,7 +183,6 @@
 				}
 				$('.searchKeyword').attr("max", countMax/30);
 			}
-
 			$('.inputSearch').hide();
 		}
 		function numberCheck(e){
@@ -196,6 +196,39 @@
 				e.value = max;
 			if(value < min)
 				e.value = min;
+		}
+		function startCheck(e){
+			var value = parseInt(e.value);
+			if(Number.isNaN(value)){
+				e.value = 1;
+			}
+			var max = parseInt(e.max);
+			var min = parseInt(e.min);
+			if(value > max)
+				e.value = max;
+			if(value < min)
+				e.value = min;
+		}
+		function endCheck(e){
+			var value = parseInt(e.value);
+			if(Number.isNaN(value)){
+				e.value = 1;
+			}
+			var max = parseInt(e.max);
+			var min = parseInt(e.min);
+			if(value > max)
+				e.value = max;
+			if(value < min)
+				e.value = min;
+		}
+		function numberCheckA(){
+			leftVal = $('#start').val();
+			rightVal = $('#end').val();
+			if(leftVal>rightVal){
+				alert("시작값이 종료값보다 높을 수 없습니다.");
+				return false;
+			}
+			
 		}
 		
 		$('.searchA').click(function() {
@@ -340,6 +373,7 @@
 				myChart[i].update();
 			}
 		});
+		
 	</script>
 </body>
 </html>

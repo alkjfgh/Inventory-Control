@@ -25,6 +25,8 @@
     	margin: 30px auto;
     	text-align: center;
     	width: 500px;
+		border: 3px solid #ccc;
+		border-collapse: collapse;
     }
 	input[type=number] {
 		width: 200px;
@@ -59,6 +61,10 @@
 	.btn:hover {
 	background-color: #555555;
 	color: hsl(60, 100%, 98%);
+	}
+	th, td{ 
+		border: 3px solid #ccc; 
+		border-collapse: collapse;
 	}
 	a{font-weight: bold;}
     a:link { color: rgb(0, 0, 0); text-decoration: none;}

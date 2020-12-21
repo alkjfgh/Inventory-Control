@@ -38,13 +38,13 @@
 		}
 
 		h1 {
-			margin: 50px;
+			margin: 30px;
 			text-align: center;  
 			font-size: 42px;
 		}
 
 		.owner_list_wrap {
-			padding: 50px;
+			padding: 10px;
 		}
 
 		.owner_list {
@@ -122,6 +122,14 @@
 			border: 1px solid black;
 			border-collapse: collapse;
 		}
+		tbody td{
+			padding : 5px 0 5px 0;
+		}
+		thead tr th {
+			background: #d7eefd;
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
 	</style>
 </head>
 
@@ -161,15 +169,11 @@
 			</tbody>
 		</table>
 	</section>
-
 	<div class="indexPage_box">
-	<span class="indexPage"></span>
+		<span class="indexPage"></span>
 	</div>
 	<div id="back">
 		<a href="master.do">뒤로가기</a>
-	</div>
-	<div id="bottom">
-		<a href="#top" class="gotopbtn">▲</a>
 	</div>
 </body>
 	<script>
