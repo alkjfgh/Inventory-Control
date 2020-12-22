@@ -1,120 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Sign Up</title>
-
-<style>
-	 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-    body{
-        font-family: 'Do Hyeon', sans-serif;
-        background-color: hsl(60, 100%, 98%);
-    }
-    h1{
-        margin: 0 auto;
-        margin-top : 50px;
-        text-align: center;  
-        font-size: 42px;
-    }
-    table{
-        width: 800px;
-        height: 400px;
-        margin: auto;
-        margin-top: 30px;
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-    th,td{
-        border: 0.125em solid black;
-        padding: 12px;
-        font-size: 18px;
-    }
-    .in_text{
-        color: rgba(41, 43, 41, 0.466);
-    }
-    input[type=text] {
-	    width: 35%;
-	    padding: 3px;
-	    margin: 8px 0;
-	    box-sizing: border-box;
-	    border: 3px solid #ccc;
-	    -webkit-transition: 0.5s;
-	    transition: 0.5s;
-	    outline: none;
-    }
-    input[type=text]:focus {
-    	border: 3px solid #555;
-    }
-    input[type=password] {
-	    width: 35%;
-	    padding: 3px;
-	    margin: 8px 0;
-	    box-sizing: border-box;
-	    border: 3px solid #ccc;
-	    -webkit-transition: 0.5s;
-	    transition: 0.5s;
-	    outline: none;
-    }
-    input[type=password]:focus {
-    	border: 3px solid #555;
-    }
-    p{
-	    width: 100px;
-	    margin: auto;
-	    margin-top: 50px;
-	    padding: auto;
-    }
-    .insert{
-	    font-family: 'Do Hyeon', sans-serif;
-	    background-color: #A593E0; 
-	    border: none;
-	    color: white;
-	    padding: 15px 32px;
-	    text-align: center;
-	    text-decoration: none;
-	    display: inline-block;
-	    font-size: 18px;
-	    margin: 4px 2px;
-	    cursor: pointer;
-	    -webkit-transition-duration: 0.4s; 
-	    transition-duration: 0.4s;
-    }
-    .insert:hover {
-    	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-    }
-    .submit{
-    	margin-top: 30px;
-    	text-align: center;
-    }
-    .button{
-		width: 100px;
-		height: 45px;
-		font-family: 'Do Hyeon', sans-serif;
-		font-size: 18px;
-		text-transform: uppercase;
-		letter-spacing: 2.5px;
-		font-weight: 500;
-		color: #000;
-		background-color: #fff;
-		border: none;
-		border-radius: 45px;
-		box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-		transition: all 0.3s ease 0s;
-		cursor: pointer;
-		outline: none;
-    }
-	.button:hover{
-		background-color: #2EE59D;
-		box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-		color: #fff;
-		transform: translateY(-7px);
-	}
-</style>
+<title>회원가입</title>
+<link rel="stylesheet" href="<c:url value="/resources/css/user/signUp.css"/>">
 </head>
 <body>
-	<h1>Sign Up</h1>
+	<h1>회원가입</h1>
 	<form action="SignUp.do" name=fr method="post" onsubmit="return fun2()">
 		<table width=750 border="1px" align=center>
 			<tr>
@@ -164,11 +59,10 @@
 		<div class="submit">
 			<input type="submit" class="button" value="회원 가입">
 			<input type="reset" class="button" name="reset" value="다시 입력"/>
+			<button class="button" type="button" onclick="location.href='../home.do'">뒤로가기</button>
 		</div>
 	</form>
-	<div>
-		<a href="../home.do">뒤로가기</a>
-	</div>
+	
 </body>
 <script>
 	var phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/;

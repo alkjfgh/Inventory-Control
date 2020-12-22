@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: 'Do Hyeon', sans-serif;
+	height: 100vh;
+	background-color: hsl(60, 100%, 98%);
+	background-size: cover;
+	color: #9DC8C8 #519D9E #D1B6E1 #58C9B9 hsl(60, 100%, 98%);
+}
+
+a {
+	text-decoration: none
+}
+
+body a:link {
+	color: black;
+}
+
+body a:visited {
+	color: black;
+}
+
+h1 {
+	margin: 30px;
+	text-align: center;
+	font-size: 42px;
+}
+
+.owner_list_wrap {
+	padding: 10px;
+}
+
+.owner_list {
+	width: 100%;
+	border-bottom: 1px solid #000;
+}
+
+.owner_list>thead>tr {
+	font-size: 24px;
+}
+
+.owner_list tbody tr {
+	font-size: 18px;
+}
+
+.owner_list tbody tr td {
+	text-align: center;
+}
+
+.btn {
+	border: 1px solid #58C9B9;
+	background: none;
+	padding: 8px 18px;
+	font-size: 16px;
+	font-family: 'Do Hyeon', sans-serif;
+	cursor: pointer;
+	margin: 5px;
+	transition: 0.8s;
+	background: #58C9B9;
+	border-radius: 25px;
+}
+
+.area {
+	color: #fff;
+}
+
+.area:hover {
+	color: #58C9B9;
+}
+
+.btn::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	z-index: -1;
+	transition: 0.8s;
+}
+
+.gotopbtn {
+	position: fixed;
+	width: 50px;
+	height: 50px bottom: 40px;
+	right: 5px;
+	cursor: pointer;
+	font-family: 'Do Hyeon', sans-serif;
+	text-decoration: none;
+	text-align: center;
+	line-height: 50px;
+	color: white;
+	font-size: 26px;
+	border: 0;
+}
+
+.indexPage_box {
+	margin: 20px;
+	width: 100%;
+	text-align: center;
+}
+
+#back {
+	margin: 20px;
+	width: 100%;
+	text-align: center;
+}
+
+table, tr, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+tbody td {
+	padding: 5px 0 5px 0;
+}
+
+thead tr th {
+	background: #d7eefd;
+	border: 1px solid black;
+	border-collapse: collapse;
+}

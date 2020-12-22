@@ -7,36 +7,7 @@
 <meta charset="UTF-8">
 <title>총 재고</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style>
-	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-	body {
-		font-family: 'Do Hyeon', sans-serif;
-		padding: 0;
-		background: hsl(60, 100%, 98%);
-		padding: 40px;
-		text-align: center;
-	}
-	h1{
-		margin: 50px;
-		text-align: center;  
-		font-size: 42px;
-	}
-	table {
-		margin: 0 auto;
-		text-align: center;
-	}
-	table, th, td{
-		border: 2px solid black;
-		border-collapse: collapse;
-	}
-	th, td{
-		padding: 5px;
-	}
-	a{font-weight: bold;}
-    a:link { color: rgb(0, 0, 0); text-decoration: none;}
-    a:visited { color: black; text-decoration: none;}
-    a:hover { color: rgb(255, 145, 0); text-decoration: none;}
-</style>
+<link rel="stylesheet" href="<c:url value="/resources/css/master/totalItem.css"/>">
 </head>
 <body>
 <h1>총 재고</h1>

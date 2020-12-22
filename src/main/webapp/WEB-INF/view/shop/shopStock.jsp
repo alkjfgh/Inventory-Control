@@ -7,45 +7,7 @@
 <meta charset="UTF-8">
 <title>상품 재고</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style>
-	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-    body{
-        font-family: 'Do Hyeon', sans-serif;
-        background-color: hsl(60, 100%, 98%);
-        font-size: 18px;
-        text-align: center;
-    }
-    #stockList {
-		margin: 0 auto;
-	}
-  	#stockList {
-      border-collapse: collapse;
-      border-top: 3px solid #168;
-    }  
-    #stockList th {
-      color: #168;
-      background: #f0f6f9;
-      text-align: center;
-    }
-    #stockList th, #stockList td {
-      padding: 10px 22px;
-      border: 1px solid #ddd;
-    }
-    #stockList th:first-child, #stockList td:first-child {
-      border-left: 0;
-    }
-    #stockList th:last-child, #stockList td:last-child {
-      border-right: 0;
-    }
-    #stockList tr td:first-child{
-      text-align: center;
-    }
-    #stockList caption{caption-side: bottom; display: none;}
-	a{font-weight: bold;}
-    a:link { color: rgb(0, 0, 0); text-decoration: none;}
-    a:visited { color: black; text-decoration: none;}
-    a:hover { color: rgb(255, 145, 0); text-decoration: none;}
-</style>
+<link rel="stylesheet" href="<c:url value="/resources/css/shop/shopStock.css"/>">
 </head>
 <body>
 	<h1>상품 재고</h1>

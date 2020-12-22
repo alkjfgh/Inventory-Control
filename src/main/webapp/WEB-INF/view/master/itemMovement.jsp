@@ -7,70 +7,7 @@
 <meta charset="utf-8">
 <title>총재고 이동현황</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style>
-	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap%27');
-	body{
-        font-family: 'Do Hyeon', sans-serif;
-        background-color: hsl(60, 100%, 98%);
-        margin: 50px;
-        text-align: center;
-    }
-    h1{
-    	margin-top: 50px;
-            text-align: center;
-            font-size: 45px;z
-    }
-     
-    .table{
-    	margin: 30px auto;
-    	text-align: center;
-    	width: 500px;
-		border: 3px solid #ccc;
-		border-collapse: collapse;
-    }
-	input[type=number] {
-		width: 200px;
-		padding: 12px 20px;
-		margin: 8px 0;
-		box-sizing: border-box;
-		border: 3px solid #ccc;
-		-webkit-transition: 0.5s;
-		transition: 0.5s;
-		outline: none;
-	} 
-
-	input[type=number]:focus {
-	 	border: 3px solid #555;
-	}
-	.btn {
-	padding: 10px 18px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	margin: 4px 2px;
-	transition-duration: 0.4s;
-	cursor: pointer;
-	}
-	.btn {
-	background-color: hsl(60, 100%, 98%);
-	color: black;
-	border: 2px solid #555555;
-	}
-
-	.btn:hover {
-	background-color: #555555;
-	color: hsl(60, 100%, 98%);
-	}
-	th, td{ 
-		border: 3px solid #ccc; 
-		border-collapse: collapse;
-	}
-	a{font-weight: bold;}
-    a:link { color: rgb(0, 0, 0); text-decoration: none;}
-    a:visited { color: black; text-decoration: none;}
-    a:hover { color: rgb(255, 145, 0); text-decoration: none;}
-</style>
+<link rel="stylesheet" href="<c:url value="/resources/css/master/itemMovement.css"/>">
 </head>
 <body>
 	<h1>총재고 이동현황</h1>

@@ -7,55 +7,7 @@
 <meta charset="UTF-8">
 <title>매장 정보</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style>
-	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-    body{
-        font-family: 'Do Hyeon', sans-serif;
-        background-color: hsl(60, 100%, 98%);
-        font-size: 18px;
-    }
-    h1{
-        text-align: center;
-        font-size: 42px;
-    }
-    ul{
-        margin: auto;
-        list-style: none;
-        height: 45px;
-        padding: 0;
-    }
-    li{
-        height: 45px;
-        float: left;
-    }
-    a.a_link {
-        height: 25px;
-        display: block;
-        width: 120px;
-        font-weight: bold;
-        background-color: rgb(252, 149, 65);
-        text-align: center;
-        line-height: 25px;
-        padding: 10px;
-        color: black; text-decoration: none;
-    }
-    a:visited {
-        color: black; text-decoration: none;
-    }
-    a:hover {
-        color: rgb(255, 255, 255); text-decoration: underline;
-    }
-    table, th, td {
-		border: 2px solid black;
-		border-collapse: collapse;
-		padding: 5px 10px;
-	}
-    table {
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 20px;
-	}
-</style>
+<link rel="stylesheet" href="<c:url value="/resources/css/shop/shopInfo.css"/>">
 </head>
 <body>
 	<h1>매장 정보</h1>

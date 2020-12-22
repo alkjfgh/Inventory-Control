@@ -12,116 +12,18 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap%27');
-	body{
-        font-family: 'Do Hyeon', sans-serif;
-        background-color: hsl(60, 100%, 98%);
-        margin: 50px;
-    }
-	h1{
-		text-align: center;
-	}
-	.searchA {
-		display: inline-block;
-		border-radius: 4px;
-		background-color: #D1B6E1;
-		border: none;
-		color: black;
-		text-align: center;
-		font-size: 24px;
-		padding: 12px;
-		width: 200px;
-		transition: all 0.5s;
-		cursor: pointer;
-		margin: 5px;
-	}
-	.searchA span {
-		cursor: pointer;
-		display: inline-block;
-		position: relative;
-		transition: 0.5s;
-	}
-	.searchA span:after {
-		content: '\00bb';
-		position: absolute;
-		opacity: 0;
-		top: 0;
-		right: -20px;
-		transition: 0.5s;
-	}
-	.searchA:hover span {
-		padding-right: 25px;
-	}
-	.searchA:hover span:after {
-		opacity: 1;
-		right: 0;
-	}
-	.searchB {
-		display: inline-block;
-		border-radius: 4px;
-		background-color: #519D9E;
-		border: none;
-		color: black;
-		text-align: center;
-		font-size: 24px;
-		padding: 12px;
-		width: 200px;
-		transition: all 0.5s;
-		cursor: pointer;
-		margin: 5px;
-	}
-	.searchB span {
-		cursor: pointer;
-		display: inline-block;
-		position: relative;
-		transition: 0.5s;
-	}
-	.searchB span:after {
-		content: '\00bb';
-		position: absolute;
-		opacity: 0;
-		top: 0;
-		right: -20px;
-		transition: 0.5s;
-	}
-	.searchB:hover span {
-		padding-right: 25px;
-	}
-	.searchB:hover span:after {
-		opacity: 1;
-		right: 0;
-	}
-	form{
-		display : inline-block;
-	}
-	#button{
-		margin: 0 auto;
-		text-align: center;
-	}
-	.category, .back{
-		margin: 0 auto;
-		text-align: center;
-	}
-	.searchCondition input:nth-of-type(1) {
-		width: 125px;
-	}
-	a{font-weight: bold;}
-    a:link { color: rgb(0, 0, 0); text-decoration: none;}
-    a:visited { color: black; text-decoration: none;}
-    a:hover { color: rgb(255, 145, 0); text-decoration: none;}
-</style>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet" href="<c:url value="/resources/css/shop/graph.css"/>">
 </head>
 <body>
 	<h1>판매 현황</h1>
