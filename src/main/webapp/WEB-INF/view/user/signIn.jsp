@@ -8,6 +8,7 @@
 <title>로그인</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="<c:url value="/resources/css/user/signIn.css"/>">
+<script src="<c:url value="/resources/js/user/signIn.js" />"></script>
 </head>
 <body>
 	<section class="login-form">
@@ -27,8 +28,6 @@
 				<span class="img_top ico_check"></span>
 				<span class="txt_lab">로그인 상태 유지</span>
 				</label>
-				&nbsp;&nbsp;&nbsp;
-				<a href="" class="link_find">아이디</a>/ <a href="" class="link_find">비밀번호 찾기</a>
 			</div>
 			<div class="btn-area">
 				<input type="submit" id="btn" value="로그인"></input>
@@ -38,23 +37,5 @@
 			<a href="../home.do">뒤로가기</a>
 		</div>
 	</section>
-	<script>
-		let id = $('#id');
-		let pw = $('#pwd');
-		let btn = $('#btn');
-		$(btn).on('click', function () {
-			if ($(id).val() == "") {
-				$(id).next('label').addClass('warning');
-				setTimeout(function () {
-					$('label').removeClass('warning');
-				}, 1500);
-			}
-			else if ($(pw).val() == "") {
-				$(pw).next('label').addClass('warning');
-			} setTimeout(function () {
-				$('label').removeClass('warning');
-			}, 1500);
-		});
-	</script>
 </body>
 </html>

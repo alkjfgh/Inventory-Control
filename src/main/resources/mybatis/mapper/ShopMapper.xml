@@ -25,11 +25,11 @@
 	<insert id="insert" parameterType="shop">
 		insert into shop (shop_seq,
 		shop_address, shop_phone,
-		shop_name)
+		shop_name, shop_count)
 		values
 		(#{shopSeq,jdbcType=DECIMAL}, #{shopAddress,jdbcType=VARCHAR},
 		#{shopPhone,jdbcType=VARCHAR},
-		#{shopName,jdbcType=VARCHAR})
+		#{shopName,jdbcType=VARCHAR},#{shopCount,jdbcType=VARCHAR})
 	</insert>
 	<update id="update" parameterType="shop">
 		update shop

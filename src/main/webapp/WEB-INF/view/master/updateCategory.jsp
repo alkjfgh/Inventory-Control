@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="<c:url value="/resources/css/master/updateCategory.css"/>">
+<script src="<c:url value="/resources/js/master/updateCategory.js" />"></script>
 </head>
 <body>
 	<section>
@@ -58,26 +59,6 @@
 	</div>
 </body>
 <script>
-    $('.add').click(function () {
-        $('.categoryAdd').show();
-        $('.categoryDelete').hide();
-    });
-    $('.del').click(function () {
-        $('.categoryAdd').hide();
-        $('.categoryDelete').show();
-    });
-    var cnt = 1;
-    
-    $('button').click(function () {
-    	var html = '<tr><td><input type="text" name="categoryName_' + cnt++ + '" /></td>'
-    	html += '<td><button type="button" class="btnDel">Del</button></td></tr>';
-        $("input[name=cnt]").attr("value", cnt);
-        $('.input-container').append(html);
-        $('.input-container').on("click", ".btnDel", function() {
-		    $(this).parent().remove();
-		});
-        
-    });
     var pageBtn = Math.ceil( ${categoryCount} / 20);
 	for(var i = 1 ; i<=pageBtn ; i++){
 		$('.indexPage').append("<a href="

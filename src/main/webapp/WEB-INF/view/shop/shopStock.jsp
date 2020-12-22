@@ -34,7 +34,6 @@
 		</c:forEach>
 	</table>
 	<div id="indexPage"><span class="indexPage"></span></div>
-	
 	<div id="back">
 		<a href="ShopInfo.do">뒤로가기</a>
 	</div>

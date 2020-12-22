@@ -56,8 +56,10 @@
         </ul>
 	</div>
 	<script>
-		var li_length =  $("li").length;
-		$("ul").css({width : li_length * 140 + "px"});
+		var li_length = $("li").length;
+		$("ul").css({
+			width : li_length * 140 + "px"
+		});
 	</script>
 </body>
 </html>

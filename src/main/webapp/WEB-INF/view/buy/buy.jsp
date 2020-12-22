@@ -101,7 +101,6 @@
 			itemList : itemInfoList
 		});
 	</c:forEach>
-	console.log(shopList);
 	function shopChange(e) {
 		var d = window.event, btn = d.target || d.srcElement;
 		var id = btn.id.split('_')[1];

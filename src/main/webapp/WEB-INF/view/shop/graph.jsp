@@ -61,7 +61,6 @@
 		<a href="ShopInfo.do">뒤로가기</a>
 	</div>
 	<script>
-		
 		countMax = parseInt("<c:out value="${shop.shopCount}" />");
 		function conditionClick(e){
 			if(e.value=='day'){
@@ -275,7 +274,6 @@
 				myChart[i].update();
 			}
 		});
-		
 	</script>
 </body>
 </html>

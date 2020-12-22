@@ -6,8 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>아이템 추가 및 삭제</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="<c:url value="/resources/css/shop/updateItem.css"/>">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="<c:url value="/resources/js/shop/updateItem.js" />"></script>
 </head>
 <body>
 	<h1>아이템 추가 및 삭제</h1>
@@ -62,25 +63,6 @@
 	</div>
 </body>
 <script>
-	$('.change').click(function() {
-		$('.add').show();
-		$('.delete').hide();
-	});
-	$('.del').click(function() {
-		$('.add').hide();
-		$('.delete').show();
-	});
-	var cnt =  1;
-	$('.insertadd').click(function() {
-		var html = '<tr><td><select class="form-control"id="'+ cnt +'" name="category_'+ cnt +'" onchange="categoryChange(this)"required="required"><option>카테고리를 선택해주세요</option><c:forEach items="${categoryList }" var="category"><option value="${category.categorySeq }">${category.categoryName  }</option></c:forEach></select></td><td><select class="form-control"id="item_'+ cnt +'" name="item_'+ cnt + '" required="required"><option id = "item_'+ cnt +'">선택해주세요.</option></select></td><td><input type="number" name="total_'+ cnt + '" required="required" />';
-		html += '</td><td><button type="button" class="btnDel">Del</button></td></tr>';
-		$("input[name=cnt]").attr("value", cnt);
-		cnt++;
-		$('.addTable').append(html);
-		$('.insertItem').on("click", ".btnDel", function() {
-		    $(this).parent().remove();
-		});
-	});
 	var arr = new Array();
 	var cs = ${addList[0].categorySeq };
 	var itemName = new Array();
@@ -108,9 +90,20 @@
 			seqList : itemSeq
 		});
 	}
+	var cnt = 1;
+	$('.insertadd').click(function() {
+		var html = '<tr><td><select class="form-control"id="'+ cnt +'" name="category_'+ cnt +'" onchange="categoryChange(this)"required="required"><option>카테고리를 선택해주세요</option><c:forEach items="${categoryList }" var="category"><option value="${category.categorySeq }">${category.categoryName  }</option></c:forEach></select></td><td><select class="form-control"id="item_'+ cnt +'" name="item_'+ cnt + '" required="required"><option id = "item_'+ cnt +'">선택해주세요.</option></select></td><td><input type="number" name="total_'+ cnt + '" required="required" />';
+		html += '</td><td><button type="button" class="btnDel">Del</button></td></tr>';
+		$("input[name=cnt]").attr("value", cnt);
+		cnt++;
+		$('.addTable').append(html);
+		$('.insertItem').on("click", ".btnDel", function() {
+		    $(this).parent().remove();
+		});
+	});
 	function categoryChange(e) {
 		var d = window.event,
-        btn = d.target || d.srcElement;
+	    btn = d.target || d.srcElement;
 		var target = document.getElementById("item_"+btn.id);
 		for (var i = 0; i < arr.length; i++) {
 			if (e.value == arr[i].categorySeq) {

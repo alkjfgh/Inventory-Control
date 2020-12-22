@@ -356,12 +356,16 @@ public class ShopController {
 	}
 
 	@RequestMapping(value = "insertShop.do", method = RequestMethod.POST)
-	public String insertShop(ShopVO vo, HttpSession session) {
+	public String insertShop(ShopVO shop, HttpSession session) {
 		UserVO user = (UserVO) session.getAttribute("user");
 		user = userService.select(user);
 		session.setAttribute("user", user);
-		vo.setShopSeq(user.getShopSeq());
-		shopService.insert(vo);
+		shop.setShopSeq(user.getShopSeq());
+		shop.setShopCount(1);
+		System.out.println(shop);
+		shopService.insert(shop);
+		System.out.println(shopService.select(shop));
+		session.setAttribute("shop", shop);
 		return "redirect:" + PATH + "ShopInfo.do";
 	}
 

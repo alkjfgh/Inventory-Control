@@ -8,6 +8,7 @@
 <title>물품 추가 및 삭제</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="<c:url value="/resources/css/master/masterUpdateItem.css"/>">
+<script src="<c:url value="/resources/js/master/masterUpdateItem.js"/>"></script>
 </head>
 <body>
 <h1>물품 추가 및 삭제</h1>
@@ -78,28 +79,7 @@
 	</div>
 </body>
 <script>
-	var pageIndex = 1;
-	var lineCnt = 12;
-	$('tbody tr').hide();
-	$('tbody tr').slice(pageIndex * lineCnt - lineCnt, pageIndex * lineCnt).show(0);
-	var pageBtn = Math.ceil($('tbody tr').length / lineCnt);
-	for(var i = 1 ; i<=pageBtn ; i++){
-		$('.addbtn').append('<button type="button" class="page" id="' + i + '">'+i+'</button>');
-	}
 	$(document).ready(function() {
-		$(".page").click(function() {
-			pageIndex = parseInt($(this).attr("id"));
-			$('tbody tr').hide();
-			$('tbody tr').slice(pageIndex * lineCnt - lineCnt, pageIndex * lineCnt).show(0); 
-		});
-		$('.add').click(function() {
-			$('.itemAdd').show();
-			$('.itemDelete').hide();
-		});
-		$('.del').click(function() {
-			$('.itemAdd').hide();
-			$('.itemDelete').show();
-		});
 		var cnt = 1;
 		$('.insertadd').click(function() {
 			var html = '<tr class="itemInput"><td>'

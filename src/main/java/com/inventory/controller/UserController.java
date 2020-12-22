@@ -26,7 +26,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ShopService shopService;
 
@@ -99,12 +99,17 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "SignUp.do", method = RequestMethod.POST)
-	public String signUp(UserVO user, HttpServletRequest request,HttpSession session) {
+	public String signUp(UserVO user, HttpServletRequest request, HttpSession session) {
 		user.setUserLevel((short) 1);
 		try {
-			userService.insert(user);
-			session.setAttribute("user", user);
-			return "redirect:/shop/insertShop.do";
+			UserVO get = userService.select(user);
+			if (get == null) {
+				userService.insert(user);
+				session.setAttribute("user", user);
+				return "redirect:/shop/insertShop.do";
+			} else {
+				return "redirect:../home.do";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:../home.do";
@@ -120,7 +125,7 @@ public class UserController {
 		response.addCookie(cookie);
 		return "redirect:/home.do";
 	}
-	
+
 	@RequestMapping(value = "cancelInsertUser.do", method = RequestMethod.GET)
 	public String cancelInsertUser(HttpSession session) {
 		UserVO user = (UserVO) session.getAttribute("user");

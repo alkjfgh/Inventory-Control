@@ -82,7 +82,7 @@ public class BuyerController {
 		List<BuyCheckVO> buyList = new ArrayList<BuyCheckVO>();
 		Set<ItemVO> duplicateCheck = new HashSet<ItemVO>();
 		List<BuyItemVO> itemList = new ArrayList<BuyItemVO>();
-		ShopVO shop = new ShopVO();
+		ShopVO shop = null;
 		for (int i = 1; i <= cnt; i++) {
 			String nullCheck = request.getParameter("shop_" + i);
 			if (nullCheck != null && !nullCheck.equals("")) {
@@ -90,11 +90,12 @@ public class BuyerController {
 				long categorySeq = Long.parseLong(request.getParameter("category_" + i));
 				long itemSeq = Long.parseLong(request.getParameter("item_" + i));
 				long buyCnt = Long.parseLong(request.getParameter("total_" + i));
-				if (shop.getShopSeq() != null && shopSeq != shop.getShopSeq() && itemList.size() > 0) {
+				if (shop != null && shopSeq != shop.getShopSeq() && itemList.size() > 0) {
 					buyList.add(new BuyCheckVO(shop, itemList));
 					itemList = new ArrayList<BuyItemVO>();
 					duplicateCheck.clear();
 				}
+				shop = new ShopVO();
 				shop.setShopSeq(shopSeq);
 				shop = shopService.select(shop);
 				ItemVO item = new ItemVO();
@@ -124,8 +125,10 @@ public class BuyerController {
 			ShopVO shop = buy.getShop();
 			long shopSeq = shop.getShopSeq();
 			Iterator<BuyItemVO> buyItemIt = buy.getBuyItemList().iterator();
+			System.out.println(shop);
 			while (buyItemIt.hasNext()) {
 				BuyItemVO buyItem = buyItemIt.next();
+				System.out.println(buyItem);
 				ItemVO item = buyItem.getItem();
 				long categorySeq = item.getCategorySeq();
 				long itemSeq = item.getItemSeq();
@@ -141,7 +144,6 @@ public class BuyerController {
 					stock.setRemain(remain - buyCnt);
 					stockService.update(stock);
 					SoldLogVO soldLog = new SoldLogVO(shop.getShopCount(), buyCnt, shopSeq, categorySeq, itemSeq);
-					System.out.println(soldLog);
 					soldLogService.insert(soldLog);
 				}
 			}
